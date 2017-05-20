@@ -1,0 +1,43 @@
+\documentclass{article}
+  \usepackage[utf8]{inputenc}
+  \usepackage{titlesec}
+
+  \setcounter{secnumdepth}{4}
+
+  \newcommand\tab[1][1cm]{\hspace*{#1}}
+
+  \title{\textbf{System Requirements and \\Design Documentation}\\
+        \textbf{Group name:} Cerebero\\
+       \textbf{ Project name:} eCivix Election Simulator}
+
+  \date{May 2017}
+
+  \author{Nardus van der Vyver u15012698 \\
+          Rikard Schouwstra u15012299 \\
+          Frederick Ehlers u \\
+          Jacobus Marais u \\
+          Victor Twigge u \\}
+
+
+
+  \usepackage{natbib}
+  \usepackage{graphicx}
+
+  \begin{document}
+
+  \maketitle
+
+  \tableofcontents
+
+  \section{Functional Requirements}
+  [Describe functional requirements of System.]
+  \section{Architectural Specifications}
+   [Describe architectural specifications of System as well as quality requirements.]
+  \section{Integration Requirement}
+    \subsection{Hardware}
+    [Description of hardware integration requirements if applicable.]
+    \subsection{Software}
+    [Description of software integration requirements if applicable.]
+   
+
+\end{document}
