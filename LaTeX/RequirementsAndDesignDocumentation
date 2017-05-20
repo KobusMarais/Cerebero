@@ -31,8 +31,120 @@
 
   \section{Functional Requirements}
   [Describe functional requirements of System.]
+ 
+   \subsection{User management} 
+    \begin{itemize}
+    \item Register as user or admin
+				\begin{itemize}
+					\item Use your personal details to register on system in order to gain access to more of the applications features.
+
+					\item Preconditions
+					\begin{itemize}
+						\item Submit details on registration form
+					\end{itemize}
+					\item Postconditions
+					\begin{itemize}
+						\item A personal account and profile is created for the user on the system
+					\end{itemize}
+				\end{itemize}
+				
+				\item Login
+				\begin{itemize}
+					\item Query user’s valid details on the system’s database through the login page to gain access to the account. 
+					\item Preconditions
+					\begin{itemize}
+						\item Have to be registered on eCivix ElectionSimulator
+						\item Have to submit his/her correct details on the login page
+					\end{itemize}
+					\item Postconditions
+					\begin{itemize}
+						\item The user is redirected to their profile
+						\item Have access to user features
+					\end{itemize}
+				\end{itemize}
+				
+				\item Admin manage user accounts
+				\begin{itemize}
+					\item User management is necessary if a user experiences problems with their password or any account related issues.
+					\item Preconditions
+					\begin{itemize}
+						\item Have admin account and therefore rights
+						\item Have internet access
+						\item A management system in place
+					\end{itemize}
+					\item Postconditions
+					\begin{itemize}
+						\item Users’ account related problems can be solved
+					\end{itemize}
+                \end{itemize}
+           
+			
+				\item Edit profile information
+				\begin{itemize}
+					\item Allow users to add a summary and personal information. Also create provision for the use of a username for anonymity.
+					\item Preconditions
+					\begin{itemize}
+						\item Submit information to the server
+					\end{itemize}
+					\item Postconditions
+					\begin{itemize}
+						\item Profile details will be changed to his/her new details
+					\end{itemize}
+					\end{itemize}
+				\end{itemize}
+           
   \section{Architectural Specifications}
    [Describe architectural specifications of System as well as quality requirements.]
+   \subsection{Architectural Requirements}
+   \begin{itemize}
+   \item (Given to us by the client: eCivix)
+        \item Web-based
+		\begin{itemize}
+			\item The web-based game should be interacted with by users through the web.
+	    \end{itemize}
+	    
+	    \item Performance
+		\begin{itemize}
+			\item The game must be optimised to function and calculate each decision made by the user in the fastest possible way.
+	    \end{itemize}
+	    
+	    \item Privacy 
+		\begin{itemize}
+			\item Legally speaking all information captured by the web-based games registration and login process has to be POPI compliant. The team will be assisted by the legal team of eCivix to ensure that all requirements in terms of privacy are met. 
+	    \end{itemize}
+	    
+	    \item Security
+		\begin{itemize}
+			\item This project will need to be able to keep user data secure and prevent illicit access by third parties. 
+            Scalability 
+            The project is intended for use as an online service, with potentially many different types of gameplay and playthroughs. The project should scale as the size of the game itself grows. 
+
+	    \end{itemize}
+	    
+	    \item Enjoyment
+		\begin{itemize}
+			\item The project should have adequate user enjoyment features as well as a fun and interactive GUI which is obviously playable as well as usable. 
+	    \end{itemize}
+	    
+	    \item Game Theory 
+		\begin{itemize}
+			\item The end game should include mathematical models that simulate the conflict and cooperation between intelligent and rational decision-makers to showcase and represent behavioural patterns of South African voters. In addition, AI players should employ game theory to determine their optimal course of action in any given circumstance.
+	    \end{itemize}
+   
+   \end{itemize}
+   \subsection{Quality Requirements} 
+   \begin{itemize}
+    \item Robustness
+		\begin{itemize}
+			\item The game should have the ability to cope with errors during execution and cope with erroneous input.
+	    \end{itemize}
+	    
+	    \item Maintainability
+		\begin{itemize}
+			\item The game should be easily maintainable (in good condition), to make future maintenance easier.
+         \end{itemize}
+        \end{itemize}
+   
   \section{Integration Requirement}
     \subsection{Hardware}
     [Description of hardware integration requirements if applicable.]
