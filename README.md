@@ -6,10 +6,10 @@
 
 ---
 
-* [Ehlers, Frederick](https://github.com/)
-* [Marais, Jacobus](https://github.com/)
-* [Twigge, Victor](https://github.com/)
-* [van der Vyver, Nardus](https://github.com/BulletFan01)
-* [Schouwstra, Rikard](https://github.com/)
+Ehlers, Frederick
+Marais, Jacobus
+Twigge, Victor
+van der Vyver, Nardus
+Schouwstra, Rikard
 
 ---
