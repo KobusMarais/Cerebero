@@ -31,10 +31,119 @@
 
   \section{Functional Requirements}
   [Describe functional requirements of System.]
- 
-   \subsection{User management} 
+   \subsection{Game Play}
+   	\begin{itemize}
+   		\item Create User/Party
+			\begin{itemize}
+				\item Select and Customise the person/party that the player will be in the game
+				\item Preconditions
+				\begin{itemize}
+					\item Registered and loggend into their account
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item Started the game
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	
+	\begin{itemize}
+   		\item Select issues that the party supports
+			\begin{itemize}
+				\item Select which issues the party supports and how they feel about them.
+				\item Preconditions
+				\begin{itemize}
+					\item Selected a party that they belong to
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item Calculates how much supporters you have in each province based on statistics
+					\item Starts main game and begins the first round
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	
+	\begin{itemize}
+   		\item  Start Fund raising
+			\begin{itemize}
+				\item Start collecting funds nationally to campaign provincially 
+				\item Preconditions
+				\begin{itemize}
+					\item User turn started.
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item Got funds to campaign
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	
+	\begin{itemize}
+   		\item  Polling
+			\begin{itemize}
+				\item Poll to check how good support is in that province
+				\item Preconditions
+				\begin{itemize}
+					\item Have enough national funds to poll in the province.
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item See more or less how many supporters you have in that province.
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	
+	\begin{itemize}
+   		\item  Campaigning
+			\begin{itemize}
+				\item Campaign in a province to gather support
+				\item Preconditions
+				\begin{itemize}
+					\item Have enough national funds to campaign in the province.
+					\item The province should have been polled.
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item Gather or lose supporters based on how your campaign went.
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	
+	\begin{itemize}
+   		\item  Ending turn
+			\begin{itemize}
+				\item Ends the turn and allows AI to play their round
+				\item Preconditions
+				\begin{itemize}
+					\item User is satisfied with what they have done in their turn
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item AI gets their turn.
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	
+	\begin{itemize}
+   		\item  Ending game
+			\begin{itemize}
+				\item The game has ended.
+				\item Preconditions
+				\begin{itemize}
+					\item The date of the election has arrived.
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item The winner of the election is announced.
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}	
+
+	
+	
+   	\subsection{User management} 
     \begin{itemize}
-    \item Register as user or admin
+    				\item Register as user or admin
 				\begin{itemize}
 					\item Use your personal details to register on system in order to gain access to more of the applications features.
 
@@ -92,7 +201,7 @@
 					\end{itemize}
 					\end{itemize}
 				\end{itemize}
-           
+           			
   \section{Architectural Specifications}
    [Describe architectural specifications of System as well as quality requirements.]
    \subsection{Architectural Requirements}
@@ -137,6 +246,7 @@
     \item Robustness
 		\begin{itemize}
 			\item The game should have the ability to cope with errors during execution and cope with erroneous input.
+	    		
 	    \end{itemize}
 	    
 	    \item Maintainability
