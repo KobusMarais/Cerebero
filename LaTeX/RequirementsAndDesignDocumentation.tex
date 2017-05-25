@@ -31,10 +31,41 @@
 
   \section{Functional Requirements}
   [Describe functional requirements of System.]
- 
-   \subsection{User management} 
+   \subsection{Game Play}
+   	\begin{itemize}
+   		\item Create User/Party
+			\begin{itemize}
+				\item Select and Customise the person/party that the player will be in the game
+				\item Preconditions
+				\begin{itemize}
+					\item Registered and loggend into their account
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item Started the game
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	\begin{itemize}
+   		\item Select issues that the party supports
+			\begin{itemize}
+				\item Select which issues the party supports and how they feel about them.
+				\item Preconditions
+				\begin{itemize}
+					\item Selected a party that they belong to
+				\end{itemize}
+				\item Postconditions
+				\begin{itemize}
+					\item Calculates how much supporters you have in each province based on statistics
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+
+	
+	
+   	\subsection{User management} 
     \begin{itemize}
-    \item Register as user or admin
+    				\item Register as user or admin
 				\begin{itemize}
 					\item Use your personal details to register on system in order to gain access to more of the applications features.
 
@@ -92,7 +123,7 @@
 					\end{itemize}
 					\end{itemize}
 				\end{itemize}
-           
+           			
   \section{Architectural Specifications}
    [Describe architectural specifications of System as well as quality requirements.]
    \subsection{Architectural Requirements}
@@ -137,6 +168,7 @@
     \item Robustness
 		\begin{itemize}
 			\item The game should have the ability to cope with errors during execution and cope with erroneous input.
+	    		
 	    \end{itemize}
 	    
 	    \item Maintainability
