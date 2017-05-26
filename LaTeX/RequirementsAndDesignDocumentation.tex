@@ -1,7 +1,12 @@
 \documentclass{article}
+\addtolength{\oddsidemargin}{-1.cm}
+\addtolength{\textwidth}{2cm}
+\addtolength{\topmargin}{-2cm}
+\addtolength{\textheight}{3.5cm}
   \usepackage[utf8]{inputenc}
   \usepackage{titlesec}
-
+  \usepackage[pdftex]{graphicx}
+  \usepackage{natbib}
   \setcounter{secnumdepth}{4}
 
   \newcommand\tab[1][1cm]{\hspace*{#1}}
@@ -12,22 +17,16 @@
 
   \date{May 2017}
 
-  \author{Frederick Ehlers u11061112 \\
-  	  Jacobus Marais u15188397 \\
-          Rikard Schouwstra u15012299 \\
-          Victor Twigge u10376802 \\
-	  Nardus van der Vyver u15012698 \\}
-
-
-
-  \usepackage{natbib}
-  \usepackage{graphicx}
+ 
+  \author{Cerebero}
+  \title{Election Simulator}
 
   \begin{document}
 
-  \maketitle
-
+ % generates the Cover page	
+  \input{CoverPage.tex}
   \tableofcontents
+  \newpage
 
   \section{Functional Requirements}
   [Describe functional requirements of System.]
@@ -38,9 +37,9 @@
 				\item Select and Customise the person/party that the player will be in the game
 				\item Preconditions
 				\begin{itemize}
-					\item Registered and loggend into their account
+					\item Registered and logged into their account
 				\end{itemize}
-				\item Postconditions
+				\item Post-conditions
 				\begin{itemize}
 					\item Started the game
 				\end{itemize}
@@ -55,7 +54,7 @@
 				\begin{itemize}
 					\item Selected a party that they belong to
 				\end{itemize}
-				\item Postconditions
+				\item Post-conditions
 				\begin{itemize}
 					\item Calculates how much supporters you have in each province based on statistics
 					\item Starts main game and begins the first round
@@ -71,7 +70,7 @@
 				\begin{itemize}
 					\item User turn started.
 				\end{itemize}
-				\item Postconditions
+				\item Post-conditions
 				\begin{itemize}
 					\item Got funds to campaign
 				\end{itemize}
@@ -86,7 +85,7 @@
 				\begin{itemize}
 					\item Have enough national funds to poll in the province.
 				\end{itemize}
-				\item Postconditions
+				\item Post-conditions
 				\begin{itemize}
 					\item See more or less how many supporters you have in that province.
 				\end{itemize}
@@ -102,7 +101,7 @@
 					\item Have enough national funds to campaign in the province.
 					\item The province should have been polled.
 				\end{itemize}
-				\item Postconditions
+				\item Post-conditions
 				\begin{itemize}
 					\item Gather or lose supporters based on how your campaign went.
 				\end{itemize}
@@ -117,7 +116,7 @@
 				\begin{itemize}
 					\item User is satisfied with what they have done in their turn
 				\end{itemize}
-				\item Postconditions
+				\item Post-conditions
 				\begin{itemize}
 					\item AI gets their turn.
 				\end{itemize}
@@ -132,12 +131,43 @@
 				\begin{itemize}
 					\item The date of the election has arrived.
 				\end{itemize}
-				\item Postconditions
+				\item Post-conditions
 				\begin{itemize}
 					\item The winner of the election is announced.
 				\end{itemize}
 			\end{itemize}
 	\end{itemize}	
+
+	\begin{itemize}
+		\item Leader-board
+			\begin{itemize}
+				\item Display the user's position on the leader-board.
+				\item Preconditions
+				\begin{itemize}	
+					\item The game has ended.
+				\end{itemize}
+				\item Post-conditions
+				\begin{itemize}	
+					\item User was able to view his position on the leader-board.
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
+			
+	\begin{itemize}
+		\item Awarding man power for an action
+			\begin{itemize}
+				\item Users are awarded man power for doing campaigns 
+				\item Preconditions
+				\begin{itemize}	
+					\item A campaign was completed before the end of the game
+				\end{itemize}
+				\item Post-conditions
+				\begin{itemize}	
+					\item Based on user's party preferences the effectiveness of the campaign is calculated.
+					\item The calculated value is then added to the user's total man power.
+				\end{itemize}
+			\end{itemize}
+	\end{itemize}
 
 	
 	
@@ -151,7 +181,7 @@
 					\begin{itemize}
 						\item Submit details on registration form
 					\end{itemize}
-					\item Postconditions
+					\item Post-conditions
 					\begin{itemize}
 						\item A personal account and profile is created for the user on the system
 					\end{itemize}
@@ -162,10 +192,10 @@
 					\item Query user’s valid details on the system’s database through the login page to gain access to the account. 
 					\item Preconditions
 					\begin{itemize}
-						\item Have to be registered on eCivix ElectionSimulator
+						\item Have to be registered on eCivix Election Simulator
 						\item Have to submit his/her correct details on the login page
 					\end{itemize}
-					\item Postconditions
+					\item Post-conditions
 					\begin{itemize}
 						\item The user is redirected to their profile
 						\item Have access to user features
@@ -181,7 +211,7 @@
 						\item Have internet access
 						\item A management system in place
 					\end{itemize}
-					\item Postconditions
+					\item Post-conditions
 					\begin{itemize}
 						\item Users’ account related problems can be solved
 					\end{itemize}
@@ -195,7 +225,7 @@
 					\begin{itemize}
 						\item Submit information to the server
 					\end{itemize}
-					\item Postconditions
+					\item Post-conditions
 					\begin{itemize}
 						\item Profile details will be changed to his/her new details
 					\end{itemize}
@@ -225,8 +255,11 @@
 	    \item Security
 		\begin{itemize}
 			\item This project will need to be able to keep user data secure and prevent illicit access by third parties. 
-            Scalability 
-            The project is intended for use as an online service, with potentially many different types of gameplay and playthroughs. The project should scale as the size of the game itself grows. 
+            
+		\item Scalability 
+            		\begin{itemize}
+				\item The project is intended for use as an online service, with potentially many different types of game-play and play-throughs. The project should scale as the size of the game itself grows. 
+			\end{itemize}
 
 	    \end{itemize}
 	    
@@ -257,9 +290,49 @@
    
   \section{Integration Requirement}
     \subsection{Hardware}
-    [Description of hardware integration requirements if applicable.]
+    Minimal hardware requirements
+	\begin{itemize}
+		\item Computer/ tablet/ smartphone 
+		\item Device must have Internet access
+		\item Device must have JavaScript support
+	\end{itemize}
     \subsection{Software}
     [Description of software integration requirements if applicable.]
-   
+    \begin{itemize}
+    \item The system will be divided into the following subsystems and components which will communicate with each other via their respective interfaces:
 
+    	\item Authentication  
+	    \begin{itemize}
+				\item An interface that handles login and register requests from users.
+		\end{itemize}
+
+		\item Artificial Intelligence 
+   		\begin{itemize}
+				\item Users will compete against the computer which is driven by AI. The AI subsystem needs to monitor the user's decisions and also be able to analyze data from the pre-populated database consisting of political data. The AI will use this information to make moves and decisions dynamically.
+		\end{itemize}
+
+		\item Users 
+		\begin{itemize}
+				\item The management of users from the admin side via CRUD methods.   		
+		\end{itemize}
+
+		\item Access Module 
+		\begin{itemize}
+				\item The web interface that the users will interact with.		
+		\end{itemize}
+
+		\item Data
+		\begin{itemize}
+				\item This subsystem will retrieve information from the database, process it and send it to the requester.
+		\end{itemize}
+
+		\item Gameplay
+		\begin{itemize}
+				\item A subsystem that provides dynamic logic for the game. It consists of the following: user and AI decisions, game rules, political data etc.
+		\end{itemize}
+	\end{itemize}
+
+	\section{Appendix}
+		\subsection{Map illustration}
+			\includegraphics[width=1\linewidth]{Images/MAP.png}\\
 \end{document}
