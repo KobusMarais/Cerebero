@@ -255,6 +255,37 @@
     [Description of hardware integration requirements if applicable.]
     \subsection{Software}
     [Description of software integration requirements if applicable.]
-   
+    \begin{itemize}
+    \item The system will be divided into the following subsystems and components which will communicate with each other via their respective interfaces:
 
+    	\item Authentication  
+	    \begin{itemize}
+				\item An interface that handles login and register requests from users.
+		\end{itemize}
+
+		\item Artificial Intelligence 
+   		\begin{itemize}
+				\item Users will compete against the computer which is driven by AI. The AI subsystem needs to monitor the user's decicions and also be able to analyze data from the prepopulated database consisting of political data. The AI will use this information to make moves and decisions dynamically.
+		\end{itemize}
+
+		\item Users 
+		\begin{itemize}
+				\item The management of users from the admin side via CRUD methods.   		
+		\end{itemize}
+
+		\item Access Module 
+		\begin{itemize}
+				\item The web interface that the users will interact with.		
+		\end{itemize}
+
+		\item Data
+		\begin{itemize}
+				\item This subsystem will retrieve information from the database, process it and send it to the requestor.
+		\end{itemize}
+
+		\item Gameplay
+		\begin{itemize}
+				\item A subsystem that provides dynamic logic for the game. It conists of the following: user and AI decisions, game rules, political data etc.
+		\end{itemize}
+	\end{itemize}
 \end{document}
