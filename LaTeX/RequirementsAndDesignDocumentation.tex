@@ -1,7 +1,8 @@
 \documentclass{article}
   \usepackage[utf8]{inputenc}
   \usepackage{titlesec}
-
+  \usepackage[pdftex]{graphicx}
+  \usepackage{natbib}
   \setcounter{secnumdepth}{4}
 
   \newcommand\tab[1][1cm]{\hspace*{#1}}
@@ -12,22 +13,16 @@
 
   \date{May 2017}
 
-  \author{Frederick Ehlers u11061112 \\
-  	  Jacobus Marais u15188397 \\
-          Rikard Schouwstra u15012299 \\
-          Victor Twigge u10376802 \\
-	  Nardus van der Vyver u15012698 \\}
-
-
-
-  \usepackage{natbib}
-  \usepackage{graphicx}
+ 
+  \author{Cerebero}
+  \title{Election Simulator}
 
   \begin{document}
 
-  \maketitle
-
+ % generates the Cover page	
+  \input{CoverPage.tex}
   \tableofcontents
+  \newpage
 
   \section{Functional Requirements}
   [Describe functional requirements of System.]
