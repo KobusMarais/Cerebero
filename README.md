@@ -9,7 +9,6 @@
 ### Ehlers, Frederick
 ### Marais, Jacobus
 ### Twigge, Victor
-### van der Vyver, Nardus
 ### Schouwstra, Rikard
 
 ---
