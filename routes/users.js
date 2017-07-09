@@ -3,7 +3,9 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.send("homepage.html");
+    var path = require('path');
+    res.sendFile(path.resolve('./Client/eCivix Election Simulator/Builds/index.html'));
+
 });
 
 module.exports = router;
