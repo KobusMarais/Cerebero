@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 70372a0fa2487aa4eac03848e218aa14
+timeCreated: 1499672621
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 12
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Raspoutine Classic
+  fontNames:
+  - Raspoutine Classic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
