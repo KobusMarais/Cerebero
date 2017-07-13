@@ -84,8 +84,6 @@ BundleArtifacts/
 
 # Others
 [Ss]tyle[Cc]op.*
-~$*
-*~
 *.dbmdl
 *.dbproj.schemaview
 *.pfx
@@ -128,3 +126,4 @@ FakesAssemblies/
 # LightSwitch generated files
 GeneratedArtifacts/
 ModelManifest.xml
+!bin/www
