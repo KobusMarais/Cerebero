@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "node ./bin/heroku-build.js"
+    "postinstall": "node ./bin/heroku-build.js",
     "start": "node ./bin/www"
 
   },
