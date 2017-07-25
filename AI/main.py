@@ -9,7 +9,8 @@ def read_in():
     return json.loads(lines[0])
 
 def main():
-lines = read_in()
+
+    lines = read_in()
 
     #create a numpy array
     np_lines = np.array(lines)
