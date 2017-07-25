@@ -127,3 +127,10 @@ FakesAssemblies/
 GeneratedArtifacts/
 ModelManifest.xml
 !bin/www
+
+*.swp
+*~
+.DS_Store
+blog.md
+node_modules/
+npm-debug.log
