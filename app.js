@@ -6,9 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const routes = require('./server/routes/index');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-var AI = require('./routes/AI');
+var index = require('./server/routes/index');
+var users = require('./server/routes/users');
+var AI = require('./server/routes/AI');
 var app = express();
 
 // view engine setup
