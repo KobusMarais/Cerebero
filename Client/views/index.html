@@ -1,36 +1,72 @@
 <!DOCTYPE html>
 <html ng-app="nodeTodo">
   <head>
-    <title>User login</title>
+    <title>Users</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="/stylesheets/style.css" media="screen">
+    <link rel="stylesheet" href="../stylesheets/style.css" media="screen">
   </head>
   <body ng-controller="mainController">
-    <div class="container">
+    <div class="leftContainer">
       <div class="header">
         <h1>eCivix</h1>
         <hr>
-        <h1 class="lead">Node + Express + Angular + PostgreSQL</h1>
+        <h1 class="lead">User Registration Credentials</h1>
       </div>
-      <div class="login-form">
-        <form>
+      <div class="registration-form">
+        <form name="regForm">
           <div class="form-group">
-            <input type="text" class="form-control input-lg" placeholder="Enter text..." ng-model="formData.text">
+            Username: <input type="text" class="form-control input-lg" placeholder="Enter username..." ng-model="formData.text" name="RegUsername"/>
+            Password: <input type="password" class="form-control input-lg" placeholder="Enter password..." ng-model="password" name="RegPwd" required ng:model-instant/>
+            Confirm: <input type="password" class="form-control input-lg" placeholder="Enter password..." ng-model="passwordConfirm" "RegPwd2" required ng:model-instant/>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="createTodo()">Add Todo</button>
+          <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="createUser()">Register</button>
         </form>
       </div>
       <br>
-      <div class="todo-list">
-        <ul ng-repeat="todo in todoData">
-          <li><h3><input class="lead" type="checkbox" ng-click="deleteTodo(todo.id)">&nbsp;{{ todo.text }}</h3></li><hr>
-        </ul>
+      <div class="RegistrationFeedBack">
+        <ul>
+          <li ng:repeat="(name, e) in form.error">
+            {{name}}:
+            <ul>
+              <li ng:repeat="widget in e">{{widget.widgetId}}</li>
+            </ul>
+          </li>
+          </ul>
       </div>
     </div>
+
+    <div class="rightContainer">
+      <div class="header">
+        <h1>eCivix</h1>
+        <hr>
+        <h1 class="lead">User Login Credentials</h1>
+      </div>
+      <div class="login-form">
+        <form name="loginFrom">
+          <div class="form-group">
+            Username: <input type="text" class="form-control input-lg" placeholder="Enter username..." ng-model="formData.text" name="LoginUsername"/>
+            Password: <input type="password" class="form-control input-lg" placeholder="Enter password..." ng-model="password" name="LoginPwd"/>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
+        </form>
+      </div>
+      <br>
+      <div class="LoginFeedBack">
+        <ul>
+          <li ng:repeat="(name, e) in form.error">
+            {{name}}:
+            <ul>
+              <li ng:repeat="widget in e">{{widget.widgetId}}</li>
+            </ul>
+          </li>
+          </ul>
+      </div>
+    </div>
+
     <script src="//code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular.min.js"></script>
-    <script src="javascripts/app.js"></script>
+    <script src="../javascripts/app.js"></script>
   </body>
 </html>

@@ -12,12 +12,48 @@ ul {
   padding-left: 10px;
 }
 
-.container {
+.leftContainer {
   max-width: 400px;
   background-color: #eeeeee;
   border: 1px solid black;
+  float: left;
+}
+
+.rightContainer {
+  max-width: 400px;
+  background-color: #eeeeee;
+  border: 1px solid black;
+  float: right;
 }
 
 .header {
   text-align: center;
+}
+/*
+.ng-invalid {
+    border-color: red;
+}
+
+.ng-valid {
+    border-color: green;
+}
+
+.ng-dirty {
+    border-style: solid;
+    border-width: 2px;
+}
+*/
+.ng-pristine {
+    border-style: solid;
+    border-width: 1px;
+}
+/*
+.errors {
+    color: red;
+}*/
+  
+h3 {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 15px;
 }

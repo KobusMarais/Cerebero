@@ -24,14 +24,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'Client')));
 console.log("TESTING 1");
 //app.use('/index', index);
-app.use('/', routes);
+app.use('./server/', routes);
 console.log("TESTING 2");
-app.use('/', users);
+app.use('./server/routes', users);
 console.log(__dirname);
-app.use('/AI', AI);
+app.use('./server/routes', AI);
 
-app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds'));
-
+//app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds'));
+app.use(index);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
