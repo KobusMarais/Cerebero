@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var AI = require('./routes/AI');
-var apitest = require('./routes/apitest');
+var api = require('./routes/api');
 
 var path = require('path');
 var app = express();
@@ -29,7 +29,7 @@ app.use('/index', index);
 console.log("TESTING 2");
 app.use('/', users);
 console.log(__dirname);
-app.use('/api/register', apitest);
+app.use('/api', api);
 
 app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds'));
 
