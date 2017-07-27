@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class GamePlayButtons : MonoBehaviour {
 
     public Button collectFundsButton;
     public Button pollProvinceButton;
     public Button campaignButton;
-
+    private WWW www;
     // Use this for initialization
     void Start () {
 
         Button btn1 = collectFundsButton.GetComponent<Button>();
-        btn1.onClick.AddListener(collectFunds);
+        btn1.onClick.AddListener(fundmid);
 
         Button btn2 = pollProvinceButton.GetComponent<Button>();
         btn2.onClick.AddListener(pollProvince);
@@ -21,10 +22,21 @@ public class GamePlayButtons : MonoBehaviour {
         Button btn3 = campaignButton.GetComponent<Button>();
         btn3.onClick.AddListener(campaign);
     }
+    void fundmid()
+    {
+       collectFunds();
+        string url = "https://ecivix-testing.herokuapp.com/api/getFunds";
+        www = new WWW(url);
+        StartCoroutine(collectFunds());
+    }
 
-    void collectFunds()
+    IEnumerator collectFunds()
     {
         print("You have clicked on the collect funds button");
+       
+        yield return www;
+        print(www.text);
+
     }
 
     void pollProvince()
