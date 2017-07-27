@@ -17,6 +17,21 @@ router.post('/login', function(req,res){
     var obj = JSON.parse(text);
     res.send(obj);
 });
+
+router.post('/collectFunds', function(req,res){
+    res.setHeader('Content-Type', 'application/json');
+    var text = '{"success" : "1"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
+router.post('/pollProvince', function(req,res){
+    res.setHeader('Content-Type', 'application/json');
+    var text = '{"success" : "1"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
 router.get('/getFunds', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     var text = '{"funds" : "10000"}';

@@ -31,7 +31,7 @@ app.use('/', users);
 console.log(__dirname);
 app.use('/api', api);
 
-app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds'));
+app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
