@@ -1,6 +1,6 @@
 ## compute_input.py
 
-import sys, json as np
+import sys, json, numpy as np
 
 #Read data from stdin
 def read_in():
@@ -10,7 +10,16 @@ def read_in():
 
 def main():
 
-    print("Hello world")
+    lines = read_in()
+
+    #create a numpy array
+    np_lines = np.array(lines)
+
+    #use numpys sum method to find sum of all elements in the array
+    lines_sum = np.sum(np_lines)
+
+    #return the sum to the output stream
+    print(lines_sum)
 
 #start process
 if __name__ == '__main__':
