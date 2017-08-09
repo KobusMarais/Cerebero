@@ -43,7 +43,7 @@ router.get('/api/v1/users', (req, res, next) => {
 router.post('/api/v1/users', (req, res, next) => {
   const results = [];
   // Grab data from http request
-  const data = {username: req.body.username, password: req.body.password, isadmin: false};
+  const data = {username: req.body.username, password: req.body.user_password, isadmin: false};
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
     // Handle connection errors
@@ -75,7 +75,7 @@ router.put('/api/v1/users/:user_id', (req, res, next) => {
   // Grab data from the URL parameters
   const id = req.params.user_id;
   // Grab data from http request
-  const data = {username: req.body.username, password: req.body.password , isadmin: req.body.isadmin};
+  const data = {username: req.body.username, password: req.body.user_password , isadmin: req.body.isadmin};
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
     // Handle connection errors
@@ -86,7 +86,7 @@ router.put('/api/v1/users/:user_id', (req, res, next) => {
     }
     // SQL Query > Update Data
     client.query('UPDATE account SET username=($1), password=($2) ,isadmin=($3) WHERE id=($4)',
-    [data.username, data.password, data.isadmin, id]);
+    [data.username, data.user_password, data.isadmin, id]);
     // SQL Query > Select Data
     const query = client.query("SELECT * FROM account ORDER BY id ASC");
     // Stream results back one row at a time
