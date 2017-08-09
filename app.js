@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var AI = require('./routes/AI');
 var api = require('./routes/api');
+const routes =require('./routes/index')
 
 var path = require('path');
 var app = express();
@@ -31,8 +32,8 @@ app.use('/', users);
 console.log(__dirname);
 app.use('/api', api);
 
-app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
-
+//app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
+app.use("/",routes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
