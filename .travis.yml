@@ -1,1 +1,14 @@
 language: node_js
+
+node_js:
+  - stable
+
+script:
+  - testing/Nodetesting.js
+
+notifications:
+  email:
+    recipients:
+      - u15188397@tuks.co.za
+    on_success: always
+    on_failure: always
