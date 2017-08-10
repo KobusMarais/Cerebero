@@ -54,23 +54,26 @@
 	\subsection{Back End}
 		\subsubsection{unittest (Python)}
 			\begin{enumerate}
-				\item 
-				\item 
-				\item 
-				\item 
+				\item The bonus of using unittest for our Python code is that it comes standard with Python from version 2.1 or greater. Thus one less dependency to handle since this one is built into Python
+				\item It allows us to write our own classes as long as they derived from unittest.TestCase. Allowing us flexibility to test our code thoroughly and extensively.
+				\item It makes testing easy regardless if it is a small test or a very very large test and has functionality to assist with the larger test to ensure they run quickly and efficiently.
+				\item Provides a lot of detail when a test fails.
 			\end{enumerate}
 			\noindent
 			This will provide us with a high quality product due to powerful technology of Mocha and thus quality of the test and their results will pass all quality expectations.
 	\subsection{Unity}
 		\subsubsection{Unity Test Tools}
 			\begin{enumerate}
-				\item 
-				\item 
-				\item 
-				\item 
+				\item We are making use of Unity Test Tools since the framework is provided by the same company and can be easily integrated and used to do all the different tests we need to run.
 			\end{enumerate}
-			\noindent
-			This will provide us with a high quality product due to powerful technology of Mocha and thus quality of the test and their results will pass all quality expectations.
+
+	\subsection{Integration testing}
+		\subsubsection{Travis Continueous Integration}
+			\begin{enumerate}
+				\item We will use Travis CI to do our integration tests.  
+				\item It will run our unit tests and gives us feedback on their successful/ failures. The bonus being that if Travis fails it will not build the project leaving the game on a last working copy and will only overwrite and do the update once the Travis build succeeds. Allowing for a great user experience since they will not experience any downtime of the game. 
+			\end{enumerate}
+			
 \section{Reporting}
    	\subsection{Reporting}
 		We will be using the reporting from the Mocha tests for reporting and quality control.
