@@ -24,11 +24,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-console.log("TESTING 1");
+
 app.use('/index', index);
-console.log("TESTING 2");
+
 app.use('/', users);
-console.log(__dirname);
+
 app.use('/api', api);
 
 app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
