@@ -144,7 +144,7 @@ router.post('/startGame', function(req, res, next) { // each province has its ow
     console.log(req.body.access_token);
     //find access token in DB
     //create and retrieve all starter info for user
-    
+
 
     //return everything that needs to be displayed on client side
     var text = '{"Username" : "Jack", "PartyName" : "Winners", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0"}';
