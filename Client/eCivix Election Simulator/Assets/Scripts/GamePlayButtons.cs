@@ -12,7 +12,7 @@ public class GamePlayButtons : MonoBehaviour {
     public Button pollProvinceButton;
     public Button campaignButton;
     private WWW www;
-    private WWWForm form;
+
     // Use this for initialization
     void Start () {
 
@@ -29,13 +29,12 @@ public class GamePlayButtons : MonoBehaviour {
     {
         collectFunds();
         string url = "http://ecivix.org.za/api/getFunds";
-        form = new WWWForm();
-        form.AddField( "access_token", "123abc" );
 
-        Dictionary<string, string> headers = new Dictionary<string, string>();
-        headers.Add("Content-Type", "application/x-www-form-urlencoded");
+        var requestString = "{\"access_token\":\"123abc\"}";
 
-        www = new WWW( url, form.data, headers );
+        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+        www = new WWW(url, pData);
         StartCoroutine(collectFunds());
     }
 
@@ -45,15 +44,7 @@ public class GamePlayButtons : MonoBehaviour {
 
         yield return www;
 
-        if (www.error != null)
-        {
-            Debug.Log("Data Submitted");
-            print(www.text);
-        }
-        else
-        {
-            Debug.Log(www.error);
-        }
+        print(www.text);
 
     }
 
