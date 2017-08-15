@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Text;
+using System.Linq;
 
 public class GamePlayButtons : MonoBehaviour {
 
@@ -10,6 +12,7 @@ public class GamePlayButtons : MonoBehaviour {
     public Button pollProvinceButton;
     public Button campaignButton;
     private WWW www;
+    private WWWForm form;
     // Use this for initialization
     void Start () {
 
@@ -24,18 +27,33 @@ public class GamePlayButtons : MonoBehaviour {
     }
     void fundmid()
     {
-       collectFunds();
-        string url = "https://ecivix-testing.herokuapp.com/api/getFunds";
-        www = new WWW(url);
+        collectFunds();
+        string url = "http://ecivix.org.za/api/getFunds";
+        form = new WWWForm();
+        form.AddField( "access_token", "123abc" );
+
+        Dictionary<string, string> headers = new Dictionary<string, string>();
+        headers.Add("Content-Type", "application/x-www-form-urlencoded");
+
+        www = new WWW( url, form.data, headers );
         StartCoroutine(collectFunds());
     }
 
     IEnumerator collectFunds()
     {
         print("You have clicked on the collect funds button");
-       
+
         yield return www;
-        print(www.text);
+
+        if (www.error != null)
+        {
+            Debug.Log("Data Submitted");
+            print(www.text);
+        }
+        else
+        {
+            Debug.Log(www.error);
+        }
 
     }
 
