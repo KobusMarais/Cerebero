@@ -4,7 +4,7 @@ node_js:
   - stable
 
 script:
-  - testing/Nodetesting.js
+  - npm test
 
 notifications:
   email:

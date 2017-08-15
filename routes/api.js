@@ -152,4 +152,19 @@ router.post('/startGame', function(req, res, next) { // each province has its ow
     res.send(obj);
 });
 
+router.post('/setAI', function(req, res, next) { // each province has its own support
+    res.setHeader('Content-Type', 'application/json');
+    console.log(req.body.access_token);
+    console.log(req.body.difficulty)
+    //find access token in DB
+    //create and retrieve all starter info for user
+
+
+    //return everything that needs to be displayed on client side
+    var text = '{"Success" : "1"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
+
 module.exports = router;
