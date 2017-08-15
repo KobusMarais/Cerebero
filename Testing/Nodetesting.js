@@ -14,8 +14,10 @@ describe('AI', function() {
         request(app)
         .get('/AI')
             .expect(200)
-            .expect("Sum of numbers=43")
-            .end();
+            .end(function(err, res) {
+                res.body.should.contain("45");
+                done();
+            });
     });
 });
 
@@ -24,8 +26,9 @@ describe('register', function() {
         request(app)
             .post('/api/register')
             .send({
-                "access_token": "123abc",
-                "difficulty" : "easy"
+                "name": "John",
+                "surname" : "Doe",
+                "email":"John.Doe@gmail.com"
             })
             .expect(200)
             .expect('Content-Type', 'application/json')
@@ -35,37 +38,88 @@ describe('register', function() {
             });
     });
 });
-/*
+
 describe('login', function() {
     it("Returns a string of test data run by login calls", function() {
-        var output = apis.router.get('/login')
-        assert.equal(output, "{Success: 200}");
+        request(app)
+            .post('/api/login')
+            .send({
+                "username": "Johndoe",
+                "password" : "1234abcd"
+            })
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function(err, res) {
+                res.body.should.have.property("access_token");
+                done();
+            });
     });
 });
 
-describe('AI', function() {
+describe('collectFunds', function() {
     it("Returns a string of test data run by collectFunds calls", function() {
-        var output = apis.router.get('/collectFunds')
-        assert.equal(output, "{Success: 200}");
+        request(app)
+            .post('/api/collectFunds')
+            .send({
+                "access_token": "123abc",
+                "province" : "Gauteng"
+            })
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function(err, res) {
+                res.body.should.have.property("success", "1");
+                res.body.should.have.property("funds");
+                done();
+            });
     });
 });
-describe('AI', function() {
+describe('pollProvince', function() {
     it("Returns a string of test data run by pollProvince calls", function() {
-        var output = apis.router.get('/pollProvince')
-        assert.equal(output, "{Success: 200}");
+        request(app)
+            .post('/api/pollProvince')
+            .send({
+                "access_token": "123abc",
+                "province" : "Gauteng"
+            })
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function(err, res) {
+                res.body.should.have.property("AI1");
+                res.body.should.have.property("AI2");
+                done();
+            });
     });
 });
 
-describe('AI', function() {
+describe('getFunds', function() {
     it("Returns a string of test data run by getFunds calls", function() {
-        var output = apis.router.get('/getFunds')
-        assert.equal(output, "{Success: 200}");
+        request(app)
+            .post('/api/getFunds')
+            .send({
+                "access_token": "123abc"
+            })
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function(err, res) {
+                res.body.should.have.property("funds");
+                done();
+            });
     });
 });
 
-describe('AI', function() {
+describe('getProfile', function() {
     it("Returns a string of test data run by getProfile calls", function() {
-        var output = apis.router.get('/getProfile')
-        assert.equal(output, "{Success: 200}");
+        request(app)
+            .post('/api/getProfile')
+            .send({
+                "access_token": "123abc"
+            })
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function(err, res) {
+                res.body.should.have.property("name");
+                res.body.should.have.property("surname")
+                done();
+            });
     });
-});*/
+});

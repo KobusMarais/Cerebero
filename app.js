@@ -27,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', index);
 
+app.use('/AI', AI);
+
 app.use('/', users);
 
 app.use('/api', api);
