@@ -1,0 +1,105 @@
+\documentclass{article}
+\addtolength{\oddsidemargin}{-1.cm}
+\addtolength{\textwidth}{2cm}
+\addtolength{\topmargin}{-2cm}
+\addtolength{\textheight}{3.5cm}
+  \usepackage[utf8]{inputenc}
+  \usepackage{titlesec}
+  \usepackage[pdftex]{graphicx}
+  \usepackage{natbib}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+  \setcounter{secnumdepth}{4}
+
+  \newcommand\tab[1][1cm]{\hspace*{#1}}
+
+  \begin{document}
+
+
+ % generates the Cover page	
+  \input{CoverPage.tex}
+  
+
+  \tableofcontents
+  \newpage
+
+\section{Introduction}
+	We Cerebero are working together with eCivix to create a new web based game. The idea of the game is to create an election simulator to teach High school students how elections work and what their vote essentially means in the greater scheme. The user will create party that they will control. The game will revolve around the party gaining funds and man power to do campaigns and gain more funds and man power to run bigger and more effective campaigns. The user with the score at the end of the game wins. The user will be playing against an AI (Artificial Intelligence) player that we will program. The AI will try be more effective/ more successful than the user. There will be a leader-board with all the users' scores and at the end of the client's event a winner will be chosen for a prize. 
+	
+
+
+\section{Testing}
+	\subsection{Front End}
+		\subsubsection{Mocha}
+			\begin{enumerate}
+				\item Testing the AngularJS front end we will be making use of the testing framework called \href{http://mochajs.org/}{Mocha}. We choose Mocha as it runs on NodeJS and uses JavaScript to do the tests, which to our benefit because of the fact that AngularJS also works with JavaScript.
+				\item This will then allow us to test our database Create, Read, Update and Delete operations that are carried out from the front end to ensure they are successfull and fail when they are supposed to.
+				\item Mocha is strong but also deverse since we can utilise Mocha to do code coverage as well. Thus allowing us to see how well our tests cover all our code, only then we will truly know if we are testing for everything.
+				\item There are numerous other reasons you want to use Mocha to improve our code:
+					\begin{enumerate}
+						\item It works with Continues Integration. Therefore our CI will not crash with Mocha tests.
+						\item Supports node debugging 
+						\item Support for extensible reporting 
+						\item Has copious amounts of documentation and support available
+						\item Much more benefits, feel free to see \href{http://mochajs.org/}{Mocha} for more benefits.
+					\end{enumerate} 
+			\end{enumerate}
+			\noindent
+			This will provide us with a high quality product due to powerful technology of Mocha and thus quality of the test and their results will pass all quality expectations.
+	\subsection{Back End}
+		\subsubsection{unittest (Python)}
+			\begin{enumerate}
+				\item The bonus of using unittest for our Python code is that it comes standard with Python from version 2.1 or greater. Thus one less dependency to handle since this one is built into Python
+				\item It allows us to write our own classes as long as they derived from unittest.TestCase. Allowing us flexibility to test our code thoroughly and extensively.
+				\item It makes testing easy regardless if it is a small test or a very very large test and has functionality to assist with the larger test to ensure they run quickly and efficiently.
+				\item Provides a lot of detail when a test fails.
+			\end{enumerate}
+			\noindent
+			This will provide us with a high quality product due to powerful technology of Mocha and thus quality of the test and their results will pass all quality expectations.
+	\subsection{Unity}
+		\subsubsection{Unity Test Tools}
+			\begin{enumerate}
+				\item We are making use of Unity Test Tools since the framework is provided by the same company and can be easily integrated and used to do all the different tests we need to run.
+			\end{enumerate}
+
+	\subsection{Integration testing}
+		\subsubsection{Travis Continueous Integration}
+			\begin{enumerate}
+				\item We will use Travis CI to do our integration tests.  
+				\item It will run our unit tests and gives us feedback on their successful/ failures. The bonus being that if Travis fails it will not build the project leaving the game on a last working copy and will only overwrite and do the update once the Travis build succeeds. Allowing for a great user experience since they will not experience any downtime of the game. 
+				\item Please see how Travis builds \href{https://travis-ci.org/KobusMarais/Cerebero/}{here}.
+			\end{enumerate}
+
+\section{Reports}
+   	\subsection{Reporting of Tests}
+		\begin{enumerate}
+			\item We will be using the reporting from the Mocha tests for reporting and quality control.
+			\item The feedback from the Unity Test Tools will be used as reporting.
+			\item unittest from Python will be utilised fully to provide detailed reports on tests that pass, fail and are expected to fail.
+		\end{enumerate}
+
+	\subsection{API documentation}
+		\subsubsection{Swagger}
+			\begin{enumerate}
+				\item Made use of swagger to document and report on or API calls so there is clear requirements and details about the various API calls and make them manageble.
+			\end{enumerate}
+  
+\section{Appendix}
+	\subsection{Github}
+		\href{https://github.com/KobusMarais/Cerebero}{Github}
+	\subsection{Trello}
+		\href{https://trello.com/b/WXh8cJZQ/demo-2}{Trello}
+	\subsection{Swagger}
+		\href{https://app.swaggerhub.com/apis/KobusMarais/eCivixAPI/1.0.0}{Swagger}
+	\subsection{Heroku}
+		\href{https://dashboard.heroku.com/apps/ecivix-testing}{Heroku}
+	\subsection{Travis CI}
+		\href{https://travis-ci.org/KobusMarais/Cerebero/}{Travis CI}
+
+
+\end{document}
