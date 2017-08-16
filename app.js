@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var AI = require('./routes/AI');
 var api = require('./routes/api');
+var mainGame = require('./routes/mainGame');
 
 var path = require('path');
 var app = express();
@@ -32,6 +33,8 @@ app.use('/AI', AI);
 app.use('/', users);
 
 app.use('/api', api);
+
+app.use('/mainGame', mainGame)
 
 app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
 
