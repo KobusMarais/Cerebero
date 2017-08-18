@@ -192,13 +192,13 @@ public class GamePlayButtons : MonoBehaviour {
             if (ProvincesButtons.provinceName == "EC")
             {
                 ECmanpower.enabled = true;
-                ECmanAnim.Play(ecCoinHash, -1, 0f);
+                ECmanAnim.Play(ecManPowerHash, -1, 0f);
             }
 
             if (ProvincesButtons.provinceName == "GP")
             {
                 GPmanpower.enabled = true;
-                GPmanAnim.Play(gpCoinHash, -1, 0f);
+                GPmanAnim.Play(gpManPowerHash, -1, 0f);
             }
         }
     }
