@@ -79,7 +79,22 @@ public class GamePlayButtons : MonoBehaviour {
 
     int gpCoinHash = Animator.StringToHash("GP_CoinAnimation");
     int gpManPowerHash = Animator.StringToHash("GP_ManPowerAnimation");
-    
+
+    int kznCoinHash = Animator.StringToHash("KZN_CoinAnimation");
+    int kznManPowerHash = Animator.StringToHash("KZN_ManPowerAnimation");
+
+    int mpCoinHash = Animator.StringToHash("MP_CoinAnimation");
+    int mpManPowerHash = Animator.StringToHash("MP_ManPowerAnimation");
+
+    int lpCoinHash = Animator.StringToHash("LP_CoinAnimation");
+    int lpManPowerHash = Animator.StringToHash("LP_ManPowerAnimation");
+
+    int nwCoinHash = Animator.StringToHash("NW_CoinAnimation");
+    int nwManPowerHash = Animator.StringToHash("NW_ManPowerAnimation");
+
+    int fsCoinHash = Animator.StringToHash("FS_CoinAnimation");
+    int fsManPowerHash = Animator.StringToHash("FS_ManPowerAnimation");
+
 
     // Use this for initialization
     void Start () {
@@ -96,6 +111,21 @@ public class GamePlayButtons : MonoBehaviour {
         GPcoin.enabled = false;
         GPmanpower.enabled = false;
 
+        KZNcoin.enabled = false;
+        KZNmanpower.enabled = false;
+
+        LPcoin.enabled = false;
+        LPmanpower.enabled = false;
+
+        MPcoin.enabled = false;
+        MPmanpower.enabled = false;
+
+        NWcoin.enabled = false;
+        NWmanpower.enabled = false;
+
+        FScoin.enabled = false;
+        FSmanpower.enabled = false;
+
         NCcoinAnim = NCcoin.GetComponent<Animator>();
         NCmanAnim = NCmanpower.GetComponent<Animator>();
 
@@ -107,6 +137,21 @@ public class GamePlayButtons : MonoBehaviour {
 
         GPcoinAnim = GPcoin.GetComponent<Animator>();
         GPmanAnim = GPmanpower.GetComponent<Animator>();
+
+        KZNcoinAnim = KZNcoin.GetComponent<Animator>();
+        KZNmanAnim = KZNmanpower.GetComponent<Animator>();
+
+        MPcoinAnim = MPcoin.GetComponent<Animator>();
+        MPmanAnim = MPmanpower.GetComponent<Animator>();
+
+        LPcoinAnim = LPcoin.GetComponent<Animator>();
+        LPmanAnim = LPmanpower.GetComponent<Animator>();
+
+        NWcoinAnim = NWcoin.GetComponent<Animator>();
+        NWmanAnim = NWmanpower.GetComponent<Animator>();
+
+        FScoinAnim = FScoin.GetComponent<Animator>();
+        FSmanAnim = FSmanpower.GetComponent<Animator>();
 
 
         Button btn1 = collectFundsButton.GetComponent<Button>();
@@ -155,6 +200,36 @@ public class GamePlayButtons : MonoBehaviour {
                 GPcoin.enabled = true;
                 GPcoinAnim.Play(gpCoinHash, -1, 0f);
             }
+
+            if (ProvincesButtons.provinceName == "MP")
+            {
+                MPcoin.enabled = true;
+                MPcoinAnim.Play(mpCoinHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "LP")
+            {
+                LPcoin.enabled = true;
+                LPcoinAnim.Play(lpCoinHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "NW")
+            {
+                NWcoin.enabled = true;
+                NWcoinAnim.Play(nwCoinHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "KZN")
+            {
+                KZNcoin.enabled = true;
+                KZNcoinAnim.Play(kznCoinHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "FS")
+            {
+                FScoin.enabled = true;
+                FScoinAnim.Play(fsCoinHash, -1, 0f);
+            }
         }
     }
 
@@ -199,6 +274,36 @@ public class GamePlayButtons : MonoBehaviour {
             {
                 GPmanpower.enabled = true;
                 GPmanAnim.Play(gpManPowerHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "KZN")
+            {
+                KZNmanpower.enabled = true;
+                KZNmanAnim.Play(kznManPowerHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "MP")
+            {
+                MPmanpower.enabled = true;
+                MPmanAnim.Play(mpManPowerHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "LP")
+            {
+                LPmanpower.enabled = true;
+                LPmanAnim.Play(lpManPowerHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "NW")
+            {
+                NWmanpower.enabled = true;
+                NWmanAnim.Play(nwManPowerHash, -1, 0f);
+            }
+
+            if (ProvincesButtons.provinceName == "FS")
+            {
+                FSmanpower.enabled = true;
+                FSmanAnim.Play(fsManPowerHash, -1, 0f);
             }
         }
     }
