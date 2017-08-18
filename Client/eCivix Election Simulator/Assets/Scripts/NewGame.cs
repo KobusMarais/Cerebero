@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class NewGame : MonoBehaviour {
-  
+
     void Start()
     {
         Button btn = GetComponent<Button>();
@@ -16,6 +16,5 @@ public class NewGame : MonoBehaviour {
     {
         SceneManager.LoadScene("NewGameScreen");
     }
-
-  
+    
 }
