@@ -13,6 +13,10 @@ public class GamePlayButtons : MonoBehaviour {
     public Text pollProvinceText;
     public Text campaignText;
 
+    public Animator pollProvinceTextAnim;
+    public Animator collectFundsTextAnim;
+    public Animator campaignTextAnim;
+
     public Image NCcoin;
     public Animator NCcoinAnim;
 
@@ -66,6 +70,7 @@ public class GamePlayButtons : MonoBehaviour {
 
     public Image FSmanpower;
     public Animator FSmanAnim;
+    
 
 
     int ncCoinHash = Animator.StringToHash("NC_CoinAnimation");
@@ -95,6 +100,9 @@ public class GamePlayButtons : MonoBehaviour {
     int fsCoinHash = Animator.StringToHash("FS_CoinAnimation");
     int fsManPowerHash = Animator.StringToHash("FS_ManPowerAnimation");
 
+    int pollProvinceTextHash = Animator.StringToHash("PollTextAnimation");
+    int collectFundsTextHash = Animator.StringToHash("CollectFundsTextAnimation");
+    int campaignTextHash = Animator.StringToHash("CampaignTextAnimation");
 
     // Use this for initialization
     void Start () {
@@ -153,6 +161,9 @@ public class GamePlayButtons : MonoBehaviour {
         FScoinAnim = FScoin.GetComponent<Animator>();
         FSmanAnim = FSmanpower.GetComponent<Animator>();
 
+        pollProvinceTextAnim = pollProvinceText.GetComponent<Animator>();
+        collectFundsTextAnim = collectFundsText.GetComponent<Animator>();
+        campaignTextAnim = campaignText.GetComponent<Animator>();
 
         Button btn1 = collectFundsButton.GetComponent<Button>();
         btn1.onClick.AddListener(collectFunds);
@@ -169,15 +180,18 @@ public class GamePlayButtons : MonoBehaviour {
     {
         print("You have clicked on the collect funds button");
 
-        collectFundsText.text = "-$5";
+        
 
-        if(ProvincesButtons.provinceName == null)
+        if (ProvincesButtons.provinceName == null)
         {
             print("Please select a province to collect funds from");
         }
         else
         {
-            if(ProvincesButtons.provinceName == "NC")
+            collectFundsText.text = "-$5";
+            collectFundsTextAnim.Play(collectFundsTextHash, -1, 0f);
+
+            if (ProvincesButtons.provinceName == "NC")
             {
                 NCcoin.enabled = true;
                 NCcoinAnim.Play(ncCoinHash, -1, 0f);
@@ -237,13 +251,15 @@ public class GamePlayButtons : MonoBehaviour {
     {
         print("You have clicked on the poll province button");
         pollProvinceText.text = "-$5";
+
+        pollProvinceTextAnim.Play(pollProvinceTextHash, -1, 0f);
     }
 
     void campaign()
     {
         print("You have clicked on the campaign button");
-        campaignText.text = "-$5";
-
+        
+        
         //print(ProvincesButtons.provinceName);
 
         if (ProvincesButtons.provinceName == null)
@@ -252,6 +268,9 @@ public class GamePlayButtons : MonoBehaviour {
         }
         else
         {
+            campaignText.text = "-$5";
+            campaignTextAnim.Play(campaignTextHash, -1, 0f);
+
             if (ProvincesButtons.provinceName == "NC")
             {
                 NCmanpower.enabled = true;
