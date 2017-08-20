@@ -92,7 +92,7 @@ public class NewGameDetails : MonoBehaviour {
        else
         {
             Upload();
-            string url = "http://ecivix.org.za/api/setAI";
+            string url = "ecivix.org.za/api/startGame";
 
             var requestString = "{\"access_token\":\"123abc\", \"difficulty\":" + difData +"}";
 
