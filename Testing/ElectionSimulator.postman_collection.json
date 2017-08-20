@@ -294,6 +294,26 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "getFundsProvince",
+			"request": {
+				"url": "http://localhost:3000/api/getFundsProvince",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

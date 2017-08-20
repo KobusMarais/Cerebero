@@ -82,6 +82,18 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
     res.send(obj);
 });
 
+router.post('/getFundsProvince', function(req, res, next) { //this is how many funds available per province
+    res.setHeader('Content-Type', 'application/json');
+    console.log(req.body.access_token);
+    //find access token in DB
+    //retrieve province available funds from db
+    //return province funds funds
+
+    var text = '{"Gauteng" : "10000", "Limpopo" : "5000", "West Cape" : "1000", "North Cape" : "2300", "East Cape" : "200", "Kwazulu natal" : "900", "Mpumalanga": "1300", "North West" : "4200", "Freestate" : "3300"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
 router.post('/getProfile', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body.access_token);
@@ -149,7 +161,7 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
 
 
     //return everything that needs to be displayed on client side
-    var text = '{"Username" : "Jack", "PartyName" : "Winners", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0"}';
+    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
