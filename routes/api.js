@@ -166,6 +166,21 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
     res.send(obj);
 });
 
+router.post('/setAI', function(req, res, next) { // initialises all values at the start of the game
+    res.setHeader('Content-Type', 'application/json');
+    console.log(req.body.access_token);
+    console.log(req.body.difficulty); //sets difficulty
+
+    //find access token in DB
+    //create and retrieve all starter info for user
+
+
+    //return everything that needs to be displayed on client side
+    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
 router.post('/endTurn', function(req, res, next) { // AIs make their final move and date increased.
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body.access_token);
