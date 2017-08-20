@@ -139,7 +139,7 @@ router.get('/getHighscoreBoard', function(req, res, next) {
     res.send(obj);
 });
 
-router.post('/startGame', function(req, res, next) { // each province has its own support
+router.post('/startGame', function(req, res, next) { // initialises all values at the start of the game
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body.access_token);
     //find access token in DB
@@ -165,6 +165,19 @@ router.post('/setAI', function(req, res, next) { // each province has its own su
     var obj = JSON.parse(text);
     res.send(obj);
 });
+
+router.post('/endTurn', function(req, res, next) { // AIs make their final move and date increased.
+    res.setHeader('Content-Type', 'application/json');
+    console.log(req.body.access_token);
+    //find access token in DB
+    //run AI
+    //Decrease time before election
+
+    var text = '{"Success" : "1"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
 
 
 module.exports = router;
