@@ -101,7 +101,7 @@ router.post('/getProfile', function(req, res, next) {
     //retrieve user info from DB
 
     //return user data
-    var text = '{"name" : "John", "surname" : "Doe"}';
+    var text = '{"name" : "John", "surname" : "Doe", "Email" : "John@doe.com"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -171,9 +171,9 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
     console.log(req.body.access_token);
     //find access token in DB
     //run AI
-    //Decrease time before election
+    //Decrease time before election and returns it
 
-    var text = '{"Success" : "1"}';
+    var text = '{"Weeks" : "10"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
