@@ -166,6 +166,4 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
     res.send(obj);
 });
 
-
-
 module.exports = router;

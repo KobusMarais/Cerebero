@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "ElectionSimulator",
-		"_postman_id": "f630439c-ba43-2e93-bc07-03d0e1eb69d7",
+		"_postman_id": "d7a7d748-678a-dc32-b294-fb8c2a66b9ef",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -167,7 +167,10 @@
 						"disabled": true
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"description": ""
 			},
 			"response": []
@@ -253,9 +256,9 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/api/setAI",
+			"name": "startGame",
 			"request": {
-				"url": "http://localhost:3000/api/setAI",
+				"url": "http://localhost:3000/api/startGame",
 				"method": "POST",
 				"header": [
 					{
@@ -267,6 +270,26 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"access_token\": \"123abc\",\r\n  \"difficulty\" : \"easy\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "endTurn",
+			"request": {
+				"url": "http://localhost:3000/api/endTurn",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
 				},
 				"description": ""
 			},
