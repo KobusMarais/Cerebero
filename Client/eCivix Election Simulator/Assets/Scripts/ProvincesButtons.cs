@@ -29,6 +29,8 @@ public class ProvincesButtons : MonoBehaviour {
     private Image targetImage;
     private bool mouseoverDone = false;
 
+    private GameObject[] provinceArray;
+    private GameObject[] provinceTextArray;
 
     // Use this for initialization
     void Start()
@@ -36,6 +38,8 @@ public class ProvincesButtons : MonoBehaviour {
         filter = GetComponent<ColliderDetectMouseover>();
         targetImage = GetComponent<Image>();
         currentButton = GetComponent<Button>();
+        provinceArray = GameObject.FindGameObjectsWithTag ("Province");
+        provinceTextArray = GameObject.FindGameObjectsWithTag ("ProvinceText");
     }
 
     // Update is called once per frame
@@ -53,6 +57,7 @@ public class ProvincesButtons : MonoBehaviour {
                 {
                     onClick.Invoke();
                     
+                    /*
                     if (targetImage.color == pressedColor)
                     {
                         targetImage.color = Color.white;
@@ -62,6 +67,25 @@ public class ProvincesButtons : MonoBehaviour {
                     {
                         targetImage.color = pressedColor;
                         text.color = Color.white;
+                    }
+                    */
+
+                    // Loop through provinces and change image color
+                    foreach (var prov in provinceArray) {
+                        if (prov.name == currentButton.name) {
+                            prov.GetComponent<Image>().color = pressedColor;
+                        } else {
+                            prov.GetComponent<Image>().color = Color.white;
+                        }
+                    }
+
+                    // Loop through province text and change font color
+                    foreach (var provText in provinceTextArray) {
+                        if (provText.name == text.name) {
+                            provText.GetComponent<Text>().color = Color.white;
+                        } else {
+                            provText.GetComponent<Text>().color = Color.black;
+                        }
                     }
 
                     if (currentButton.name == "NCButton")
