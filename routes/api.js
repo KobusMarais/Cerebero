@@ -37,7 +37,7 @@ router.post('/collectFunds', function(req,res){
     //save amount of funds user has to db.
 
     //return success and update funds
-    var text = '{"success" : "1", "funds" : "3000"}';
+    var text = '{"success" : "1", "funds" : "3000", "AI1Move" : "Collect Funds Gauteng", "AI2Move" : "Campaign Limpopo" , "AI3Move" : "Campaign Western Cape", "AI4Move" : "Collect Funds Freestate"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -52,7 +52,7 @@ router.post('/campaignProvince', function(req,res){
     //save amount of funds user has to db.
 
     //return success and update funds
-    var text = '{"success" : "1", "support" : "3000"}';
+    var text = '{"success" : "1", "support" : "3000", "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -65,7 +65,7 @@ router.post('/pollProvince', function(req,res){
     //retrieve opponent's in that province from db
     //return support to user
 
-    var text = '{"AI1" : "50", "AI2" : "30"}';
+    var text = '{"User": "40", "AI1" : "10", "AI2" : "10", "AI3": "20", "AI4" : "20", "AI1Move" : "Poll Gauteng", "AI2Move" : "Poll Limpopo" , "AI3Move" : "Collect Funds Freestate", "AI4Move" : "Campaign Western Cape"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -192,5 +192,6 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
     var obj = JSON.parse(text);
     res.send(obj);
 });
+
 
 module.exports = router;
