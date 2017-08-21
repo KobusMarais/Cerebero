@@ -161,7 +161,7 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
 
 
     //return everything that needs to be displayed on client side
-    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0"}';
+    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -176,7 +176,7 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
 
 
     //return everything that needs to be displayed on client side
-    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0"}';
+    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
