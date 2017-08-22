@@ -14,6 +14,11 @@ router.get('/', (req, res, next) => {
     __dirname, '..', 'public', 'index.html'));
 });
 
+router.get('/profile', (req, res, next) => {
+  res.sendFile(path.join(
+    __dirname, '..', 'public', 'profile.html'));
+});
+
 /* READ */
 router.get('/api/v1/users', (req, res, next) => {
   const results = [];
@@ -43,7 +48,7 @@ router.get('/api/v1/users', (req, res, next) => {
 router.post('/api/v1/users', (req, res, next) => {
   const results = [];
   // Grab data from http request
-  const data = {username: req.body.username, password: req.body.user_password, isadmin: false};
+  const data = {username: req.body.reg_username, password: req.body.reg_user_password, isadmin: false};
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
     // Handle connection errors
@@ -61,6 +66,33 @@ router.post('/api/v1/users', (req, res, next) => {
     query.on('row', (row) => {
       results.push(row);
     });
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
+/* login a user*/
+router.post('/api/v1/loginUsers', (req, res, next) => {
+  const results = [];
+  // Grab data from http request
+  const data = {username: req.body.log_username, password: req.body.log_user_password};
+  // Get a Postgres client from the connection pool
+  pg.connect(connectionString, (err, client, done) => {
+    // Handle connection errors
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+    // SQL Query > SELECT user
+    const userPassword = client.query('SELECT password FROM account WHERE username = $1', [data.username]).then.toString;
+    if(userPassword == data.password)
+      return true;
+    else
+      return false;   
     // After all data is returned, close connection and return results
     query.on('end', () => {
       done();
@@ -122,6 +154,35 @@ router.delete('/api/v1/users/:user_id', (req, res, next) => {
     query.on('row', (row) => {
       results.push(row);
     });
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
+/* CREATE a user profile*/
+router.post('/api/v1/createProfile', (req, res, next) => {
+  const results = [];
+  // Grab data from http request
+  const data = {topic1: req.body.topic1, topic2: req.body.topic2, topic3: req.body.topic3, topic4: req.body.topic4};
+  // Get a Postgres client from the connection pool
+  pg.connect(connectionString, (err, client, done) => {
+    // Handle connection errors
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    } 
+    // SQL Query > Select logged in user
+    const userID = client.query('SELECT id FROM account WHERE username = $1;', ['test1']).then.toString(); 
+    // SQL Query > Insert Data
+    client.query('INSERT INTO userProfile(userId, topic1, topic2, topic3, topic4) values($1, $2, $3, $4, $5)',
+    [userID, data.topic1, data.topic2, data.topic3, data.topic4]);
+    
+    //REMEMBER TO RETRIEVE USERID!!!
+
     // After all data is returned, close connection and return results
     query.on('end', () => {
       done();
