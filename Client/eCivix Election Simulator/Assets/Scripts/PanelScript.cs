@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelScript : MonoBehaviour {
 
@@ -82,7 +83,7 @@ public class PanelScript : MonoBehaviour {
 
         //menu.SetActive(false);
         //map.SetActive(true);
-
+        SceneManager.LoadScene("NewGameScreen");
     }
 
     void sound()
