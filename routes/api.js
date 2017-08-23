@@ -37,7 +37,7 @@ router.post('/collectFunds', function(req,res){
     //save amount of funds user has to db.
 
     //return success and update funds
-    var text = '{"success" : "1", "funds" : "3000"}';
+    var text = '{"success" : "1", "funds" : "3000", "AI1Move" : "Collect Funds Gauteng", "AI2Move" : "Campaign Limpopo" , "AI3Move" : "Campaign Western Cape", "AI4Move" : "Collect Funds Freestate"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -52,7 +52,7 @@ router.post('/campaignProvince', function(req,res){
     //save amount of funds user has to db.
 
     //return success and update funds
-    var text = '{"success" : "1", "support" : "3000"}';
+    var text = '{"success" : "1", "support" : "3000", "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -65,7 +65,7 @@ router.post('/pollProvince', function(req,res){
     //retrieve opponent's in that province from db
     //return support to user
 
-    var text = '{"AI1" : "50", "AI2" : "30"}';
+    var text = '{"User": "40", "AI1" : "10", "AI2" : "10", "AI3": "20", "AI4" : "20", "AI1Move" : "Poll Gauteng", "AI2Move" : "Poll Limpopo" , "AI3Move" : "Collect Funds Freestate", "AI4Move" : "Campaign Western Cape"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -82,6 +82,18 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
     res.send(obj);
 });
 
+router.post('/getFundsProvince', function(req, res, next) { //this is how many funds available per province
+    res.setHeader('Content-Type', 'application/json');
+    console.log(req.body.access_token);
+    //find access token in DB
+    //retrieve province available funds from db
+    //return province funds funds
+
+    var text = '{"Gauteng" : "10000", "Limpopo" : "5000", "West Cape" : "1000", "North Cape" : "2300", "East Cape" : "200", "Kwazulu natal" : "900", "Mpumalanga": "1300", "North West" : "4200", "Freestate" : "3300"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
 router.post('/getProfile', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body.access_token);
@@ -89,7 +101,7 @@ router.post('/getProfile', function(req, res, next) {
     //retrieve user info from DB
 
     //return user data
-    var text = '{"name" : "John", "surname" : "Doe"}';
+    var text = '{"name" : "John", "surname" : "Doe", "Email" : "John@doe.com"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
@@ -139,29 +151,44 @@ router.get('/getHighscoreBoard', function(req, res, next) {
     res.send(obj);
 });
 
-router.post('/startGame', function(req, res, next) { // each province has its own support
+router.post('/startGame', function(req, res, next) { // initialises all values at the start of the game
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body.access_token);
+    console.log(req.body.difficulty); //sets difficulty
+
     //find access token in DB
     //create and retrieve all starter info for user
 
 
     //return everything that needs to be displayed on client side
-    var text = '{"Username" : "Jack", "PartyName" : "Winners", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0"}';
+    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
 
-router.post('/setAI', function(req, res, next) { // each province has its own support
+router.post('/setAI', function(req, res, next) { // initialises all values at the start of the game
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body.access_token);
-    console.log(req.body.difficulty)
+    console.log(req.body.difficulty); //sets difficulty
+
     //find access token in DB
     //create and retrieve all starter info for user
 
 
     //return everything that needs to be displayed on client side
-    var text = '{"Success" : "1"}';
+    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
+router.post('/endTurn', function(req, res, next) { // AIs make their final move and date increased.
+    res.setHeader('Content-Type', 'application/json');
+    console.log(req.body.access_token);
+    //find access token in DB
+    //run AI
+    //Decrease time before election and returns it
+
+    var text = '{"Weeks" : "10"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
