@@ -14,12 +14,8 @@ public class ProvincesButtons : MonoBehaviour
     public UnityEvent onMouseExit;
     public UnityEvent whileMouseOver;
     public UnityEvent whileMouseAway;
-
-    public Color normalColor;
+    
     public Color pressedColor;
-    public Color highlightedColor;
-    public Color selectedColor;
-    public Color disabledColor;
 
     public Text text;
 

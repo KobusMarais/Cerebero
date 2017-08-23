@@ -172,7 +172,7 @@ public class GamePlayButtons : MonoBehaviour {
         campaignTextAnim = campaignText.GetComponent<Animator>();
 
         Button btn1 = collectFundsButton.GetComponent<Button>();
-        btn1.onClick.AddListener(fundmid);
+        btn1.onClick.AddListener(collectFunds);
 
         Button btn2 = pollProvinceButton.GetComponent<Button>();
         btn2.onClick.AddListener(pollProvince);
@@ -182,23 +182,8 @@ public class GamePlayButtons : MonoBehaviour {
         
     }
 
-    void fundmid()
+    IEnumerator fundmid()
     {
-        collectFunds();
-        string url = "http://ecivix.org.za/api/getFunds";
-
-        var requestString = "{'access_token':'123abc'}";
-
-        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
-
-        www = new WWW(url, pData);
-        StartCoroutine(collectFunds());
-    }
-
-    IEnumerator collectFunds()
-    {
-        print("You have clicked on the collect funds button");
-
         yield return www;
         if (!string.IsNullOrEmpty(www.error))
         {
@@ -209,7 +194,21 @@ public class GamePlayButtons : MonoBehaviour {
             var jsonObj = JSON.Parse(www.text);
             userFunds.text = jsonObj["funds"].Value.ToString();
         }
+    }
 
+    void collectFunds()
+    {
+        print("You have clicked on the collect funds button");
+
+        fundmid();
+        string url = "http://ecivix.org.za/api/getFunds";
+
+        var requestString = "{'access_token':'123abc'}";
+
+        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+        www = new WWW(url, pData);
+        StartCoroutine(fundmid());
 
         if (ProvincesButtons.provinceName == null)
         {
@@ -380,8 +379,5 @@ public class GamePlayButtons : MonoBehaviour {
         }
     }
 
-    void OnGUI()
-    {
-    }
     
 }
