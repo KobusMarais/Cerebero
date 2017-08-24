@@ -11,18 +11,20 @@ const connectionString = process.env.DATABASE_URL || 'postgres://qteorhenhhafxk:
 //     __dirname, '..', '..', 'client', 'views', 'index.html'));
 // });
 router.get('/loginpage', (req, res, next) => {
-
+    console.log("THIS IS WHERE THE DOG SLEEPS 3");
   res.sendFile(path.join(
     __dirname, '..', 'public', 'index.html'));
 });
 
 router.get('/profile', (req, res, next) => {
+    console.log("THIS IS WHERE THE DOG SLEEPS 2");
   res.sendFile(path.join(
     __dirname, '..', 'public', 'profile.html'));
+
 });
 
 /* READ */
-router.get('/api/v1/users', (req, res, next) => {
+/*router.get('/api/v1/users', (req, res, next) => {
   const results = [];
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
@@ -44,10 +46,10 @@ router.get('/api/v1/users', (req, res, next) => {
       return res.json(results);
     });
   });
-});
+});*/
 
 /* CREATE a single user*/
-router.post('/api/v1/users', (req, res, next) => {
+/*router.post('/api/v1/users', (req, res, next) => {
   const results = [];
   // Grab data from http request
   const data = {username: req.body.reg_username, password: req.body.reg_user_password, isadmin: false};
@@ -75,9 +77,9 @@ router.post('/api/v1/users', (req, res, next) => {
     });
   });
 });
-
+*/
 /* login a user*/
-router.post('/api/v1/loginUsers', (req, res, next) => {
+/*router.post('/api/v1/loginUsers', (req, res, next) => {
   const results = [];
   // Grab data from http request
   const data = {username: req.body.log_username, password: req.body.log_user_password};
@@ -102,8 +104,8 @@ router.post('/api/v1/loginUsers', (req, res, next) => {
     });
   });
 });
-
-/* UPDATE */
+*/
+/* UPDATE *//*
 router.put('/api/v1/users/:user_id', (req, res, next) => {
   const results = [];
   // Grab data from the URL parameters
@@ -134,9 +136,9 @@ router.put('/api/v1/users/:user_id', (req, res, next) => {
     });
   });
 });
-
+*/
 /* DELETE */ 
-router.delete('/api/v1/users/:user_id', (req, res, next) => {
+/*router.delete('/api/v1/users/:user_id', (req, res, next) => {
   const results = [];
   // Grab data from the URL parameters
   const id = req.params.todo_id;
@@ -163,9 +165,9 @@ router.delete('/api/v1/users/:user_id', (req, res, next) => {
     });
   });
 });
-
+*/
 /* CREATE a user profile*/
-router.post('/api/v1/createProfile', (req, res, next) => {
+/*router.post('/api/v1/createProfile', (req, res, next) => {
   const results = [];
   // Grab data from http request
   const data = {topic1: req.body.topic1, topic2: req.body.topic2, topic3: req.body.topic3, topic4: req.body.topic4};
@@ -192,5 +194,5 @@ router.post('/api/v1/createProfile', (req, res, next) => {
     });
   });
 });
-
+*/
 module.exports = router;
