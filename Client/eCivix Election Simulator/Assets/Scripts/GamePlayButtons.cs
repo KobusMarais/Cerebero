@@ -18,6 +18,7 @@ public class GamePlayButtons : MonoBehaviour {
 	public Text AI2Action;
 	public Text AI3Action;
 	public Text AI4Action;
+	public Text userName;
 
 	public Text collectFundsText;
 	public Text pollProvinceText;
@@ -121,6 +122,15 @@ public class GamePlayButtons : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+
+		// Set new game variables
+		var jsonObj = JSON.Parse(NewGameDetails.newGameJson);
+		userName.text = jsonObj["Username"].Value.ToString();
+		userFunds.text = jsonObj["Funds"].Value.ToString();
+		userManpower.text = jsonObj["Manpower"].Value.ToString();
+		endTurnText.text = jsonObj["Weeks"].Value.ToString();
+
 
 		NCcoin.enabled = false;
 		NCmanpower.enabled = false;
