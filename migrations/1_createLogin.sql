@@ -1,7 +1,7 @@
 -- User: "testUser"
 -- DROP USER "testUser";
 
-CREATE USER "testUser" WITH
+CREATE USER 'testUser' WITH
   LOGIN
   SUPERUSER
   INHERIT
@@ -9,4 +9,4 @@ CREATE USER "testUser" WITH
   CREATEROLE
   REPLICATION;
 
-COMMENT ON ROLE "testUser" IS 'for testing the postgres server';
+COMMENT ON ROLE 'testUser' IS 'for testing the postgres server';

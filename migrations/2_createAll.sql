@@ -15,7 +15,7 @@
 
 -- CREATE TABLES
 CREATE TABLE userAccounts (
-	pkid INT PRIMARY KEY, -- DEFAULT NEXTVAL('userSequence'),
+	pkid SERIAL PRIMARY KEY, 
 	username TEXT NOT NULL,
 	user_password TEXT UNIQUE NOT NULL,
 	isAdmin BOOLEAN NOT NULL,
@@ -25,13 +25,13 @@ CREATE TABLE userAccounts (
 );
 
 CREATE TABLE aiAccount (
-	pkid INT PRIMARY KEY, -- DEFAULT NEXTVAL('aiSequence'),
+	pkid INT PRIMARY KEY,
 	aiDescription TEXT NOT NULL
 );
 
 CREATE TABLE userProfile(
-	pkid INT PRIMARY KEY, -- DEFAULT NEXTVAL('userProfileSequence'),
-	userId INT NOT NULL REFERENCES userAccounts(userId),
+	pkid SERIAL PRIMARY KEY, 
+	userId INT NOT NULL REFERENCES userAccounts(pkid),
 	topic1 INT NOT NULL,
 	topic2 INT NOT NULL,
 	topic3 INT NOT NULL,
@@ -40,8 +40,8 @@ CREATE TABLE userProfile(
 );
 
 CREATE TABLE aiProfile(
-	pkid INT PRIMARY KEY, -- DEFAULT NEXTVAL('aiProfileSequence'),
-	aiId INT NOT NULL REFERENCES aiAccount(aiId),
+	pkid SERIAL PRIMARY KEY,  
+	aiId INT NOT NULL REFERENCES aiAccount(pkid),
 	topic1 INT NOT NULL,
 	topic2 INT NOT NULL,
 	topic3 INT NOT NULL,
@@ -50,13 +50,13 @@ CREATE TABLE aiProfile(
 );
 
 CREATE TABLE allTopics(
-	pkid INT PRIMARY KEY, -- DEFAULT NEXTVAL('topicSequence'),
+	pkid SERIAL PRIMARY KEY, 
 	topicDescription TEXT NOT NULL
 );
 
 CREATE TABLE tblFunds(
-	pkid INT PRIMARY KEY, 
-	userId INT NOT NULL REFERENCES userAccount(userId),
+	pkid SERIAL PRIMARY KEY,  
+	userId INT NOT NULL REFERENCES userAccounts(pkid),
 	ai1_funds INT NOT NULL,
     ai2_funds INT NOT NULL,
 	ai3_funds INT NOT NULL,
@@ -64,8 +64,8 @@ CREATE TABLE tblFunds(
 );
 
 CREATE TABLE tblManPower(
-	pkid INT PRIMARY KEY,
-	userId INT NOT NULL REFERENCES userAccount(userId),
+	pkid SERIAL PRIMARY KEY, 
+	userId INT NOT NULL REFERENCES userAccounts(pkid),
 	ai1_ManPower INT NOT NULL,
 	ai2_ManPower INT NOT NULL,
 	ai3_ManPower INT NOT NULL,
@@ -73,36 +73,36 @@ CREATE TABLE tblManPower(
 );
 	
 CREATE TABLE tblProvince(
-	pkid INT PRIMARY KEY,
+	pkid SERIAL PRIMARY KEY, 
 	provinceName TEXT NOT NULL,
 	totalSupportAvailable INT NOT NULL,
 	totalManpowerAvailable INT NOT NULL
 );
 
 CREATE TABLE tblTypesOfActions(
-	pkid INT PRIMARY KEY,
-	actionDescription TEXT NOT NULL, -- (Campaigning, Rally etc)
+	pkid SERIAL PRIMARY KEY, 
+	actionDescription TEXT NOT NULL, 
 	costInFunds INT NOT NULL,
 	costInManPower INT NOT NULL
 );
 
 CREATE TABLE tblUserSupportGained(
-	pkid INT PRIMARY KEY,
-	userId INT NOT NULL REFERENCES userAccount(userId),
-	provinceId INT NOT NULL REFERENCES tblProvince(provinceId),
+	pkid SERIAL PRIMARY KEY, 
+	userId INT NOT NULL REFERENCES userAccounts(pkid),
+	provinceId INT NOT NULL REFERENCES tblProvince(pkid),
 	support INT NOT NULL
 );
 
 CREATE TABLE tblAiSupportGained(
-	pkid INT PRIMARY KEY,
-	aiId INT NOT NULL REFERENCES aiAccount(aiId),
-	provinceId INT NOT NULL REFERENCES tblProvince(provinceId),
+	pkid SERIAL PRIMARY KEY, 
+	aiId INT NOT NULL REFERENCES aiAccount(pkid),
+	provinceId INT NOT NULL REFERENCES tblProvince(pkid),
 	support INT NOT NULL
 );
 
 CREATE TABLE Leaderboard(
-    pkid INT PRIMARY KEY,
-    userId INT NOT NULL REFERENCES userAccount(userId),
+    pkid SERIAL PRIMARY KEY, 
+    userId INT NOT NULL REFERENCES userAccounts(pkid),
     score INT NOT NULL
 );
 
