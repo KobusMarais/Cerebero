@@ -5,11 +5,13 @@ const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://qteorhenhhafxk:6ce54e222dd9d48768d1450b96fa91b0966239026292309303229619afc37969@ec2-54-247-177-33.eu-west-1.compute.amazonaws.com:5432/d81ndajjs435dl';
 
 /* GET home page. */
+
 // router.get('/', (req, res, next) => {
 //   res.sendFile(path.join(
 //     __dirname, '..', '..', 'client', 'views', 'index.html'));
 // });
-router.get('/', (req, res, next) => {
+router.get('/loginpage', (req, res, next) => {
+
   res.sendFile(path.join(
     __dirname, '..', 'public', 'index.html'));
 });
