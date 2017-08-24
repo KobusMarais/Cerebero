@@ -8,12 +8,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var AI = require('./routes/AI');
-var api = require('./routes/api');
-<<<<<<< HEAD
+var api = require('./routes/api'); 
 var mainGame = require('./routes/mainGame');
-=======
-const routes =require('./routes/index')
->>>>>>> fred/loginPage
+
 
 var path = require('path');
 var app = express();
