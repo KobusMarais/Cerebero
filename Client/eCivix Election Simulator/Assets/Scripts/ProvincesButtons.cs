@@ -4,7 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine;
 
-public class ProvincesButtons : MonoBehaviour {
+public class ProvincesButtons : MonoBehaviour
+{
 
     public bool interactable = true;
     public float fadeSpeed = 10f;
@@ -13,12 +14,8 @@ public class ProvincesButtons : MonoBehaviour {
     public UnityEvent onMouseExit;
     public UnityEvent whileMouseOver;
     public UnityEvent whileMouseAway;
-
-    public Color normalColor;
+    
     public Color pressedColor;
-    public Color highlightedColor;
-    public Color selectedColor;
-    public Color disabledColor;
 
     public Text text;
 
@@ -26,7 +23,7 @@ public class ProvincesButtons : MonoBehaviour {
     private Button currentButton;
 
     private ColliderDetectMouseover filter;
-    private Image targetImage;
+    //private Image targetImage;
     private bool mouseoverDone = false;
 
     private GameObject[] provinceArray;
@@ -36,10 +33,10 @@ public class ProvincesButtons : MonoBehaviour {
     void Start()
     {
         filter = GetComponent<ColliderDetectMouseover>();
-        targetImage = GetComponent<Image>();
+        //targetImage = GetComponent<Image>();
         currentButton = GetComponent<Button>();
-        provinceArray = GameObject.FindGameObjectsWithTag ("Province");
-        provinceTextArray = GameObject.FindGameObjectsWithTag ("ProvinceText");
+        provinceArray = GameObject.FindGameObjectsWithTag("Province");
+        provinceTextArray = GameObject.FindGameObjectsWithTag("ProvinceText");
     }
 
     // Update is called once per frame
@@ -56,7 +53,7 @@ public class ProvincesButtons : MonoBehaviour {
                 if (Input.GetMouseButtonUp(0))
                 {
                     onClick.Invoke();
-                    
+
                     /*
                     if (targetImage.color == pressedColor)
                     {
@@ -71,19 +68,27 @@ public class ProvincesButtons : MonoBehaviour {
                     */
 
                     // Loop through provinces and change image color
-                    foreach (var prov in provinceArray) {
-                        if (prov.name == currentButton.name) {
+                    foreach (var prov in provinceArray)
+                    {
+                        if (prov.name == currentButton.name)
+                        {
                             prov.GetComponent<Image>().color = pressedColor;
-                        } else {
+                        }
+                        else
+                        {
                             prov.GetComponent<Image>().color = Color.white;
                         }
                     }
 
                     // Loop through province text and change font color
-                    foreach (var provText in provinceTextArray) {
-                        if (provText.name == text.name) {
+                    foreach (var provText in provinceTextArray)
+                    {
+                        if (provText.name == text.name)
+                        {
                             provText.GetComponent<Text>().color = Color.white;
-                        } else {
+                        }
+                        else
+                        {
                             provText.GetComponent<Text>().color = Color.black;
                         }
                     }
@@ -134,7 +139,7 @@ public class ProvincesButtons : MonoBehaviour {
                         provinceName = "LP";
                     }
 
-                    
+
 
                 }
 
