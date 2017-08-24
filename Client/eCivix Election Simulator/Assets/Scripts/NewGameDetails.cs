@@ -31,6 +31,8 @@ public class NewGameDetails : MonoBehaviour {
     WWW www;
     bool flag;
 
+	public static String newGameJson = "";
+
     // Use this for initialization
     void Start () {
 
@@ -120,6 +122,7 @@ public class NewGameDetails : MonoBehaviour {
         }
         else
         {
+			newGameJson = www.text;
             SceneManager.LoadScene("MainScreen");
         }
     }
