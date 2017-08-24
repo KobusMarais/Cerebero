@@ -31,6 +31,8 @@ public class NewGameDetails : MonoBehaviour {
     WWW www;
     bool flag;
 
+	public static String newGameJson = "";
+
     // Use this for initialization
     void Start () {
 
@@ -92,7 +94,7 @@ public class NewGameDetails : MonoBehaviour {
        else
         {
             Upload();
-            string url = "ecivix.org.za/api/startGame";
+            string url = "http://ecivix.org.za/api/startGame";
 
             var requestString = "{\"access_token\":\"123abc\", \"difficulty\":" + difData +"}";
 
@@ -120,6 +122,7 @@ public class NewGameDetails : MonoBehaviour {
         }
         else
         {
+			newGameJson = www.text;
             SceneManager.LoadScene("MainScreen");
         }
     }
