@@ -184,11 +184,12 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
 router.post('/endTurn', function(req, res, next) { // AIs make their final move and date increased.
     res.setHeader('Content-Type', 'application/json');
     console.log(req.body.access_token);
+
     //find access token in DB
     //run AI
     //Decrease time before election and returns it
 
-    var text = '{"Weeks" : "10"}';
+    var text = '{"Weeks" : "' + req.body.weeks +'"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });

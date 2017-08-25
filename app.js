@@ -8,8 +8,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var AI = require('./routes/AI');
-var api = require('./routes/api');
+var api = require('./routes/api'); 
 var mainGame = require('./routes/mainGame');
+
 
 var path = require('path');
 var app = express();
@@ -24,7 +25,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', index);
 
@@ -33,11 +34,8 @@ app.use('/AI', AI);
 app.use('/', users);
 
 app.use('/api', api);
-
 app.use('/mainGame', mainGame)
-
 app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
