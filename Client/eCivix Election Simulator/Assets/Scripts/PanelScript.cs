@@ -10,6 +10,7 @@ public class PanelScript : MonoBehaviour {
 
     public Button menuButton;
     public Button closeMenu;
+    
 
     public Button saveButton;
     public Button soundButton;
@@ -20,6 +21,8 @@ public class PanelScript : MonoBehaviour {
 
     public GameObject menu;
     public GameObject map;
+
+
 
     // Use this for initialization
     void Start () {
@@ -52,9 +55,9 @@ public class PanelScript : MonoBehaviour {
     void openPanel()    
     {
         //OPEN MENU
-
         menu.SetActive(true);
         map.SetActive(false);
+        
     }
 
     void closePanel()   
@@ -63,6 +66,8 @@ public class PanelScript : MonoBehaviour {
 
         menu.SetActive(false);
         map.SetActive(true);
+
+       // NCButton.interactable = true;
     }
 
     void saveGame() 
