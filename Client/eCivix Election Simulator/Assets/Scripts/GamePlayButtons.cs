@@ -11,7 +11,6 @@ public class GamePlayButtons : MonoBehaviour {
 	public Button pollProvinceButton;
 	public Button campaignButton;
 
-	// Test
 	public Button endTurnButton;
 	public Text endTurnText;
 	public Text AI1Action;
@@ -21,7 +20,7 @@ public class GamePlayButtons : MonoBehaviour {
 	public Text userName;
 
     public Text Score;
-
+	public int weeks;
 
     public Text collectFundsText;
 	public Text pollProvinceText;
@@ -141,7 +140,7 @@ public class GamePlayButtons : MonoBehaviour {
 		userFunds.text = jsonObj["Funds"].Value.ToString();
 		userManpower.text = jsonObj["Manpower"].Value.ToString();
 		endTurnText.text = jsonObj["Weeks"].Value.ToString();
-
+		weeks =  int.Parse(jsonObj["Weeks"].Value);
 
 		NCcoin.enabled = false;
 		NCmanpower.enabled = false;
@@ -570,15 +569,28 @@ public class GamePlayButtons : MonoBehaviour {
 
 	void endTurn() {
 		print("End turn button clicked");
+
+		weeks--;
+		endTurnText.text = weeks.ToString();
+		if(weeks == 0)
+		{
+			infoPanel.SetActive(true);
+			infoPanelAnim.Play(infoPanelHash, -1, 0f);
+			infoPanelHeadingText.text = "Congratulations";
+			infoPanelText.text = PlayerPrefs.GetString("Player Party") + " has won the election!";
+		}
+
+		/*
 		getWeeks();
 		string url = "http://ecivix.org.za/api/endTurn";
 
-		var requestString = "{'access_token':'123abc'}";
+		var requestString = "{'access_token':'123abc','weeks':'3'}";
 
 		byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
 		www = new WWW(url, pData);
 		StartCoroutine(getWeeks());
+		*/
 
 
 	}
