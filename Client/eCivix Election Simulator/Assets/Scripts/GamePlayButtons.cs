@@ -126,6 +126,7 @@ public class GamePlayButtons : MonoBehaviour {
 	int campaignTextHash = Animator.StringToHash("CampaignTextAnimation");
 
     int infoPanelHash = Animator.StringToHash("InformationPanel");
+    int infoPanelPollHash = Animator.StringToHash("InformationPanelPoll");
 
     string fundsVal;
     string manPowerVal;
@@ -405,7 +406,7 @@ public class GamePlayButtons : MonoBehaviour {
 			StartCoroutine (provincePolled());
 
             infoPanel.SetActive(true);
-            infoPanelAnim.Play(infoPanelHash, -1, 0f);
+            infoPanelAnim.Play(infoPanelPollHash, -1, 0f);
             infoPanelHeadingText.text = ProvincesButtons.provinceName;
         }
 	}
@@ -575,7 +576,7 @@ public class GamePlayButtons : MonoBehaviour {
 		if(weeks == 0)
 		{
 			infoPanel.SetActive(true);
-			infoPanelAnim.Play(infoPanelHash, -1, 0f);
+			infoPanelAnim.Play(infoPanelPollHash, -1, 0f);
 			infoPanelHeadingText.text = "Congratulations";
 			infoPanelText.text = PlayerPrefs.GetString("Player Party") + " has won the election!";
 		}
