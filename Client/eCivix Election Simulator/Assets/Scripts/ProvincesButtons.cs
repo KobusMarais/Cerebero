@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ProvincesButtons : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class ProvincesButtons : MonoBehaviour
                 whileMouseOver.Invoke();
                 if (Input.GetMouseButtonUp(0))
                 {
-                    onClick.Invoke();
+                        onClick.Invoke();
 
                     /*
                     if (targetImage.color == pressedColor)

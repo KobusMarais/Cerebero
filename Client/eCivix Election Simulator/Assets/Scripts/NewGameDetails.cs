@@ -7,7 +7,8 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.Text;
 
-public class NewGameDetails : MonoBehaviour {
+public class NewGameDetails : MonoBehaviour
+{
 
     public Button continueButton;
     public InputField partyNameInput;
@@ -31,10 +32,11 @@ public class NewGameDetails : MonoBehaviour {
     WWW www;
     bool flag;
 
-	public static String newGameJson = "";
+    public static String newGameJson;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         flag = false;
         difData = "";
@@ -76,7 +78,7 @@ public class NewGameDetails : MonoBehaviour {
 
         Button avt8 = avatar8.GetComponent<Button>();
         avt8.onClick.AddListener(Avatar8);
-   
+
         Button avt9 = avatar9.GetComponent<Button>();
         avt9.onClick.AddListener(Avatar9);
 
@@ -84,19 +86,19 @@ public class NewGameDetails : MonoBehaviour {
         avt10.onClick.AddListener(Avatar10);
 
     }
-	
-	void StartGame()
+
+    void StartGame()
     {
-       if(partyNameInput.text == "" || difData == "" || !flag)
+        if (partyNameInput.text == "" || difData == "" || !flag)
         {
             Debug.Log("One or more empty fields");
         }
-       else
+        else
         {
             Upload();
             string url = "http://ecivix.org.za/api/startGame";
 
-            var requestString = "{\"access_token\":\"123abc\", \"difficulty\":" + difData +"}";
+            var requestString = "{\"access_token\":\"123abc\", \"difficulty\":" + difData + "}";
 
             byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
@@ -104,11 +106,11 @@ public class NewGameDetails : MonoBehaviour {
             StartCoroutine(Upload());
 
             PlayerPrefs.SetString("Player Party", partyNameInput.text);
-            
+
         }
-        
+
     }
-    
+
 
     IEnumerator Upload()
     {
@@ -122,7 +124,7 @@ public class NewGameDetails : MonoBehaviour {
         }
         else
         {
-			newGameJson = www.text;
+            newGameJson = www.text;
             SceneManager.LoadScene("MainScreen");
         }
     }

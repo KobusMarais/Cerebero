@@ -73,6 +73,22 @@
 				\item We will use Travis CI to do our integration tests.  
 				\item It will run our unit tests and gives us feedback on their successful/ failures. The bonus being that if Travis fails it will not build the project leaving the game on a last working copy and will only overwrite and do the update once the Travis build succeeds. Allowing for a great user experience since they will not experience any downtime of the game. 
 				\item Please see how Travis builds \href{https://travis-ci.org/KobusMarais/Cerebero/}{here}.
+                
+                \item Travis.CI testing is integration testing that runs our integration tests to ensure that all parts still work when connected to one another, below is an example of these tests: \\
+                
+				\begin{center}
+			        \includegraphics[width=0.55\linewidth]{Images/TravisCI_1.png}
+			    \end{center}
+			    
+			    \item This is the summary that is displayed every time a new feature is pushed to a branch.
+			    
+			    \begin{center}
+			        \includegraphics[width=1\linewidth]{Images/TravisCI_2.png}
+			    \end{center}
+			    
+			    \item We have setup our integration tests to also do unit testing, this ensures that every time code is pushed to a branch, that all of the functions still work as they are supposed to work, this does take a bit longer as displayed, but it ensures that we know the moment when something breaks. 
+
+
 			\end{enumerate}
 
 \section{Reports}

@@ -11,7 +11,6 @@ public class GamePlayButtons : MonoBehaviour {
 	public Button pollProvinceButton;
 	public Button campaignButton;
 
-	// Test
 	public Button endTurnButton;
 	public Text endTurnText;
 	public Text AI1Action;
@@ -20,7 +19,10 @@ public class GamePlayButtons : MonoBehaviour {
 	public Text AI4Action;
 	public Text userName;
 
-	public Text collectFundsText;
+    public Text Score;
+	public int weeks;
+
+    public Text collectFundsText;
 	public Text pollProvinceText;
 	public Text campaignText;
 
@@ -87,9 +89,12 @@ public class GamePlayButtons : MonoBehaviour {
 	public Image FSmanpower;
 	public Animator FSmanAnim;
 
+    public Text infoPanelText;
+    public Text infoPanelHeadingText;
+    public GameObject infoPanel;
+    public Animator infoPanelAnim;
 
-
-	int ncCoinHash = Animator.StringToHash("NC_CoinAnimation");
+    int ncCoinHash = Animator.StringToHash("NC_CoinAnimation");
 	int ncManPowerHash = Animator.StringToHash("NC_ManPowerAnimation");
 
 	int wcCoinHash = Animator.StringToHash("WC_CoinAnimation");
@@ -120,8 +125,14 @@ public class GamePlayButtons : MonoBehaviour {
 	int collectFundsTextHash = Animator.StringToHash("CollectFundsTextAnimation");
 	int campaignTextHash = Animator.StringToHash("CampaignTextAnimation");
 
-	// Use this for initialization
-	void Start () {
+    int infoPanelHash = Animator.StringToHash("InformationPanel");
+    int infoPanelPollHash = Animator.StringToHash("InformationPanelPoll");
+
+    string fundsVal;
+    string manPowerVal;
+
+    // Use this for initialization
+    void Start () {
 
 
 		// Set new game variables
@@ -130,7 +141,7 @@ public class GamePlayButtons : MonoBehaviour {
 		userFunds.text = jsonObj["Funds"].Value.ToString();
 		userManpower.text = jsonObj["Manpower"].Value.ToString();
 		endTurnText.text = jsonObj["Weeks"].Value.ToString();
-
+		weeks =  int.Parse(jsonObj["Weeks"].Value);
 
 		NCcoin.enabled = false;
 		NCmanpower.enabled = false;
@@ -159,7 +170,11 @@ public class GamePlayButtons : MonoBehaviour {
 		FScoin.enabled = false;
 		FSmanpower.enabled = false;
 
-		NCcoinAnim = NCcoin.GetComponent<Animator>();
+        infoPanel.SetActive(false);
+
+        infoPanelAnim = infoPanel.GetComponent<Animator>();
+
+        NCcoinAnim = NCcoin.GetComponent<Animator>();
 		NCmanAnim = NCmanpower.GetComponent<Animator>();
 
 		WCcoinAnim = WCcoin.GetComponent<Animator>();
@@ -201,10 +216,40 @@ public class GamePlayButtons : MonoBehaviour {
 
 		Button btn4 = endTurnButton.GetComponent<Button>();
 		btn4.onClick.AddListener(endTurn);
+
+        getScore();
 	}
 
 
-	void collectFunds()
+    void getScore()
+    {
+        getScoreHelp();
+        string url = "http://ecivix.org.za/api/getScore";
+
+        var requestString = "{'access_token':'123abc'}";
+
+        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+        www = new WWW(url, pData);
+        StartCoroutine(getScoreHelp());
+    }
+
+    IEnumerator getScoreHelp()
+	{
+		yield return www;
+		if (!string.IsNullOrEmpty(www.error))
+		{
+			Debug.Log(www.error);
+			//print(www.error);
+		}
+		else
+		{
+			var jsonObj = JSON.Parse(www.text);
+            Score.text = jsonObj["score"].Value.ToString(); 
+        }
+	}
+
+    void collectFunds()
 	{
 		print("You have clicked on the collect funds button");
 
@@ -292,7 +337,13 @@ public class GamePlayButtons : MonoBehaviour {
 				FScoin.enabled = true;
 				FScoinAnim.Play(fsCoinHash, -1, 0f);
 			}
-		}
+
+            infoPanel.SetActive(true);
+            infoPanelAnim.Play(infoPanelHash, -1, 0f);
+            infoPanelHeadingText.text = ProvincesButtons.provinceName;
+
+
+        }
 	}
 
 	IEnumerator provinceCollect()
@@ -310,7 +361,8 @@ public class GamePlayButtons : MonoBehaviour {
 			AI2Action.text = jsonObj["AI2Move"].Value.ToString();
 			AI3Action.text = jsonObj["AI3Move"].Value.ToString();
 			AI4Action.text = jsonObj["AI4Move"].Value.ToString();
-		}
+            
+        }
 	}
 
 	IEnumerator updateFunds()
@@ -324,17 +376,21 @@ public class GamePlayButtons : MonoBehaviour {
 		else
 		{
 			var jsonObj = JSON.Parse(www2.text);
-			//print(www.text);
-			userFunds.text = jsonObj["funds"].Value.ToString();
-		}
+            //print(www.text);
+
+            fundsVal = jsonObj["funds"].Value.ToString();
+            userFunds.text = fundsVal;
+
+            infoPanelText.text = "You have collected " + fundsVal + " funds";
+        }
 	}
 
 	void pollProvince()
 	{
 		print("You have clicked on the poll province button");
-		/*pollProvinceText.text = "-$5";
+		pollProvinceText.text = "-$5";
+        pollProvinceTextAnim.Play(pollProvinceTextHash, -1, 0f);
 
-        pollProvinceTextAnim.Play(pollProvinceTextHash, -1, 0f);*/
 		if (ProvincesButtons.provinceName == null) {
 			print ("Please select a province to campaign");
 		} else {
@@ -348,7 +404,11 @@ public class GamePlayButtons : MonoBehaviour {
 
 			www = new WWW (url, pData);
 			StartCoroutine (provincePolled());
-		}
+
+            infoPanel.SetActive(true);
+            infoPanelAnim.Play(infoPanelPollHash, -1, 0f);
+            infoPanelHeadingText.text = ProvincesButtons.provinceName;
+        }
 	}
 
 	IEnumerator provincePolled()
@@ -366,7 +426,11 @@ public class GamePlayButtons : MonoBehaviour {
 			AI2Action.text = jsonObj["AI2Move"].Value.ToString();
 			AI3Action.text = jsonObj["AI3Move"].Value.ToString();
 			AI4Action.text = jsonObj["AI4Move"].Value.ToString();
-		}
+
+
+            infoPanelText.text = "Poll Votes\n\n" + userName.text + ": " + jsonObj["User"].Value.ToString() + "\nAI 1: " + jsonObj["AI1"].Value.ToString() + "\nAI 2: " + jsonObj["AI2"].Value.ToString() + "\nAI 3: " +
+            jsonObj["AI3"].Value.ToString() + "\nAI 4: " + jsonObj["AI4"].Value.ToString();
+        }
 	}
 
 	void campaign()
@@ -459,7 +523,12 @@ public class GamePlayButtons : MonoBehaviour {
 				FSmanpower.enabled = true;
 				FSmanAnim.Play(fsManPowerHash, -1, 0f);
 			}
-		}
+
+            infoPanel.SetActive(true);
+            infoPanelAnim.Play(infoPanelHash, -1, 0f);
+            infoPanelHeadingText.text = ProvincesButtons.provinceName;
+
+        }
 	}
 
 	IEnumerator getManpower()
@@ -474,8 +543,11 @@ public class GamePlayButtons : MonoBehaviour {
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
-			userManpower.text = jsonObj["manpower"].Value.ToString();
-		}
+            manPowerVal = jsonObj["manpower"].Value.ToString();
+            userManpower.text = manPowerVal;
+
+            infoPanelText.text = "You have received " + manPowerVal + " manpower";
+        }
 	}
 
 	IEnumerator provinceCampaign()
@@ -498,15 +570,30 @@ public class GamePlayButtons : MonoBehaviour {
 
 	void endTurn() {
 		print("End turn button clicked");
+
+		weeks--;
+		endTurnText.text = weeks.ToString();
+		if(weeks == 0)
+		{
+			infoPanel.SetActive(true);
+			infoPanelAnim.Play(infoPanelPollHash, -1, 0f);
+			infoPanelHeadingText.text = "Congratulations";
+			infoPanelText.text = PlayerPrefs.GetString("Player Party") + " has won the election!";
+		}
+
+		/*
 		getWeeks();
 		string url = "http://ecivix.org.za/api/endTurn";
 
-		var requestString = "{'access_token':'123abc'}";
+		var requestString = "{'access_token':'123abc','weeks':'3'}";
 
 		byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
 		www = new WWW(url, pData);
 		StartCoroutine(getWeeks());
+		*/
+
+
 	}
 
 	IEnumerator getWeeks()
@@ -521,6 +608,14 @@ public class GamePlayButtons : MonoBehaviour {
 			print(www.text);
 			var jsonObj = JSON.Parse(www.text);
 			endTurnText.text = jsonObj["Weeks"].Value.ToString();
+
+            if(jsonObj["Weeks"].Value.ToString() == "10")
+            {
+                infoPanel.SetActive(true);
+                infoPanelAnim.Play(infoPanelHash, -1, 0f);
+                infoPanelHeadingText.text = "Congratulations";
+                infoPanelText.text = PlayerPrefs.GetString("Player Party") + " has won the election!";
+            }
 		}
 	}
 }
