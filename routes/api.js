@@ -3,6 +3,10 @@ var router = express.Router();
 
 router.post('/register', function(req,res){
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.name);
     console.log(req.body.surname);
     console.log(req.body.email);
@@ -16,6 +20,11 @@ router.post('/register', function(req,res){
 
 router.post('/login', function(req,res){
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
     console.log(req.body.username);
     console.log(req.body.password);
 
@@ -30,6 +39,10 @@ router.post('/login', function(req,res){
 router.post('/collectFunds', function(req,res){
 
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     console.log(req.body.province);
     //find access token in DB
@@ -45,6 +58,10 @@ router.post('/collectFunds', function(req,res){
 router.post('/campaignProvince', function(req,res){
 
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     console.log(req.body.province);
     //find access token in DB
@@ -59,6 +76,10 @@ router.post('/campaignProvince', function(req,res){
 
 router.post('/pollProvince', function(req,res){
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     console.log(req.body.province);
     //find access token in DB
@@ -72,6 +93,10 @@ router.post('/pollProvince', function(req,res){
 
 router.post('/getFunds', function(req, res, next) { //this is a national overall value
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     //find access token in DB
     //retrieve user funds from db
@@ -84,6 +109,10 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
 
 router.post('/getFundsProvince', function(req, res, next) { //this is how many funds available per province
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     //find access token in DB
     //retrieve province available funds from db
@@ -96,6 +125,10 @@ router.post('/getFundsProvince', function(req, res, next) { //this is how many f
 
 router.post('/getProfile', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     //find access token in DB
     //retrieve user info from DB
@@ -108,6 +141,10 @@ router.post('/getProfile', function(req, res, next) {
 
 router.post('/getScore', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     //find access token in DB
     //retrieve user score from DB
@@ -120,6 +157,10 @@ router.post('/getScore', function(req, res, next) {
 
 router.post('/getManpower', function(req, res, next) { //this is an overall national total
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     //find access token in DB
     //retrieve user score from DB
@@ -133,6 +174,10 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
 
 router.post('/getSupport', function(req, res, next) { // each province has its own support
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     console.log(req.body.province);
     //find access token in DB
@@ -146,6 +191,10 @@ router.post('/getSupport', function(req, res, next) { // each province has its o
 
 router.get('/getHighscoreBoard', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     var text = '{"Jack" : "10000", "John" : "80", "Jacky" : "70"}';
     var obj = JSON.parse(text);
     res.send(obj);
@@ -153,6 +202,10 @@ router.get('/getHighscoreBoard', function(req, res, next) {
 
 router.post('/startGame', function(req, res, next) { // initialises all values at the start of the game
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     console.log(req.body.difficulty); //sets difficulty
 
@@ -166,8 +219,14 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
     res.send(obj);
 });
 
+
+//this function has been deprecated, no need to use it anymore, will be removed soon...
 router.post('/setAI', function(req, res, next) { // initialises all values at the start of the game
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     console.log(req.body.difficulty); //sets difficulty
 
@@ -183,8 +242,12 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
 
 router.post('/endTurn', function(req, res, next) { // AIs make their final move and date increased.
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
-
+    console.log(req.body.weeks);
     //find access token in DB
     //run AI
     //Decrease time before election and returns it
