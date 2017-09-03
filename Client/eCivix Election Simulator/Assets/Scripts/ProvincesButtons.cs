@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ProvincesButtons : MonoBehaviour {
+public class ProvincesButtons : MonoBehaviour
+{
 
     public bool interactable = true;
     public float fadeSpeed = 10f;
@@ -13,28 +15,29 @@ public class ProvincesButtons : MonoBehaviour {
     public UnityEvent onMouseExit;
     public UnityEvent whileMouseOver;
     public UnityEvent whileMouseAway;
-
-    public Color normalColor;
+    
     public Color pressedColor;
-    public Color highlightedColor;
-    public Color selectedColor;
-    public Color disabledColor;
 
     public Text text;
 
+    public static string provinceName;
     private Button currentButton;
 
     private ColliderDetectMouseover filter;
-    private Image targetImage;
+    //private Image targetImage;
     private bool mouseoverDone = false;
 
+    private GameObject[] provinceArray;
+    private GameObject[] provinceTextArray;
 
     // Use this for initialization
     void Start()
     {
         filter = GetComponent<ColliderDetectMouseover>();
-        targetImage = GetComponent<Image>();
+        //targetImage = GetComponent<Image>();
         currentButton = GetComponent<Button>();
+        provinceArray = GameObject.FindGameObjectsWithTag("Province");
+        provinceTextArray = GameObject.FindGameObjectsWithTag("ProvinceText");
     }
 
     // Update is called once per frame
@@ -50,7 +53,9 @@ public class ProvincesButtons : MonoBehaviour {
                 whileMouseOver.Invoke();
                 if (Input.GetMouseButtonUp(0))
                 {
-                    onClick.Invoke();
+                        onClick.Invoke();
+
+                    /*
                     if (targetImage.color == pressedColor)
                     {
                         targetImage.color = Color.white;
@@ -61,45 +66,81 @@ public class ProvincesButtons : MonoBehaviour {
                         targetImage.color = pressedColor;
                         text.color = Color.white;
                     }
+                    */
+
+                    // Loop through provinces and change image color
+                    foreach (var prov in provinceArray)
+                    {
+                        if (prov.name == currentButton.name)
+                        {
+                            prov.GetComponent<Image>().color = pressedColor;
+                        }
+                        else
+                        {
+                            prov.GetComponent<Image>().color = Color.white;
+                        }
+                    }
+
+                    // Loop through province text and change font color
+                    foreach (var provText in provinceTextArray)
+                    {
+                        if (provText.name == text.name)
+                        {
+                            provText.GetComponent<Text>().color = Color.white;
+                        }
+                        else
+                        {
+                            provText.GetComponent<Text>().color = Color.black;
+                        }
+                    }
 
                     if (currentButton.name == "NCButton")
                     {
                         print("You have clicked on the Northen Cape province");
+                        provinceName = "NC";
                     }
                     else if (currentButton.name == "WCButton")
                     {
                         print("You have clicked on the Western Cape province");
+                        provinceName = "WC";
                     }
                     else if (currentButton.name == "ECButton")
                     {
                         print("You have clicked on the Eastern Cape province");
+                        provinceName = "EC";
                     }
                     else if (currentButton.name == "KZNButton")
                     {
                         print("You have clicked on the KwaZulu Natal province");
+                        provinceName = "KZN";
                     }
                     else if (currentButton.name == "FSButton")
                     {
                         print("You have clicked on the Free State province");
+                        provinceName = "FS";
                     }
                     else if (currentButton.name == "GPButton")
                     {
                         print("You have clicked on the Gauteng province");
+                        provinceName = "GP";
                     }
                     else if (currentButton.name == "NWButton")
                     {
                         print("You have clicked on the North West province");
+                        provinceName = "NW";
                     }
                     else if (currentButton.name == "MPButton")
                     {
                         print("You have clicked on the Mpumalanga province");
+                        provinceName = "MP";
                     }
                     else if (currentButton.name == "LPButton")
                     {
                         print("You have clicked on the Limpopo province");
+                        provinceName = "LP";
                     }
 
-                    
+
 
                 }
 

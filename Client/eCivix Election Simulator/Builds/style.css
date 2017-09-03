@@ -1,0 +1,22 @@
+@font-face{
+		font-family:'RaspoutineClassic_TB';
+		src: url('Fonts/RaspoutineClassic_TB.otf');
+}
+body{
+	background-image: url(Images/WelcomeBackground.png);
+	background-size: cover;
+
+	font-family:'RaspoutineClassic_TB';
+}
+
+h3{
+	color:#FFFFFF;
+	height: 200px;
+	width: 400px;
+	font-size: 60px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -200px;
+}

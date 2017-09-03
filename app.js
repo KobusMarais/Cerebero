@@ -6,9 +6,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const routes = require('./server/routes/index');
 
-var index = require('./server/routes/index');
-var users = require('./server/routes/users');
-var AI = require('./server/routes/AI');
+var index = require('./routes/index');
+var users = require('./routes/users');
+var AI = require('./routes/AI');
+var api = require('./routes/api'); 
+var mainGame = require('./routes/mainGame');
+
+
+var path = require('path');
 var app = express();
 
 // view engine setup
@@ -21,17 +26,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'Client')));
-console.log("TESTING 1");
-//app.use('/index', index);
-app.use('./server/', routes);
-console.log("TESTING 2");
-app.use('./server/routes', users);
-console.log(__dirname);
-app.use('./server/routes', AI);
+//app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds'));
-app.use(index);
+app.use('/index', index);
+
+app.use('/AI', AI);
+
+app.use('/', users);
+
+app.use('/api', api);
+app.use('/mainGame', mainGame)
+app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

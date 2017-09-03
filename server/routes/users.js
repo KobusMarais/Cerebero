@@ -4,7 +4,8 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     var path = require('path');
-    res.sendFile(path.resolve('./Client/eCivix Election Simulator/Builds/index.html'));
+    console.log("THIS IS WHERE THE DOG SLEEPS 1");
+    res.sendFile(path.resolve('./Client/eCivix Election Simulator/UnderConstructionPage/index.html'));
 
 });
 
