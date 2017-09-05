@@ -21,6 +21,7 @@ CREATE TABLE userAccounts (
 	isAdmin BOOLEAN NOT NULL,
 	firstName TEXT NOT NULL,
     lastName TEXT NOT NULL,
+	currentScore INT,
     highestScore INT
 );
 
@@ -57,6 +58,7 @@ CREATE TABLE allTopics(
 CREATE TABLE tblFunds(
 	pkid SERIAL PRIMARY KEY,  
 	userId INT NOT NULL REFERENCES userAccounts(pkid),
+	user_funds INT NOT NULL,
 	ai1_funds INT NOT NULL,
     ai2_funds INT NOT NULL,
 	ai3_funds INT NOT NULL,
@@ -66,6 +68,7 @@ CREATE TABLE tblFunds(
 CREATE TABLE tblManPower(
 	pkid SERIAL PRIMARY KEY, 
 	userId INT NOT NULL REFERENCES userAccounts(pkid),
+	user_ManPower INT NOT NULL,
 	ai1_ManPower INT NOT NULL,
 	ai2_ManPower INT NOT NULL,
 	ai3_ManPower INT NOT NULL,
@@ -75,7 +78,7 @@ CREATE TABLE tblManPower(
 CREATE TABLE tblProvince(
 	pkid SERIAL PRIMARY KEY, 
 	provinceName TEXT NOT NULL,
-	totalSupportAvailable INT NOT NULL,
+	totalfundsAvailable INT NOT NULL,
 	totalManpowerAvailable INT NOT NULL
 );
 
@@ -98,6 +101,20 @@ CREATE TABLE tblAiSupportGained(
 	aiId INT NOT NULL REFERENCES aiAccount(pkid),
 	provinceId INT NOT NULL REFERENCES tblProvince(pkid),
 	support INT NOT NULL
+);
+
+CREATE TABLE tblUserManPowerGained(
+	pkid SERIAL PRIMARY KEY, 
+	userId INT NOT NULL REFERENCES userAccounts(pkid),
+	provinceId INT NOT NULL REFERENCES tblProvince(pkid),
+	manPower INT NOT NULL
+);
+
+CREATE TABLE tblAiManPowerGained(
+	pkid SERIAL PRIMARY KEY, 
+	aiId INT NOT NULL REFERENCES aiAccount(pkid),
+	provinceId INT NOT NULL REFERENCES tblProvince(pkid),
+	manPower INT NOT NULL
 );
 
 CREATE TABLE Leaderboard(

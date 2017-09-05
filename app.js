@@ -7,13 +7,11 @@ var bodyParser = require('body-parser');
 const routes = require('./server/routes/index');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var AI = require('./routes/AI');
+//var users = require('./routes/users');
+//var AI = require('./routes/AI');
 var api = require('./routes/api'); 
 var mainGame = require('./routes/mainGame');
 
-
-var path = require('path');
 var app = express();
 
 // view engine setup
@@ -30,12 +28,12 @@ app.use(cookieParser());
 
 app.use('/index', index);
 
-app.use('/AI', AI);
+//app.use('/AI', AI);
 
-app.use('/', users);
+//app.use('/', users);
 
 app.use('/api', api);
-app.use('/mainGame', mainGame)
+app.use('/mainGame', mainGame);
 app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
