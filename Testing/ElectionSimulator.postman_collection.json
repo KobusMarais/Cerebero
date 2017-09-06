@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "ElectionSimulator",
-		"_postman_id": "d7a7d748-678a-dc32-b294-fb8c2a66b9ef",
+		"_postman_id": "f33357a1-9115-7041-2024-d5ac5cabe72b",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -310,6 +310,63 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "endHighScore",
+			"request": {
+				"url": "http://localhost:3000/api/endHighScore",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"access_token\": \"123abc\",\r\n  \"userScore\": \"20\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getIssues",
+			"request": {
+				"url": "http://localhost:3000/api/getIssues",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "setIssues",
+			"request": {
+				"url": "http://localhost:3000/api/setIssues",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"access_token\": \"123abc\",\r\n\t\"issues\":[{\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\":\"racism\", \"stance\":\"far right\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}]\r\n}"
 				},
 				"description": ""
 			},

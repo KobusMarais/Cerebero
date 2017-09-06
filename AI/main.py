@@ -16,10 +16,13 @@ def main():
     np_lines = np.array(lines)
 
     #use numpys sum method to find sum of all elements in the array
-    lines_sum = np.sum(np_lines)
+   # lines_sum = np.sum(np_lines)
 
     #return the sum to the output stream
-    print(lines_sum)
+    print(np_lines[1])
+    print(np_lines[0])
+    print(np_lines[2])
+    print(np_lines[3])
 
 #start process
 if __name__ == '__main__':

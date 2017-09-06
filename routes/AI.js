@@ -8,18 +8,25 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     var spawn = require('child_process').spawn,
         py    = spawn('python', ['./AI/main.py']),
-        data = [1,2,3,4,5,6,7,8,9],
+        data = ["tester" , "5" , "10" , "marais"],
         dataString = '';
+    py.stdin.setEncoding('utf-8');
 
-    py.stdout.on('data', function(data){
-        dataString += data.toString();
+    //reads data received
+    py.stdout.on('data', function(bata){
+        dataString += bata.toString();
     });
+
+    //outputs data received when script ends
     py.stdout.on('end', function(){
         console.log('Sum of numbers=',dataString);
         res.send(dataString);
     });
+    //py.stdin.write();
+    //writes data to script
     py.stdin.write(JSON.stringify(data));
     py.stdin.end();
+
 });
 
 module.exports = router;
