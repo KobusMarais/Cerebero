@@ -4,33 +4,22 @@ const {Pool, Client, pg} = require('pg');
 const path = require('path');
 const connectionString = 'postgres://qteorhenhhafxk:6ce54e222dd9d48768d1450b96fa91b0966239026292309303229619afc37969@ec2-54-247-177-33.eu-west-1.compute.amazonaws.com:5432/d81ndajjs435dl';
 
-const pool = new Pool({
-  // user: 'qteorhenhhafxk',
-  // host: 'ec2-54-247-177-33.eu-west-1.compute.amazonaws.com',
-  // database: '/d81ndajjs435dl',
-  // password: '6ce54e222dd9d48768d1450b96fa91b0966239026292309303229619afc37969',
-  // port: '5432'
-  connectionString: connectionString,
-})
-
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res);
-  pool.end();
-})
+// const pool = new Pool({
+//   user: 'qteorhenhhafxk',
+//   host: 'ec2-54-247-177-33.eu-west-1.compute.amazonaws.com',
+//   database: '/d81ndajjs435dl',
+//   password: '6ce54e222dd9d48768d1450b96fa91b0966239026292309303229619afc37969',
+//   port: '5432',
+//   connectionString: connectionString,
+// })
 
 const client = new Client({
-  // user: 'qteorhenhhafxk',
-  // host: 'ec2-54-247-177-33.eu-west-1.compute.amazonaws.com',
-  // database: '/d81ndajjs435dl',
-  // password: '6ce54e222dd9d48768d1450b96fa91b0966239026292309303229619afc37969',
-  // port: '5432'
+  /*user: 'qteorhenhhafxk',
+     host: 'ec2-54-247-177-33.eu-west-1.compute.amazonaws.com',
+     database: '/d81ndajjs435dl',
+     password: '6ce54e222dd9d48768d1450b96fa91b0966239026292309303229619afc37969',
+     port: '5432',*/
   connectionString: connectionString,
-})
-client.connect();
-
-client.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  client.end()
 })
 
 router.post('/register', function(req,res){
@@ -44,23 +33,34 @@ router.post('/register', function(req,res){
     console.log(req.body.email);
     // Grab data from http request
     const data = {username: req.body.reg_username, password: req.body.reg_user_password, isadmin: false, firstName: req.body.firstName, lastName: req.body.lastName, highestScore: 0};
+    const queryString = 'INSERT INTO userAccounts(username, user_password, isadmin, firstName, lastName, highestScore) values($1, $2, $3, $4, $5, $6)';
+    const queryValues = [data.username, data.password, data.isadmin, data.firstName, data.lastName, data.highestScore];
+    client.connect();
 
-    pg.connect(connectionString, (err, client, done) => {
-        // Handle connection errors
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({success: false, data: err});
+    // SQL Query > Insert Data
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
         }
-        // SQL Query > Insert Data
-        client.query('INSERT INTO userAccounts(username, user_password, isadmin, firstName, lastName, highestScore) values($1, $2, $3, $4, $5, $6)',
-        [data.username, data.password, data.isadmin, data.firstName, data.lastName, data.highestScore]);
-        
-        // After all data is returned, close connection and return results
-        query.on('end', () => {
-          done();
-          return res.json();
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+            })
+        .catch(e => {
+            console.error(e.stack)
         });
+
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
+      done();
+      return res.json();
     });
     //Insert code here to check if email or username has been used before
 
@@ -78,38 +78,55 @@ router.post('/login', function(req,res){
     res.setHeader('Access-Control-Allow-Credentials', true); 
     console.log(req.body.username);
     console.log(req.body.password);
+    const data = {username: req.body.log_username, password: req.body.log_user_password};
+    const queryString = 'SELECT username, user_password FROM userAccounts WHERE username = $1';
+    const queryValues = [data.username];
 
     const results = [];
     //insert code here to check if email and password are correct.
-    pg.connect(connectionString, (err, client, done) => {
-        // Handle connection errors
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({success: false, data: err});
-        }
+    client.connect();
 
-        const data = {username: req.body.log_username, password: req.body.log_user_password};
-        const query = client.query('SELECT username, user_password FROM userAccounts WHERE username = $1', [data.username]);
-        // Stream results back one row at a time
-        query.on('row', (row) => {
-          results.push(row);
+    // SQL Query > Insert Data
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
         });
 
-        if (results != null){
-            var user = results.pop();
-            var password = results.pop();
-            if (user == data.username && password == data.password)
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
+        done();
+        return res.json();
+    });
+
+        /*if (!results.isEmpty()){
+            let user = results.pop();
+            let password = results.pop();
+            if ((user.compare(data.username)) && (password.compare(data.password)){
                 return res.status(200).json({success: true});
-            else 
+            }
+            else {
                 return res.status(403).json({success: false});
+            }
         }
         // After all data is returned, close connection and return results
         query.on('end', () => {
           done();
           return res.json(results);
-        });
-    });
+        });*/
     //generate new token for each user and create entry in db for that user.
     var text = '{"access_token" : "123abc"}';
     var obj = JSON.parse(text);
@@ -129,30 +146,70 @@ router.post('/collectFunds', function(req,res){
     //calculate fund change according to dataset from db
     //save amount of funds user has to db.
 
-    pg.connect(connectionString, (err, client, done) => {
-        // Handle connection errors
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({success: false, data: err});
+    const data = {username: req.body.username};
+    const queryString = 'SELECT * FROM tblFunds WHERE userId = $1';
+    const queryValues = [data.username];
+
+    const results = [];
+    //insert code here to check if email and password are correct.
+    client.connect();
+
+    // SQL Query > Insert Data
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
         }
-        var userId = getUserId(reg.body.username);
-        var extraFunds = req.body.funds;
-        const data = {username: req.body.username};
-        const query = client.query('SELECT * FROM tblFunds WHERE userId = $1', [userId]);
-        
-        // Stream results back one row at a time
-        query.on('row', (row) => {
-          results.push(row);
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
         });
-        var currentFunds = 200;
-        var newFundsTotal = currentFunds + extraFunds;
-        const updateQuery = client.query('Update user_funds SET user_funds = $1',[newFundsTotal]);
-        // After all data is returned, close connection and return results
-        query.on('end', () => {
-          done();
-          return res.json(results);
+
+    let userId = getUserId(reg.body.username);
+    let extraFunds = req.body.funds;
+
+    // Stream results back one row at a time
+    query.on('row', (row) => {
+      results.push(row);
+    });
+
+    const currentFunds = 200;
+    newFundsTotal = currentFunds + extraFunds;
+    const updateQuery = client.query('Update user_funds SET user_funds = $1');
+    const updateValues = [newFundsTotal];
+    // SQL Query > Insert Data
+    client.query(updateQuery, updateValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(updateQuery, updateValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
         });
+
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
+      done();
+      return res.json(results);
     });
 
     //return success and update funds
@@ -174,33 +231,67 @@ router.post('/campaignProvince', function(req,res){
     //calculate support change according to dataset from db
     //save amount of funds user has to db.
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      var userId = getUserId(reg.body.username); 
-      const data = {username: req.body.username};
-      const query = client.query('SELECT support FROM tblUserSupportGained WHERE userId = $1 AND provinceId = $2', [userId, reg.body.provinceId]);
-      const newSupport = 20;
-      const finalNewSupport = newSupport + 'Queried support';
+    const userId = getUserId(reg.body.username);
+    const newSupport = 20;
+    finalNewSupport = newSupport + 'Queried support';
+    const queryString = 'SELECT support FROM tblUserSupportGained WHERE userId = $1 AND provinceId = $2';
+    const queryValues = [userId, reg.body.provinceId];
 
-      /* AI moves? */
+    const results = [];
+    //insert code here to check if email and password are correct.
+    client.connect();
+
+    // SQL Query > Insert Data
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
 
 
-      // Stream results back one row at a time
-      query.on('row', (row) => {
+    // Stream results back one row at a time
+    query.on('row', (row) => {
         results.push(row);
-      });
-      const updateQuery = client.query('Update tblUserSupportGained SET support = $1',[finalNewSupport]);
+    });
+
+    const updateQuery = client.query('Update tblUserSupportGained SET support = $1');
+    const updateValues = [finalNewSupport];
       // After all data is returned, close connection and return results
+    client.query(updateQuery, updateValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(updateQuery, updateValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
       query.on('end', () => {
         done();
         return res.json(results);
       });
-    });
 
     //return success and update funds
     var text = '{"success" : "1", "support" : $1, "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}',[finalNewSupport];
@@ -219,29 +310,38 @@ router.post('/pollProvince', function(req,res){
     //find access token in DB
     //retrieve opponent's in that province from db
     //return support to user
+    const userId = getUserId(reg.body.username);
+    const queryString = 'SELECT support FROM tblUserSupportGained WHERE userId = $1 AND provinceId = $2';
+    const queryValues = [userId, reg.body.provinceId];
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      var userId = getUserId(reg.body.username); 
-      const data = {username: req.body.username};
-      const query = client.query('SELECT support FROM tblUserSupportGained WHERE userId = $1 AND provinceId = $2', [userId, reg.body.provinceId]); 
-      /* AI moves? */
+    const results = [];
+    //insert code here to check if email and password are correct.
+    client.connect();
 
+    // SQL Query > Insert Data
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
 
-      // Stream results back one row at a time
-      query.on('row', (row) => {
-        results.push(row);
-      });
-      // After all data is returned, close connection and return results
-      query.on('end', () => {
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
         done();
         return res.json(results);
-      });
     });
     
     var text = '{"User": "40", "AI1" : "10", "AI2" : "10", "AI3": "20", "AI4" : "20", "AI1Move" : "Poll Gauteng", "AI2Move" : "Poll Limpopo" , "AI3Move" : "Collect Funds Freestate", "AI4Move" : "Campaign Western Cape"}';
@@ -260,26 +360,38 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
     //retrieve user funds from db
     //return user funds
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      var userId = getUserId(reg.body.username);
-      const query = client.query('SELECT * FROM tblFunds WHERE userId = $1', [userId]);
-      
-      // Stream results back one row at a time
-      query.on('row', (row) => {
-        results.push(row);
-      });
+    const userId = getUserId(reg.body.username);
+    const queryString = 'SELECT * FROM tblFunds WHERE userId = $1';
+    const queryValues = [userId];
 
-      // After all data is returned, close connection and return results
-      query.on('end', () => {
+    const results = [];
+    //insert code here to check if email and password are correct.
+    client.connect();
+
+    // SQL Query > Insert Data
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
         done();
         return res.json(results);
-      });
     });
 
     var text = '{"funds" : "10000"}';
@@ -297,38 +409,202 @@ router.post('/getFundsProvince', function(req, res, next) { //this is how many f
     //find access token in DB
     //retrieve province available funds from db
     //return province funds funds
+    const queryGP = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Gauteng"');
+    const queryMP = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Mpumanlanga"');
+    const queryL = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Limpopo"');
+    const queryKZN = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Kwazulu-Natal"');
+    const queryEC = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Eastern Cape"');
+    const queryWC = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Western Cape"');
+    const queryNC = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Northern Cape"');
+    const queryFS = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Free State"');
+    const queryNW = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "North West"');
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      const queryGP = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Gauteng"');
-      const queryMP = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Mpumanlanga"');
-      const queryL = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Limpopo"');
-      const queryKZN = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Kwazulu-Natal"');
-      const queryEC = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Eastern Cape"');
-      const queryWC = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Western Cape"');
-      const queryNC = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Northern Cape"');
-      const queryFS = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "Free State"');
-      const queryGauteng = client.query('SELECT totalfundsAvailable FROM tblProvince WHERE provinceName = "North West"');      
-      
-      // Stream results back one row at a time
-      query.on('row', (row) => {
-        results.push(row);
-      });
+    const results = [];
+    //insert code here to check if email and password are correct.
+    client.connect();
 
-      // After all data is returned, close connection and return results
-      query.on('end', () => {
+    // SQL Queries
+    client.query(queryGP, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryMP, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryL, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryKZN, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryEC, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryWC, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryNC, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryFS, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryNC, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    client.query(queryNW, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+
+    client.query(queryGP)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    client.query(queryMP)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    client.query(queryL)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    client.query(queryKZN)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    client.query(queryEC)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    client.query(queryWC)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    client.query(queryNC)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    client.query(queryFS)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    client.query(queryNW)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
         done();
         return res.json(results);
-      });
     });
     
-    var text = '{"Gauteng" : "10000", "Limpopo" : "5000", "West Cape" : "1000", "North Cape" : "2300", "East Cape" : "200", "Kwazulu natal" : "900", "Mpumalanga": "1300", "North West" : "4200", "Freestate" : "3300"}';
-    var obj = JSON.parse(text);
+    const text = '{"Gauteng" : "10000", "Limpopo" : "5000", "West Cape" : "1000", "North Cape" : "2300", "East Cape" : "200", "Kwazulu natal" : "900", "Mpumalanga": "1300", "North West" : "4200", "Freestate" : "3300"}';
+    const obj = JSON.parse(text);
     res.send(obj);
 });
 
@@ -339,29 +615,34 @@ router.post('/getProfile', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
+    const userId = getUserId(reg.body.username);
+    const queryString = 'SELECT * FROM userAccounts WHERE userId = $1';
+    const queryValues = [userId];
     //find access token in DB
     //retrieve user info from DB
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      var userId = getUserId(reg.body.username);
-      const query = client.query('SELECT * FROM userAccounts WHERE userId = $1', [userId]);
-      
-      // Stream results back one row at a time
-      query.on('row', (row) => {
-        results.push(row);
-      });
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
 
-      // After all data is returned, close connection and return results
-      query.on('end', () => {
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    query.on('end', () => {
         done();
         return res.json(results);
-      });
     });
 
     //return user data
@@ -380,26 +661,34 @@ router.post('/getScore', function(req, res, next) {
     //find access token in DB
     //retrieve user score from DB
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      var userId = getUserId(reg.body.username);
-      const query = client.query('SELECT currentScore FROM userAccounts WHERE userId = $1', [userId]);
-      
-      // Stream results back one row at a time
-      query.on('row', (row) => {
-        results.push(row);
-      });
+    const userId = getUserId(reg.body.username);
+    const queryString = 'SELECT currentScore FROM userAccounts WHERE userId = $1';
+    const queryValues = [userId];
+    //find access token in DB
+    //retrieve user info from DB
 
-      // After all data is returned, close connection and return results
-      query.on('end', () => {
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    query.on('end', () => {
         done();
         return res.json(results);
-      });
     });
 
     //return score
@@ -418,27 +707,34 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
     //find access token in DB
     //retrieve user score from DB
     //get current manpower support user has from db
+    const userId = getUserId(reg.body.username);
+    const queryString = 'SELECT manPower FROM tblUserManPowerGained WHERE userId = $1';
+    const queryValues = [userId];
+    //find access token in DB
+    //retrieve user info from DB
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      var userId = getUserId(reg.body.username);
-      const query = client.query('SELECT manPower FROM tblUserManPowerGained WHERE userId = $1', [userId]);
-      
-      // Stream results back one row at a time
-      query.on('row', (row) => {
-        results.push(row);
-      });
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
 
-      // After all data is returned, close connection and return results
-      query.on('end', () => {
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    query.on('end', () => {
         done();
         return res.json(results);
-      });
     });
 
     //return manpower user has currently
@@ -459,26 +755,34 @@ router.post('/getSupport', function(req, res, next) { // each province has its o
     //retrieve user support for that province from DB
     //get current support user has in that province from db
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      var userId = getUserId(reg.body.username);
-      const query = client.query('SELECT support FROM tblUserSupportGained WHERE userId = $1', [userId]);
-      
-      // Stream results back one row at a time
-      query.on('row', (row) => {
-        results.push(row);
-      });
+    const userId = getUserId(reg.body.username);
+    const queryString = 'SELECT manPower FROM tblUserManPowerGained WHERE userId = $1';
+    const queryValues = [userId];
+    //find access token in DB
+    //retrieve user info from DB
 
-      // After all data is returned, close connection and return results
-      query.on('end', () => {
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(queryString, queryValues)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    query.on('end', () => {
         done();
         return res.json(results);
-      });
     });
 
     var text = '{"support" : "10"}';
@@ -493,26 +797,32 @@ router.get('/getHighscoreBoard', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    pg.connect(connectionString, (err, client, done) => {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({success: false, data: err});
-      }
-      var userId = getUserId(reg.body.username);
-      const query = client.query('SELECT * FROM Leaderboard ORDER BY score DESC');
-      
-      // Stream results back one row at a time
-      query.on('row', (row) => {
-        results.push(row);
-      });
+    const queryString = 'SELECT * FROM Leaderboard ORDER BY score DESC';
+    //find access token in DB
+    //retrieve user info from DB
 
-      // After all data is returned, close connection and return results
-      query.on('end', () => {
+    client.query(queryString, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
+    });
+
+    // promise
+    client.query(queryString)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    query.on('end', () => {
         done();
         return res.json(results);
-      });
     });
 
     var text = '{"Jack" : "10000", "John" : "80", "Jacky" : "70"}';
@@ -604,19 +914,38 @@ function getUserId(username){
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(username);
-    var query;
-    pg.connect(connectionString, (err, client, done) => {
-        // Handle connection errors
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({success: false, data: err});
-        }
 
-        query = client.query('SELECT pkid FROM userAccounts WHERE username = $1', [username]);
-        // Stream results back one row at a time
+    const userId = getUserId(reg.body.username);
+    const queryString = 'SELECT pkid FROM userAccounts WHERE username = $1';
+    const queryValues = [username];
+    //find access token in DB
+    //retrieve user info from DB
+
+    client.query(queryString, queryValues, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+        }
+        else {
+            console.log(res.rows[0])
+        }
     });
-    return query;
+
+    // promise
+    client.query(queryString)
+        .then(res => {
+            console.log(res.rows[0])
+
+        })
+        .catch(e => {
+            console.error(e.stack)
+        });
+
+    query.on('end', () => {
+        done();
+        return res.json(results);
+    });
+
+    return res.json(results);
 }
 
 module.exports = router;
