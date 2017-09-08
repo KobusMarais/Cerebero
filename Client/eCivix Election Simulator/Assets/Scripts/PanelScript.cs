@@ -21,6 +21,7 @@ public class PanelScript : MonoBehaviour {
 
     public GameObject menu;
     public GameObject map;
+    public GameObject leaderBoard;
 
 
 
@@ -28,6 +29,7 @@ public class PanelScript : MonoBehaviour {
     void Start () {
 
         menu.SetActive(false);
+        leaderBoard.SetActive(false);
 
         Button btn1 = menuButton.GetComponent<Button>();
         btn1.onClick.AddListener(openPanel);
@@ -75,9 +77,11 @@ public class PanelScript : MonoBehaviour {
         //SAVE GAME
 
         //print("You have clicked on the save game button");
-        
+
         //menu.SetActive(false);
         //map.SetActive(true);
+
+        leaderBoard.SetActive(true);
     }
 
     void restartGame()  
