@@ -17,6 +17,9 @@ public class NewGameDetails : MonoBehaviour
     public Button easyDif;
     public Button hardDif;
 
+    public GameObject loadScreen;
+    public GameObject loadText;
+
     public Button avatar1;
     public Button avatar2;
     public Button avatar3;
@@ -40,6 +43,9 @@ public class NewGameDetails : MonoBehaviour
 
         flag = false;
         difData = "";
+
+        loadScreen.SetActive(false);
+        loadText.SetActive(false);
 
         Button btn = continueButton.GetComponent<Button>();
         btn.onClick.AddListener(StartGame);
@@ -95,6 +101,9 @@ public class NewGameDetails : MonoBehaviour
         }
         else
         {
+            loadScreen.SetActive(true);
+            loadText.SetActive(true);
+
             Upload();
             string url = "http://ecivix.org.za/api/startGame";
 
@@ -111,21 +120,32 @@ public class NewGameDetails : MonoBehaviour
 
     }
 
+    IEnumerator delayLoading()
+    {
+        yield return new WaitForSeconds(2);
+
+        SceneManager.LoadScene("IssuesSelection");
+    }
+
 
     IEnumerator Upload()
     {
         yield return www;
 
-        print(www.text);
+       // print(www.text);
 
         if (!string.IsNullOrEmpty(www.error))
         {
             Debug.Log(www.error);
+
+            loadScreen.SetActive(false);
+            loadText.SetActive(false);
         }
         else
         {
             newGameJson = www.text;
-            SceneManager.LoadScene("MainScreen");
+            StartCoroutine(delayLoading());
+            
         }
     }
 
