@@ -267,7 +267,7 @@ router.post('/endHighScore', function(req, res, next) { // receives user score a
     console.log(req.body.userScore);
     //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
 
-    var text = '{"scoreboard": [{"1":{"name":"Kobus","score":"123"}},{"2":{"name": "John","score":"122"}},{"3":{"name":"Jack","score":"121"}},{"4":{"name":"Rikard","score":"120"}},{"5":{"name":"Fred","score":"119"}},{"6":{"name":"Victor","score":"118"}},{"7":{"name":"Zoo","score":"117"}},{"8":{"name":"Jess","score":"116"}},{"9":{"name":"Jacky","score":"115"}},{"10":{"name":"Jasper","score":"114"}},{"33":{"name": "Daniel","score":"100"}}]}';
+    var text = '{"scoreboard": [{"1":{"name":"Kobus","score":"123", "position" : "1"}},{"2":{"name": "John","score":"122", "position" : "2"}},{"3":{"name":"Jack","score":"121", "position" : "3"}},{"4":{"name":"Rikard","score":"120", "position" : "4"}},{"5":{"name":"Fred","score":"119", "position" : "5"}},{"6":{"name":"Victor","score":"118", "position" : "6"}},{"7":{"name":"Zoo","score":"117","position" : "7"}},{"8":{"name":"Jess","score":"116", "position" : "8"}},{"9":{"name":"Jacky","score":"115", "position" : "9"}},{"10":{"name":"Jasper","score":"114", "position" : "10"}},{"33":{"name": "Daniel","score":"100", "position" : "33"}}]}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
