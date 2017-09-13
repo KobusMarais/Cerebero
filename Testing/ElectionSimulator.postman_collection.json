@@ -371,6 +371,20 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "getStances",
+			"request": {
+				"url": "http://localhost:3000/api/endHighScore",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"access_token\": \"123abc\",\r\n\t\"issues\":[\"crime\", \"Racism\", \"Abortion\", \"Prostition\"]\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

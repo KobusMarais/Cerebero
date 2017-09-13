@@ -278,7 +278,21 @@ router.get('/getIssues', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    var text = '{"issues":[{"crime":[{"farLeft" : "Restorative Justice"}, {"left" : "Rehabilitation"}, {"centre" : "Prevention"}, {"right" :"Punishment"}, {"farRight": "Increased Sentencing"}]},{"Tax of High income earners":[{"farLeft" : "70%"}, {"left" : "50%"}, {"centre" : "35%"}, {"right" :"15%"}, {"farRight": "0%"}]}]}';
+    var text = '{"issues":["crime", "Symbols of History", "Immigration", "Racism", "Fire Arm Control", "Same Sex Marriage", "Prostitution", "Abortion", "Regulation of media", "Sport Quotas", "Drug legislation", "Mining", "Energy production", "Affirmative Action", "Labor regulation", "Land reform", "Tax of high income earners", "Social grants", "unemployment", "Tertiary Education", "Primary Education", "African Union", "Housing"]}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
+router.post('/getStances', function(req, res, next) { // receives user score and inserts into leaderboard
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    var text = "{\n" +
+        "\t\"stances\":[{\"1\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"2\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"3\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"4\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"5\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]}]\n" +
+        "}";
     var obj = JSON.parse(text);
     res.send(obj);
 });
