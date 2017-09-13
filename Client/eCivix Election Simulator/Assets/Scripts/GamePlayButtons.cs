@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using SimpleJSON;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 public class GamePlayButtons : MonoBehaviour {
 
@@ -553,7 +554,8 @@ public class GamePlayButtons : MonoBehaviour {
 	IEnumerator provinceCampaign()
 	{
 		yield return www2;
-		if (!string.IsNullOrEmpty(www2.error))
+        
+        if (!string.IsNullOrEmpty(www2.error))
 		{
 			Debug.Log(www2.error);
 			//print(www.error);
@@ -568,7 +570,13 @@ public class GamePlayButtons : MonoBehaviour {
 		}
 	}
 
-	void endTurn() {
+    IEnumerator delayLeaderboard()
+    {
+        yield return new WaitForSeconds(3);
+
+        SceneManager.LoadScene("LeaderBoard");
+    }
+        void endTurn() {
 		print("End turn button clicked");
 
 		weeks--;
@@ -579,7 +587,11 @@ public class GamePlayButtons : MonoBehaviour {
 			infoPanelAnim.Play(infoPanelPollHash, -1, 0f);
 			infoPanelHeadingText.text = "Congratulations";
 			infoPanelText.text = PlayerPrefs.GetString("Player Party") + " has won the election!";
-		}
+
+
+            StartCoroutine(delayLeaderboard());
+            
+        }
 
 		/*
 		getWeeks();

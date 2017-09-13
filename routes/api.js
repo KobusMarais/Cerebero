@@ -257,5 +257,45 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
     res.send(obj);
 });
 
+router.post('/endHighScore', function(req, res, next) { // receives user score and inserts into leaderboard
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    console.log(req.body.access_token);
+    console.log(req.body.userScore);
+    //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
+
+    var text = '{"scoreboard": [{"1":{"name":"Kobus","score":"123"}},{"2":{"name": "John","score":"122"}},{"3":{"name":"Jack","score":"121"}},{"4":{"name":"Rikard","score":"120"}},{"5":{"name":"Fred","score":"119"}},{"6":{"name":"Victor","score":"118"}},{"7":{"name":"Zoo","score":"117"}},{"8":{"name":"Jess","score":"116"}},{"9":{"name":"Jacky","score":"115"}},{"10":{"name":"Jasper","score":"114"}},{"33":{"name": "Daniel","score":"100"}}]}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
+router.get('/getIssues', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    var text = '{"issues":[{"crime":[{"farLeft" : "Restorative Justice"}, {"left" : "Rehabilitation"}, {"centre" : "Prevention"}, {"right" :"Punishment"}, {"farRight": "Increased Sentencing"}]},{"Tax of High income earners":[{"farLeft" : "70%"}, {"left" : "50%"}, {"centre" : "35%"}, {"right" :"15%"}, {"farRight": "0%"}]}]}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
+
+router.post('/setIssues', function(req, res, next) { // receives user score and inserts into leaderboard
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    console.log(req.body.access_token);
+    console.log(req.body.issues);
+    //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
+
+    var text = '{"success": "1"}';
+    var obj = JSON.parse(text);
+    res.send(obj);
+});
 
 module.exports = router;

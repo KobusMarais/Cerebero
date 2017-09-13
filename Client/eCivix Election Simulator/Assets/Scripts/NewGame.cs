@@ -15,6 +15,7 @@ public class NewGame : MonoBehaviour {
     void TaskOnClick()
     {
         SceneManager.LoadScene("NewGameScreen");
+        Screen.fullScreen = true;
     }
     
 }
