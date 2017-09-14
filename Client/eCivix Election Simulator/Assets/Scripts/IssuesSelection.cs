@@ -22,7 +22,7 @@ public class IssuesSelection : MonoBehaviour {
     {
         yield return new WaitForSeconds(2);
 
-        SceneManager.LoadScene("MainScreen");
+        SceneManager.LoadScene("StanceSelection");
     }
 
     void SelectIssues() {
