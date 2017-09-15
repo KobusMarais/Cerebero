@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using SimpleJSON;
+using System.Text;
 
 public class IssuesStancesSelection : MonoBehaviour {
 
+	private WWW www;
     public GameObject loadScreen;
     public GameObject loadText;
 
@@ -31,10 +34,18 @@ public class IssuesStancesSelection : MonoBehaviour {
         loadScreen.SetActive(false);
         loadText.SetActive(false);
 
-        Issue1Text.text = "Issue 1 text";
-        Issue2Text.text = "Issue 2 text";
-        Issue3Text.text = "Issue 3 text";
-        Issue4Text.text = "Issue 4 text";
+		loadIssues ();
+
+		Issue1Stance.text = "Stance: Center";
+		Issue2Stance.text = "Stance: Center";
+		Issue3Stance.text = "Stance: Center";
+		Issue4Stance.text = "Stance: Center";
+
+
+        //Issue1Text.text = "Issue 1 asdf";
+        //Issue2Text.text = "Issue 2 text";
+        //Issue3Text.text = "Issue 3 text";
+        //Issue4Text.text = "Issue 4 text";
 
         Button btn = startButton.GetComponent<Button>();
         btn.onClick.AddListener(SelectStances);
@@ -47,7 +58,8 @@ public class IssuesStancesSelection : MonoBehaviour {
 
     void issue1Slider(float value)
     {
-        Issue1Stance.text = "Value: " + value;
+        //Issue1Stance.text = "Value: " + value;
+		Issue1Stance.text = "Stance:";
 
         if(value == 1)
         {
@@ -78,7 +90,8 @@ public class IssuesStancesSelection : MonoBehaviour {
 
     void issue2Slider(float value)
     {
-        Issue2Stance.text = "Value: " + value;
+		//Issue2Stance.text = "Value: " + value;
+		Issue2Stance.text = "Stance:";
 
         if (value == 1)
         {
@@ -109,7 +122,8 @@ public class IssuesStancesSelection : MonoBehaviour {
 
     void issue3Slider(float value)
     {
-        Issue3Stance.text = "Value: " + value;
+		//Issue3Stance.text = "Value: " + value;
+		Issue3Stance.text = "Stance:";
 
         if (value == 1)
         {
@@ -140,7 +154,8 @@ public class IssuesStancesSelection : MonoBehaviour {
 
     void issue4Slider(float value)
     {
-        Issue4Stance.text = "Value: " + value;
+		//Issue4Stance.text = "Value: " + value;
+		Issue4Stance.text = "Stance:";
 
         if (value == 1)
         {
@@ -171,10 +186,8 @@ public class IssuesStancesSelection : MonoBehaviour {
 
     void SelectStances()
     {
-        loadScreen.SetActive(true);
-        loadText.SetActive(true);
-
-        StartCoroutine(delayLoading());
+		print (createIssueStanceArray ());
+		setIssues ();
     }
 
     IEnumerator delayLoading()
@@ -183,4 +196,83 @@ public class IssuesStancesSelection : MonoBehaviour {
 
         SceneManager.LoadScene("MainScreen");
     }
+
+	void loadIssues()
+	{
+		//selectedIssues
+		int i = 0;
+		foreach (var issue in IssuesSelection.selectedIssues) {
+			print (issue.ToString());
+			i++;
+			switch (i) {
+			case 1:
+				Issue1Text.text = issue.ToString();
+				break;
+			case 2:
+				Issue2Text.text = issue.ToString();
+				break;
+			case 3:
+				Issue3Text.text = issue.ToString();
+				break;
+			case 4:
+				Issue4Text.text = issue.ToString();
+				break;
+			}
+		}
+	}
+
+	void setIssues()
+	{
+		print("Setting issues");
+
+		setIssuesReturn();
+		string url = "http://ecivix.org.za/api/setIssues";
+
+		var requestString = "{'access_token':'123abc','issues':[" + createIssueStanceArray() + "]}";
+
+		byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
+
+		www = new WWW (url, pData);
+		StartCoroutine (setIssuesReturn());
+	}
+
+	IEnumerator setIssuesReturn()
+	{
+		yield return www;
+		if (!string.IsNullOrEmpty (www.error)) {
+			Debug.Log (www.error);
+			print (www.error);
+		} else {
+			print(www.text);
+			loadScreen.SetActive(true);
+			loadText.SetActive(true);
+
+			StartCoroutine(delayLoading());
+		}
+	}
+
+	string createIssueStanceArray(){
+		string array = "{'issue':'"+IssuesSelection.selectedIssues[0].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue1Stance.text.ToString()) +"'}," +
+			"{'issue':'"+IssuesSelection.selectedIssues[1].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue2Stance.text.ToString()) +"'}," +
+			"{'issue':'"+IssuesSelection.selectedIssues[2].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue3Stance.text.ToString()) +"'}," +
+			"{'issue':'"+IssuesSelection.selectedIssues[3].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue4Stance.text.ToString()) +"'}";
+
+		return array;
+	}
+
+	string trimStanceText(string t){
+
+		if (t == "Stance: Far Left")
+			return "far left";
+		if (t == "Stance: Left")
+			return "left";
+		if (t == "Stance: Center")
+			return "centre";
+		if (t == "Stance: Right")
+			return "right";
+		if (t == "Stance: Far Right")
+			return "far right";
+
+		return "";
+	}
 }
