@@ -11,6 +11,7 @@ public class IssuesStancesSelection : MonoBehaviour {
 	private WWW www;
     public GameObject loadScreen;
     public GameObject loadText;
+	JSONNode jsonStanceObj;
 
     public Button startButton;
     public Slider issue1;
@@ -35,11 +36,12 @@ public class IssuesStancesSelection : MonoBehaviour {
         loadText.SetActive(false);
 
 		loadIssues ();
+		loadStances ();
 
-		Issue1Stance.text = "Stance: Center";
-		Issue2Stance.text = "Stance: Center";
-		Issue3Stance.text = "Stance: Center";
-		Issue4Stance.text = "Stance: Center";
+		//Issue1Stance.text = "Stance: Center";
+		//Issue2Stance.text = "Stance: Center";
+		//Issue3Stance.text = "Stance: Center";
+		//Issue4Stance.text = "Stance: Center";
 
 
         //Issue1Text.text = "Issue 1 asdf";
@@ -59,31 +61,36 @@ public class IssuesStancesSelection : MonoBehaviour {
     void issue1Slider(float value)
     {
         //Issue1Stance.text = "Value: " + value;
-		Issue1Stance.text = "Stance:";
+		//Issue1Stance.text = "Stance:";
 
         if(value == 1)
         {
-            Issue1Stance.text += " Far Left";
+            //Issue1Stance.text += " Far Left";
+			Issue1Stance.text = jsonStanceObj [0] [0] [0] [0] [0];
         }
 
         if (value == 2)
         {
-            Issue1Stance.text += " Left";
+            //Issue1Stance.text += " Left";
+			Issue1Stance.text = jsonStanceObj [0] [0] [0] [1] [0];
         }
 
         if (value == 3)
         {
-            Issue1Stance.text += " Center";
+            //Issue1Stance.text += " Center";
+			Issue1Stance.text = jsonStanceObj [0] [0] [0] [2] [0];
         }
 
         if (value == 4)
         {
-            Issue1Stance.text += " Right";
+            //Issue1Stance.text += " Right";
+			Issue1Stance.text = jsonStanceObj [0] [0] [0] [3] [0];
         }
 
         if (value == 5)
         {
-            Issue1Stance.text += " Far Right";
+            //Issue1Stance.text += " Far Right";
+			Issue1Stance.text = jsonStanceObj [0] [0] [0] [4] [0];
         }
         
     }
@@ -91,31 +98,36 @@ public class IssuesStancesSelection : MonoBehaviour {
     void issue2Slider(float value)
     {
 		//Issue2Stance.text = "Value: " + value;
-		Issue2Stance.text = "Stance:";
+		//Issue2Stance.text = "Stance:";
 
         if (value == 1)
         {
-            Issue2Stance.text += " Far Left";
+            //Issue2Stance.text += " Far Left";
+			Issue2Stance.text = jsonStanceObj [0] [1] [0] [0] [0];
         }
 
         if (value == 2)
         {
-            Issue2Stance.text += " Left";
+            //Issue2Stance.text += " Left";
+			Issue2Stance.text = jsonStanceObj [0] [1] [0] [1] [0];
         }
 
         if (value == 3)
         {
-            Issue2Stance.text += " Center";
+            //Issue2Stance.text += " Center";
+			Issue2Stance.text = jsonStanceObj [0] [1] [0] [2] [0];
         }
 
         if (value == 4)
         {
-            Issue2Stance.text += " Right";
+            //Issue2Stance.text += " Right";
+			Issue2Stance.text = jsonStanceObj [0] [1] [0] [3] [0];
         }
 
         if (value == 5)
         {
-            Issue2Stance.text += " Far Right";
+            //Issue2Stance.text += " Far Right";
+			Issue2Stance.text = jsonStanceObj [0] [1] [0] [4] [0];
         }
 
     }
@@ -123,31 +135,36 @@ public class IssuesStancesSelection : MonoBehaviour {
     void issue3Slider(float value)
     {
 		//Issue3Stance.text = "Value: " + value;
-		Issue3Stance.text = "Stance:";
+		//Issue3Stance.text = "Stance:";
 
         if (value == 1)
         {
-            Issue3Stance.text += " Far Left";
+            //Issue3Stance.text += " Far Left";
+			Issue3Stance.text = jsonStanceObj [0] [2] [0] [0] [0];
         }
 
         if (value == 2)
         {
-            Issue3Stance.text += " Left";
+            //Issue3Stance.text += " Left";
+			Issue3Stance.text = jsonStanceObj [0] [2] [0] [1] [0];
         }
 
         if (value == 3)
         {
-            Issue3Stance.text += " Center";
+            //Issue3Stance.text += " Center";
+			Issue3Stance.text = jsonStanceObj [0] [2] [0] [2] [0];
         }
 
         if (value == 4)
         {
-            Issue3Stance.text += " Right";
+            //Issue3Stance.text += " Right";
+			Issue3Stance.text = jsonStanceObj [0] [2] [0] [3] [0];
         }
 
         if (value == 5)
         {
-            Issue3Stance.text += " Far Right";
+            //Issue3Stance.text += " Far Right";
+			Issue3Stance.text = jsonStanceObj [0] [2] [0] [4] [0];
         }
 
     }
@@ -155,38 +172,43 @@ public class IssuesStancesSelection : MonoBehaviour {
     void issue4Slider(float value)
     {
 		//Issue4Stance.text = "Value: " + value;
-		Issue4Stance.text = "Stance:";
+		//Issue4Stance.text = "Stance:";
 
         if (value == 1)
         {
-            Issue4Stance.text += " Far Left";
+            //Issue4Stance.text += " Far Left";
+			Issue4Stance.text = jsonStanceObj [0] [3] [0] [0] [0];
         }
 
         if (value == 2)
         {
-            Issue4Stance.text += " Left";
+            //Issue4Stance.text += " Left";
+			Issue4Stance.text = jsonStanceObj [0] [3] [0] [1] [0];
         }
 
         if (value == 3)
         {
-            Issue4Stance.text += " Center";
+            //Issue4Stance.text += " Center";
+			Issue4Stance.text = jsonStanceObj [0] [3] [0] [2] [0];
         }
 
         if (value == 4)
         {
-            Issue4Stance.text += " Right";
+            //Issue4Stance.text += " Right";
+			Issue4Stance.text = jsonStanceObj [0] [3] [0] [3] [0];
         }
 
         if (value == 5)
         {
-            Issue4Stance.text += " Far Right";
+            //Issue4Stance.text += " Far Right";
+			Issue4Stance.text = jsonStanceObj [0] [3] [0] [4] [0];
         }
 
     }
 
     void SelectStances()
     {
-		print (createIssueStanceArray ());
+		//print (createIssueStanceArray ());
 		setIssues ();
     }
 
@@ -221,6 +243,16 @@ public class IssuesStancesSelection : MonoBehaviour {
 		}
 	}
 
+	void loadStances() {
+		jsonStanceObj = JSON.Parse (IssuesSelection.stancesArray);
+
+		Issue1Stance.text = jsonStanceObj [0] [0] [0] [2] [0];
+		Issue2Stance.text = jsonStanceObj [0] [1] [0] [2] [0];
+		Issue3Stance.text = jsonStanceObj [0] [2] [0] [2] [0];
+		Issue4Stance.text = jsonStanceObj [0] [3] [0] [2] [0];
+		//print("xyz: " + jsonStanceObj[0][0][0][2][0].ToString());
+	}
+
 	void setIssues()
 	{
 		print("Setting issues");
@@ -252,25 +284,31 @@ public class IssuesStancesSelection : MonoBehaviour {
 	}
 
 	string createIssueStanceArray(){
-		string array = "{'issue':'"+IssuesSelection.selectedIssues[0].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue1Stance.text.ToString()) +"'}," +
+		/*string array = "{'issue':'"+IssuesSelection.selectedIssues[0].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue1Stance.text.ToString()) +"'}," +
 			"{'issue':'"+IssuesSelection.selectedIssues[1].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue2Stance.text.ToString()) +"'}," +
 			"{'issue':'"+IssuesSelection.selectedIssues[2].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue3Stance.text.ToString()) +"'}," +
 			"{'issue':'"+IssuesSelection.selectedIssues[3].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue4Stance.text.ToString()) +"'}";
+		*/
+		string array = "{'issue':'"+IssuesSelection.selectedIssues[0].ToString().ToLower()+"', 'stance':'"+ stance(issue1.value) +"'}," +
+			"{'issue':'"+IssuesSelection.selectedIssues[1].ToString().ToLower()+"', 'stance':'"+ stance(issue2.value) +"'}," +
+			"{'issue':'"+IssuesSelection.selectedIssues[2].ToString().ToLower()+"', 'stance':'"+ stance(issue3.value) +"'}," +
+			"{'issue':'"+IssuesSelection.selectedIssues[3].ToString().ToLower()+"', 'stance':'"+ stance(issue4.value) +"'}";
 
+		//print ("boom: " + array);
 		return array;
 	}
 
-	string trimStanceText(string t){
+	string stance(float t){
 
-		if (t == "Stance: Far Left")
+		if (t == 1)
 			return "far left";
-		if (t == "Stance: Left")
+		if (t == 2)
 			return "left";
-		if (t == "Stance: Center")
+		if (t == 3)
 			return "centre";
-		if (t == "Stance: Right")
+		if (t == 4)
 			return "right";
-		if (t == "Stance: Far Right")
+		if (t == 5)
 			return "far right";
 
 		return "";
