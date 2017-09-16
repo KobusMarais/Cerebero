@@ -13,6 +13,7 @@ public class IssuesSelection : MonoBehaviour {
     public GameObject loadText;
 	private WWW www;
 	public static List<string> selectedIssues = new List<string> ();
+	public static string stancesArray;
 
 	private GameObject[] issueToggleArray;
 
@@ -61,8 +62,6 @@ public class IssuesSelection : MonoBehaviour {
 
     void SelectIssues() {
 
-		// temp
-
 		foreach (var issue in issueToggleArray)
 		{
 			//issue.GetComponentInChildren<Text>().text = removeApos(jsonObj ["issues"] [i].ToString ());
@@ -72,14 +71,51 @@ public class IssuesSelection : MonoBehaviour {
 				selectedIssues.Add(issue.GetComponentInChildren<Text>().text.ToString());
 			}
 		}
-
-		// temp
-
-        loadScreen.SetActive(true);
-        loadText.SetActive(true);
-
-        StartCoroutine(delayLoading());
+			
+		getStances ();   
     }
+
+
+	void getStances()
+	{
+		print("Getting stances");
+
+		saveStances();
+		string url = "http://ecivix.org.za/api/getStances";
+
+		var requestString = "{'access_token':'123abc','issues':[" + createIssueArray() + "]}";
+
+		print (requestString);
+		byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
+
+		www = new WWW (url, pData);
+		StartCoroutine (saveStances());
+	}
+
+	IEnumerator saveStances()
+	{
+		yield return www;
+		if (!string.IsNullOrEmpty (www.error)) {
+			Debug.Log (www.error);
+			print (www.error);
+		} else {
+
+			stancesArray = www.text;
+
+			loadScreen.SetActive(true);
+			loadText.SetActive(true);
+			StartCoroutine(delayLoading());
+		}
+	}
+
+	string createIssueArray() {
+		string array = "'"+IssuesSelection.selectedIssues[0].ToString().ToLower()+"'," +
+			"'"+IssuesSelection.selectedIssues[1].ToString().ToLower()+"'," +
+			"'"+IssuesSelection.selectedIssues[2].ToString().ToLower()+"'," +
+			"'"+IssuesSelection.selectedIssues[3].ToString().ToLower()+"'" ;
+		//print ("Array" + array);
+		return array;
+	}
 
 	void getIssues()
 	{
