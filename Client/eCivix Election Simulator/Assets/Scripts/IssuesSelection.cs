@@ -62,6 +62,8 @@ public class IssuesSelection : MonoBehaviour {
 
     void SelectIssues() {
 
+        int count = 0;
+
 		foreach (var issue in issueToggleArray)
 		{
 			//issue.GetComponentInChildren<Text>().text = removeApos(jsonObj ["issues"] [i].ToString ());
@@ -69,10 +71,20 @@ public class IssuesSelection : MonoBehaviour {
 			if (issue.GetComponentInChildren<Toggle>().isOn) {
 				//print(issue.GetComponentInChildren<Text>().text.ToLower());
 				selectedIssues.Add(issue.GetComponentInChildren<Text>().text.ToString());
+                count++;
+
 			}
 		}
-			
-		getStances ();   
+
+        if(count == 4)
+        {
+            getStances();
+        }
+        else
+        {
+            Debug.Log("Please choose 4 issues...");
+        }
+
     }
 
 
