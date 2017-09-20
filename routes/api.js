@@ -1,10 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const pg = require('pg');
-const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
-var query;
-const client = new pg.Client(connectionString);
-client.connect();
+var queries = require('./queries.js');
+
 
 router.post('/register', function(req,res){
     res.setHeader('Content-Type', 'application/json');
@@ -278,9 +275,9 @@ router.post('/endHighScore', function(req, res, next) { // receives user score a
         tempo = row['userid'];
         console.log(typeof(tempo));
         console.log(tempo);
-        });
+    });
 
-   // var text = '{"scoreboard": [{"1":{"name":"Kobus","score":"123", "position" : "1"}},{"2":{"name": "John","score":"122", "position" : "2"}},{"3":{"name":"Jack","score":"121", "position" : "3"}},{"4":{"name":"Rikard","score":"120", "position" : "4"}},{"5":{"name":"Fred","score":"119", "position" : "5"}},{"6":{"name":"Victor","score":"118", "position" : "6"}},{"7":{"name":"Zoo","score":"117","position" : "7"}},{"8":{"name":"Jess","score":"116", "position" : "8"}},{"9":{"name":"Jacky","score":"115", "position" : "9"}},{"10":{"name":"Jasper","score":"114", "position" : "10"}},{"33":{"name": "Daniel","score":"100", "position" : "33"}}]}';
+    // var text = '{"scoreboard": [{"1":{"name":"Kobus","score":"123", "position" : "1"}},{"2":{"name": "John","score":"122", "position" : "2"}},{"3":{"name":"Jack","score":"121", "position" : "3"}},{"4":{"name":"Rikard","score":"120", "position" : "4"}},{"5":{"name":"Fred","score":"119", "position" : "5"}},{"6":{"name":"Victor","score":"118", "position" : "6"}},{"7":{"name":"Zoo","score":"117","position" : "7"}},{"8":{"name":"Jess","score":"116", "position" : "8"}},{"9":{"name":"Jacky","score":"115", "position" : "9"}},{"10":{"name":"Jasper","score":"114", "position" : "10"}},{"33":{"name": "Daniel","score":"100", "position" : "33"}}]}';
     console.log(tempo);
     var text = '{"test": "' + tempo+ '"}';
     console.log(text);
@@ -305,10 +302,30 @@ router.post('/getStances', function(req, res, next) { // receives user score and
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
+    /*console.log(req.body.issues[0]);
+    console.log(req.body.issues[1]);
+    console.log(req.body.issues[2]);
+    console.log(req.body.issues[3]);
+*/
+    var text = '{"success":"0"}';
+    testingf(finishoff);
+    console.log("THIS IS WHERE THE DOG SLEEPS");
+    function testingf (callback) {
+        text = queries.getStances(req.body.issues[0], req.body.issues[1], req.body.issues[2], req.body.issues[3]);
+        console.log("THIS IS WHERE THE Hamster SLEEPS");
+        callback();
+    }
 
-    var text = "{stances\":[{\"1\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"2\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"3\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"4\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"5\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]}]\n}";
-    var obj = JSON.parse(text);
-    res.send(obj);
+    function finishoff()
+    {
+        console.log(text);
+        console.log("THIS IS WHERE THE CAT SLEEPS");
+        var obj = JSON.parse(text);
+        res.send(obj);
+    }
+
+    //var text = "{\"stances\":[{\"1\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"2\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"3\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"4\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"5\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]}]\n}";
+
 });
 
 router.post('/setIssues', function(req, res, next) { // receives user score and inserts into leaderboard

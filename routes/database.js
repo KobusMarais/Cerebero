@@ -3,7 +3,7 @@ const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localh
 var query;
 const client = new pg.Client(connectionString);
 client.connect();
-
+/*
 query = client.query('CREATE TABLE userAccounts( pkid SERIAL PRIMARY KEY, username TEXT NOT NULL, user_password TEXT UNIQUE NOT NULL, isAdmin BOOLEAN NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, currentScore INT, highestScore INT);');
 query = client.query('CREATE TABLE userProfile( pkid SERIAL PRIMARY KEY, userId INT NOT NULL REFERENCES userAccounts(pkid), topic1 TEXT NOT NULL, topic2 TEXT NOT NULL, topic3 TEXT NOT NULL, topic4 TEXT NOT NULL, suppGauteng INT NOT NULL, suppFreestate INT NOT NULL, suppLimpopo INT NOT NULL, suppNorthWest INT NOT NULL, suppNorthCape INT NOT NULL, suppWestCape INT NOT NULL, suppEastCape INT NOT NULL, suppKZN INT NOT NULL, suppMpuma INT NOT NULL, action1 TEXT NULL, action2 TEXT NULL, action3 TEXT NULL);');
 query = client.query('CREATE TABLE AI(pkid SERIAL PRIMARY KEY, userId INT NOT NULL REFERENCES userAccounts(pkid), aiNum INT NOT NULL, topic1 TEXT NOT NULL, topic2 TEXT NOT NULL, topic3 TEXT NOT NULL, topic4 TEXT NOT NULL, suppGauteng INT NOT NULL, suppFreestate INT NOT NULL, suppLimpopo INT NOT NULL, suppNorthWest INT NOT NULL, suppNorthCape INT NOT NULL, suppWestCape INT NOT NULL, suppEastCape INT NOT NULL, suppKZN INT NOT NULL, suppMpuma INT NOT NULL, action1 TEXT NULL, action2 TEXT NULL, action3 TEXT NULL);');
@@ -234,11 +234,18 @@ query = client.query('INSERT INTO Stances(pkid,stance,suppGauteng, suppFreestate
 query = client.query('INSERT INTO Leaderboard(pkid,userId, score) values($1,$2,$3)',[1, 3, 9001]);
 
 
-
+*/
+/*
  var counter = 0;
     query = client.query('SELECT t.* FROM Leaderboard t ORDER BY t.score DESC LIMIT 100');
     query.on('row', (row) => {
         console.log(row['userid'])});
-
+*/
+var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ "Crime"/*req.body.issues[0]*/ +"'";
+query = client.query(querytext);
+//a = "Crime";
+//query = client.query("SELECT * FROM allIssues WHERE topicname = '"+ a +"'");
+query.on('row', (row) => {
+    console.log(row['topicdescription'])});
 
 query.on('end', () => { client.end(); });
