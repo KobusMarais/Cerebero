@@ -1,5 +1,5 @@
 const pg = require('pg');
-const connectionString = "dbname=d3ut3fprt4hrav host=ec2-46-137-117-43.eu-west-1.compute.amazonaws.com port=5432 user=warhcsijvbwhbf password=5a55cf9d31eba0713f019e24d589bd4bcf454a41ffda2804796461aabcdb6864 sslmode=require"
+const connectionString = "dbname=d3ut3fprt4hrav host=ec2-46-137-117-43.eu-west-1.compute.amazonaws.com port=5432 user=warhcsijvbwhbf password=5a55cf9d31eba0713f019e24d589bd4bcf454a41ffda2804796461aabcdb6864 sslmode=require";
 var query;
 const client = new pg.Client(connectionString);
 client.connect();
