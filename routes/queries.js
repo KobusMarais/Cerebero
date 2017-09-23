@@ -5,28 +5,36 @@ const client = new pg.Client(connectionString);
 client.connect();
 
 module.exports = {
-
     getStances: function (a, b, c, d, callback) {
+        const client = new pg.Client(connectionString);
+        client.connect();
         var sendback = '{"stances":[';
         sendback += '{"1":[{"test":"works"}';
-        var querytext /*= "SELECT * FROM allIssues WHERE topicname = '"+ a +"'";
-        query = client.query(querytext,function (callback) {
-            query.on('row', (row) => {
-                sendback += "{" + '"'+row['topicstance']+'"' + " : "  +  '"'+ row['topicdescription'] + '"'+ "} , ";
-                console.log(sendback);
-            });
-            //sendback += ']},';
-            //sendback += '{"2":[';
-        });*/
 
-        querytext = "SELECT * FROM allIssues WHERE topicname = '"+ b +"'";
+        var overall = [];
+        var mini = [];
+        var obj = new Object();
+
+        var text = JSON.stringify(overall);
+        var counting =0;
+        var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ a +"' OR topicname = '" + b+ "' OR topicname = '" +c +  "' OR topicname = '"+ d +"'";
         query = client.query(querytext);
             query.on('row', (row) => {
-                sendback += ",{" + '"'+ row['topicstance'] + '"'+ " : " + '"'+ row['topicdescription'] + '"'+ "}";
+                //sendback += ",{" + '"'+ row['topicstance'] + '"'+ " : " + '"'+ row['topicdescription'] + '"'+ "}";
+                obj = new Object();
+                obj.stance = row['topicstance'];
+                obj.description = row['topicdescription'];
+                mini.push(obj);
+                counting++;
+                if(counting%5 ==0)
+                {
+                    overall.push(mini);
+                    mini = [];
+                }
             });
             query.on('end', () => {
-                sendback += "]}";
-                sendback += "]}";
+                var sendback = JSON.stringify(overall);
+                console.log(sendback);
                 client.end();
 
                 callback(err=null,result=sendback);

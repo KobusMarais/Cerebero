@@ -328,43 +328,13 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     //console.log(req.body.issues);
     //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
 
-    var overall = [];
-    var mini = [];
-    var obj = new Object();
-    obj.stance = 'Right';
-    obj.descr = 'Free speech';
-    mini.push(obj);
-    obj = new Object();
-    obj.stance = 'left';
-    obj.descr = 'Freeqweqwe speech';
-    mini.push(obj);
-    obj = new Object();
-    obj.stance = 'asdasdasd';
-    obj.descr = 'zzzzzzzzzzzzzzzzzzz';
-    mini.push(obj);
-    overall.push(mini);
 
-    obj = new Object();
-    obj.stance = 'Right';
-    obj.descr = 'Free speech';
-    mini.push(obj);
-    obj = new Object();
-    obj.stance = 'left';
-    obj.descr = 'Freeqweqwe speech';
-    mini.push(obj);
-    obj = new Object();
-    obj.stance = 'asdasdasd';
-    obj.descr = 'zzzzzzzzzzzzzzzzzzz';
-
-    mini.push(obj);
-    overall.push(mini);
-    var text = JSON.stringify(overall);
 
 //convert string to Json Object
 //    console.log(JSON.parse(string));
 
     console.log(text);
-  //  var text = '{"success": "1"}';
+   var text = '{"success": "1"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });
