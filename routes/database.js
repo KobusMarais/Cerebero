@@ -241,11 +241,20 @@ query = client.query('INSERT INTO Leaderboard(pkid,userId, score) values($1,$2,$
     query.on('row', (row) => {
         console.log(row['userid'])});
 */
+var texto = "this is a test   ";
+
 var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ "Crime"/*req.body.issues[0]*/ +"'";
 query = client.query(querytext);
 //a = "Crime";
 //query = client.query("SELECT * FROM allIssues WHERE topicname = '"+ a +"'");
 query.on('row', (row) => {
-    console.log(row['topicdescription'])});
+    texto += row['topicdescription'];
+    console.log(texto);
+});
 
-query.on('end', () => { client.end(); });
+
+
+query.on('end', () => {
+    console.log(texto + "finishline");
+    client.end();
+});

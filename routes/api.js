@@ -307,23 +307,13 @@ router.post('/getStances', function(req, res, next) { // receives user score and
     console.log(req.body.issues[2]);
     console.log(req.body.issues[3]);
 */
-    var text = '{"success":"0"}';
-    testingf(finishoff);
-    console.log("THIS IS WHERE THE DOG SLEEPS");
-    function testingf (callback) {
-        text = queries.getStances(req.body.issues[0], req.body.issues[1], req.body.issues[2], req.body.issues[3]);
-        console.log("THIS IS WHERE THE Hamster SLEEPS");
-        callback();
-    }
-
-    function finishoff()
-    {
-        console.log(text);
-        console.log("THIS IS WHERE THE CAT SLEEPS");
-        var obj = JSON.parse(text);
+    let i = req.body.issues; // for brevity
+    queries.getStances(i[0], i[1], i[2], i[3], function(err, result) {
+        if (err) return console.log("error: ", err)
+        console.log(result);
+        var obj = JSON.parse(result);
         res.send(obj);
-    }
-
+    });
     //var text = "{\"stances\":[{\"1\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"2\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"3\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"4\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"5\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]}]\n}";
 
 });
@@ -334,11 +324,47 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.issues);
+  //  console.log(req.body.access_token);
+    //console.log(req.body.issues);
     //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
 
-    var text = '{"success": "1"}';
+    var overall = [];
+    var mini = [];
+    var obj = new Object();
+    obj.stance = 'Right';
+    obj.descr = 'Free speech';
+    mini.push(obj);
+    obj = new Object();
+    obj.stance = 'left';
+    obj.descr = 'Freeqweqwe speech';
+    mini.push(obj);
+    obj = new Object();
+    obj.stance = 'asdasdasd';
+    obj.descr = 'zzzzzzzzzzzzzzzzzzz';
+    mini.push(obj);
+    overall.push(mini);
+
+    obj = new Object();
+    obj.stance = 'Right';
+    obj.descr = 'Free speech';
+    mini.push(obj);
+    obj = new Object();
+    obj.stance = 'left';
+    obj.descr = 'Freeqweqwe speech';
+    mini.push(obj);
+    obj = new Object();
+    obj.stance = 'asdasdasd';
+    obj.descr = 'zzzzzzzzzzzzzzzzzzz';
+
+    mini.push(obj);
+    overall.push(mini);
+    var text = JSON.stringify(overall);
+
+//convert string to Json Object
+//    console.log(JSON.parse(string));
+
+    console.log(text);
+  //  var text = '{"success": "1"}';
     var obj = JSON.parse(text);
     res.send(obj);
 });

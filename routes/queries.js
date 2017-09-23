@@ -6,14 +6,10 @@ client.connect();
 
 module.exports = {
 
-    getStances: function (a, b, c, d) {
-        console.log(a);
-        console.log(b);
-        console.log(c);
-        console.log(d);
+    getStances: function (a, b, c, d, callback) {
         var sendback = '{"stances":[';
-        sendback += '{"1":[';
-        var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ a +"'";
+        sendback += '{"1":[{"test":"works"}';
+        var querytext /*= "SELECT * FROM allIssues WHERE topicname = '"+ a +"'";
         query = client.query(querytext,function (callback) {
             query.on('row', (row) => {
                 sendback += "{" + '"'+row['topicstance']+'"' + " : "  +  '"'+ row['topicdescription'] + '"'+ "} , ";
@@ -21,24 +17,24 @@ module.exports = {
             });
             //sendback += ']},';
             //sendback += '{"2":[';
-        });
+        });*/
 
         querytext = "SELECT * FROM allIssues WHERE topicname = '"+ b +"'";
-        query = client.query(querytext, function (callback) {
+        query = client.query(querytext);
             query.on('row', (row) => {
-                sendback += "{" + '"'+ row['topicstance'] + '"'+ " : " + '"'+ row['topicdescription'] + '"'+ "} , ";
-                console.log(sendback);
+                sendback += ",{" + '"'+ row['topicstance'] + '"'+ " : " + '"'+ row['topicdescription'] + '"'+ "}";
             });
-            function callback() {
+            query.on('end', () => {
+                sendback += "]}";
+                sendback += "]}";
+                client.end();
 
-                sendback += "]}";
-                sendback += "]}";
+                callback(err=null,result=sendback);
                 return sendback;
-            };
-            callback();
-        });
 
-    },
+            });
+
+        },
     bar: function () {
         // whatever
     }
