@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var AI = require('./routes/AI');
 var api = require('./routes/api'); 
 var mainGame = require('./routes/mainGame');
+var databasers = require('./routes/database.js');
 
 
 var path = require('path');
@@ -34,7 +35,8 @@ app.use('/AI', AI);
 app.use('/', users);
 
 app.use('/api', api);
-app.use('/mainGame', mainGame)
+app.use('/mainGame', mainGame);
+app.use('/dbtest', databasers);
 app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
