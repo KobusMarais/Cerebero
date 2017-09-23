@@ -8,8 +8,6 @@ module.exports = {
     getStances: function (a, b, c, d, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
-        var sendback = '{"stances":[';
-        sendback += '{"1":[{"test":"works"}';
 
         var overall = [];
         var mini = [];

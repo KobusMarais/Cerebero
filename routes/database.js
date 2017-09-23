@@ -1,9 +1,9 @@
 const pg = require('pg');
-const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+const connectionString = "dbname=d3ut3fprt4hrav host=ec2-46-137-117-43.eu-west-1.compute.amazonaws.com port=5432 user=warhcsijvbwhbf password=5a55cf9d31eba0713f019e24d589bd4bcf454a41ffda2804796461aabcdb6864 sslmode=require"
 var query;
 const client = new pg.Client(connectionString);
 client.connect();
-/*
+
 query = client.query('CREATE TABLE userAccounts( pkid SERIAL PRIMARY KEY, username TEXT NOT NULL, user_password TEXT UNIQUE NOT NULL, isAdmin BOOLEAN NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, currentScore INT, highestScore INT);');
 query = client.query('CREATE TABLE userProfile( pkid SERIAL PRIMARY KEY, userId INT NOT NULL REFERENCES userAccounts(pkid), topic1 TEXT NOT NULL, topic2 TEXT NOT NULL, topic3 TEXT NOT NULL, topic4 TEXT NOT NULL, suppGauteng INT NOT NULL, suppFreestate INT NOT NULL, suppLimpopo INT NOT NULL, suppNorthWest INT NOT NULL, suppNorthCape INT NOT NULL, suppWestCape INT NOT NULL, suppEastCape INT NOT NULL, suppKZN INT NOT NULL, suppMpuma INT NOT NULL, action1 TEXT NULL, action2 TEXT NULL, action3 TEXT NULL);');
 query = client.query('CREATE TABLE AI(pkid SERIAL PRIMARY KEY, userId INT NOT NULL REFERENCES userAccounts(pkid), aiNum INT NOT NULL, topic1 TEXT NOT NULL, topic2 TEXT NOT NULL, topic3 TEXT NOT NULL, topic4 TEXT NOT NULL, suppGauteng INT NOT NULL, suppFreestate INT NOT NULL, suppLimpopo INT NOT NULL, suppNorthWest INT NOT NULL, suppNorthCape INT NOT NULL, suppWestCape INT NOT NULL, suppEastCape INT NOT NULL, suppKZN INT NOT NULL, suppMpuma INT NOT NULL, action1 TEXT NULL, action2 TEXT NULL, action3 TEXT NULL);');
@@ -234,27 +234,27 @@ query = client.query('INSERT INTO Stances(pkid,stance,suppGauteng, suppFreestate
 query = client.query('INSERT INTO Leaderboard(pkid,userId, score) values($1,$2,$3)',[1, 3, 9001]);
 
 
-*/
+
 /*
  var counter = 0;
     query = client.query('SELECT t.* FROM Leaderboard t ORDER BY t.score DESC LIMIT 100');
     query.on('row', (row) => {
         console.log(row['userid'])});
 */
-var texto = "this is a test   ";
+/*var texto = "this is a test   ";
 
-var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ "Crime"/*req.body.issues[0]*/ +"'";
-query = client.query(querytext);
+var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ "Crime" +"'";
+query = client.query(querytext);*/
 //a = "Crime";
 //query = client.query("SELECT * FROM allIssues WHERE topicname = '"+ a +"'");
-query.on('row', (row) => {
+/*query.on('row', (row) => {
     texto += row['topicdescription'];
     console.log(texto);
 });
-
+*/
 
 
 query.on('end', () => {
-    console.log(texto + "finishline");
+  //  console.log(texto + "finishline");
     client.end();
 });
