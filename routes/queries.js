@@ -41,6 +41,22 @@ module.exports = {
             return sendback;
         });
     },
+    getFunds : function (accesstoken, callback) {
+        const client = new pg.Client(connectionString);
+        client.connect();
+        var obj = new Object();
+        var querytext = "select * from tblFunds WHERE userId ='"+accesstoken+"'";
+        query = client.query(querytext);
+        query.on('row', (row) => {
+                obj.funds = row['user_funds'];
+        });
+        query.on('end', () => {
+            var sendback = JSON.stringify(obj);
+            client.end();
+            callback(err=null,result=sendback);
+            return sendback;
+        });
+    },
     getStances: function (a, b, c, d, callback) {
         const client = new pg.Client(connectionString);
         client.connect();

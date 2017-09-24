@@ -107,10 +107,11 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
     //find access token in DB
     //retrieve user funds from db
     //return user funds
-
-    var text = '{"funds" : "10000"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getFunds(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getFundsProvince', function(req, res, next) { //this is how many funds available per province
