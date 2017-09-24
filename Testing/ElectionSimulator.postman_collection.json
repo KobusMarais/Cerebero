@@ -37,7 +37,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"John\",\r\n  \"surname\": \"Doe\",\r\n  \"email\": \"John.Doe@gmail.com\"\r\n}"
+					"raw": "{\r\n  \"name\": \"John\",\r\n  \"surname\": \"Doe\",\r\n  \"email\": \"John.Doe@gmail.com\",\r\n  \"password\":\"pass123\",\r\n  \"username\": \"johnthedoe\"\r\n}"
 				},
 				"description": ""
 			},
@@ -57,7 +57,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"1\"\r\n}"
 				},
 				"description": ""
 			},
@@ -77,7 +77,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"2\"\r\n}"
 				},
 				"description": ""
 			},
@@ -97,7 +97,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"1\"\r\n}"
 				},
 				"description": ""
 			},
@@ -117,7 +117,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"1\"\r\n}"
 				},
 				"description": ""
 			},
@@ -137,7 +137,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"1\",\r\n  \"province\":\"mpumalanga\"\r\n}"
 				},
 				"description": ""
 			},
@@ -189,7 +189,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"username\": \"John\",\r\n  \"password\": \"Password123\"\r\n}"
+					"raw": "{\r\n  \"username\": \"Victor\",\r\n  \"password\": \"password111\"\r\n}"
 				},
 				"description": ""
 			},
@@ -278,7 +278,7 @@
 		{
 			"name": "endTurn",
 			"request": {
-				"url": "http://localhost:3000/api/endTurn",
+				"url": "http://ecivix.org.za/api/endTurn",
 				"method": "POST",
 				"header": [
 					{
@@ -289,7 +289,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"123abc\",\r\n  \"weeks\" : \"2\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"1\"\r\n}"
 				},
 				"description": ""
 			},
@@ -309,7 +309,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"123abc\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"1\"\r\n}"
 				},
 				"description": ""
 			},
@@ -329,7 +329,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"123abc\",\r\n  \"userScore\": \"20\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"1\",\r\n  \"userScore\": \"100\"\r\n}"
 				},
 				"description": ""
 			},
@@ -375,12 +375,18 @@
 		{
 			"name": "getStances",
 			"request": {
-				"url": "http://localhost:3000/api/endHighScore",
+				"url": "http://localhost:3000/api/getStances",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"access_token\": \"123abc\",\r\n\t\"issues\":[\"crime\", \"Racism\", \"Abortion\", \"Prostition\"]\r\n}"
+					"raw": "{\r\n\t\"access_token\": \"1\",\r\n\t\"issues\":[\"Same-Sex Marriage\", \"Racism\", \"Abortion\", \"Prostitution\"]\r\n}"
 				},
 				"description": ""
 			},
