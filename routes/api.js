@@ -124,10 +124,12 @@ router.post('/getFundsProvince', function(req, res, next) { //this is how many f
     //find access token in DB
     //retrieve province available funds from db
     //return province funds funds
+    queries.getFundsProvince(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 
-    var text = '{"Gauteng" : "10000", "Limpopo" : "5000", "West Cape" : "1000", "North Cape" : "2300", "East Cape" : "200", "Kwazulu natal" : "900", "Mpumalanga": "1300", "North West" : "4200", "Freestate" : "3300"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
 });
 
 router.post('/getProfile', function(req, res, next) {
@@ -141,9 +143,11 @@ router.post('/getProfile', function(req, res, next) {
     //retrieve user info from DB
 
     //return user data
-    var text = '{"name" : "John", "surname" : "Doe", "Email" : "John@doe.com"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getProfile(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getScore', function(req, res, next) {
@@ -152,14 +156,16 @@ router.post('/getScore', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
+
     //find access token in DB
     //retrieve user score from DB
 
     //return score
-    var text = '{"score" : "10000"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getScore(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getManpower', function(req, res, next) { //this is an overall national total
@@ -174,9 +180,11 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
     //get current manpower support user has from db
 
     //return manpower user has currently
-    var text = '{"manpower" : "10000"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getManpower(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getSupport', function(req, res, next) { // each province has its own support
@@ -185,15 +193,16 @@ router.post('/getSupport', function(req, res, next) { // each province has its o
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.province);
+
     //find access token in DB
     //retrieve user support for that province from DB
     //get current support user has in that province from db
 
-    var text = '{"support" : "10"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getSupport(req.body.access_token, req.body.province, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.get('/getHighscoreBoard', function(req, res, next) {
@@ -202,9 +211,11 @@ router.get('/getHighscoreBoard', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    var text = '{"Jack" : "10000", "John" : "80", "Jacky" : "70"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getHighscoreBoard(function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/startGame', function(req, res, next) { // initialises all values at the start of the game
@@ -221,6 +232,11 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
 
 
     //return everything that needs to be displayed on client side
+   /* queries.startGame(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });*/
     var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
     var obj = JSON.parse(text);
     res.send(obj);
@@ -240,7 +256,6 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
     //find access token in DB
     //create and retrieve all starter info for user
 
-
     //return everything that needs to be displayed on client side
     var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
     var obj = JSON.parse(text);
@@ -254,14 +269,15 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
-    console.log(req.body.weeks);
     //find access token in DB
     //run AI
     //Decrease time before election and returns it
 
-    var text = '{"Weeks" : "' + req.body.weeks +'"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.endTurn(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/endHighScore', function(req, res, next) { // receives user score and inserts into leaderboard
