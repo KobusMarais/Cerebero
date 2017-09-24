@@ -9,15 +9,17 @@ router.post('/register', function(req,res){
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.name);
-    console.log(req.body.surname);
-    console.log(req.body.email);
+
+    let i = req.body;
+    //generate new token for each user and create entry in db for that user.
+    queries.register(i.name, i.surname, i.email, i.username, i.password, function(err, result) {
+        if (err) return console.log("error: ", err)
+        console.log(result);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
     //Insert code here to check if email or username has been used before
 
-    //generate new token for each user and create entry in db for that user.
-    var text = '{"access_token" : "123abc"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
 });
 
 router.post('/login', function(req,res){
@@ -30,12 +32,14 @@ router.post('/login', function(req,res){
     console.log(req.body.username);
     console.log(req.body.password);
 
-    //insert code here to check if email and password are correct.
+    //insert code here to check if email and password are correct and return accesskey.
+    let i = req.body;
+    queries.login(i.username, i.password, function(err, result) {
+        if (err) return console.log("error: ", err);
 
-    //generate new token for each user and create entry in db for that user.
-    var text = '{"access_token" : "123abc"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/collectFunds', function(req,res){
@@ -103,10 +107,11 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
     //find access token in DB
     //retrieve user funds from db
     //return user funds
-
-    var text = '{"funds" : "10000"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getFunds(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getFundsProvince', function(req, res, next) { //this is how many funds available per province
@@ -119,10 +124,12 @@ router.post('/getFundsProvince', function(req, res, next) { //this is how many f
     //find access token in DB
     //retrieve province available funds from db
     //return province funds funds
+    queries.getFundsProvince(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 
-    var text = '{"Gauteng" : "10000", "Limpopo" : "5000", "West Cape" : "1000", "North Cape" : "2300", "East Cape" : "200", "Kwazulu natal" : "900", "Mpumalanga": "1300", "North West" : "4200", "Freestate" : "3300"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
 });
 
 router.post('/getProfile', function(req, res, next) {
@@ -136,9 +143,11 @@ router.post('/getProfile', function(req, res, next) {
     //retrieve user info from DB
 
     //return user data
-    var text = '{"name" : "John", "surname" : "Doe", "Email" : "John@doe.com"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getProfile(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getScore', function(req, res, next) {
@@ -147,14 +156,16 @@ router.post('/getScore', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
+
     //find access token in DB
     //retrieve user score from DB
 
     //return score
-    var text = '{"score" : "10000"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getScore(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getManpower', function(req, res, next) { //this is an overall national total
@@ -169,9 +180,11 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
     //get current manpower support user has from db
 
     //return manpower user has currently
-    var text = '{"manpower" : "10000"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getManpower(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getSupport', function(req, res, next) { // each province has its own support
@@ -180,15 +193,16 @@ router.post('/getSupport', function(req, res, next) { // each province has its o
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.province);
+
     //find access token in DB
     //retrieve user support for that province from DB
     //get current support user has in that province from db
 
-    var text = '{"support" : "10"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getSupport(req.body.access_token, req.body.province, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.get('/getHighscoreBoard', function(req, res, next) {
@@ -197,9 +211,11 @@ router.get('/getHighscoreBoard', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    var text = '{"Jack" : "10000", "John" : "80", "Jacky" : "70"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.getHighscoreBoard(function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/startGame', function(req, res, next) { // initialises all values at the start of the game
@@ -216,6 +232,11 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
 
 
     //return everything that needs to be displayed on client side
+   /* queries.startGame(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });*/
     var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
     var obj = JSON.parse(text);
     res.send(obj);
@@ -235,7 +256,6 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
     //find access token in DB
     //create and retrieve all starter info for user
 
-
     //return everything that needs to be displayed on client side
     var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
     var obj = JSON.parse(text);
@@ -249,14 +269,15 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
-    console.log(req.body.weeks);
     //find access token in DB
     //run AI
     //Decrease time before election and returns it
 
-    var text = '{"Weeks" : "' + req.body.weeks +'"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.endTurn(req.body.access_token, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/endHighScore', function(req, res, next) { // receives user score and inserts into leaderboard
@@ -265,24 +286,12 @@ router.post('/endHighScore', function(req, res, next) { // receives user score a
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.userScore);
-    //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
-    var counter = 0;
-    var tempo;
-    query = client.query('SELECT t.* FROM Leaderboard t ORDER BY t.score DESC LIMIT 100');
-    query.on('row', (row) => {
-        tempo = row['userid'];
-        console.log(typeof(tempo));
-        console.log(tempo);
-    });
 
-    // var text = '{"scoreboard": [{"1":{"name":"Kobus","score":"123", "position" : "1"}},{"2":{"name": "John","score":"122", "position" : "2"}},{"3":{"name":"Jack","score":"121", "position" : "3"}},{"4":{"name":"Rikard","score":"120", "position" : "4"}},{"5":{"name":"Fred","score":"119", "position" : "5"}},{"6":{"name":"Victor","score":"118", "position" : "6"}},{"7":{"name":"Zoo","score":"117","position" : "7"}},{"8":{"name":"Jess","score":"116", "position" : "8"}},{"9":{"name":"Jacky","score":"115", "position" : "9"}},{"10":{"name":"Jasper","score":"114", "position" : "10"}},{"33":{"name": "Daniel","score":"100", "position" : "33"}}]}';
-    console.log(tempo);
-    var text = '{"test": "' + tempo+ '"}';
-    console.log(text);
-    var obj = JSON.parse(text);
-    res.send(obj);
+    queries.endHighScore(req.body.access_token, req.body.userScore, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.get('/getIssues', function(req, res, next) {
@@ -291,9 +300,12 @@ router.get('/getIssues', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    var text = '{"issues":["crime", "Symbols of History", "Immigration", "Racism", "Fire Arm Control", "Same Sex Marriage", "Prostitution", "Abortion", "Regulation of media", "Sport Quotas", "Drug legislation", "Mining", "Energy production", "Affirmative Action", "Labor regulation", "Land reform", "Tax of high income earners", "Social grants", "unemployment", "Tertiary Education", "Primary Education", "African Union", "Housing"]}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+
+    queries.getIssues(function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/getStances', function(req, res, next) { // receives user score and inserts into leaderboard
@@ -302,11 +314,7 @@ router.post('/getStances', function(req, res, next) { // receives user score and
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    /*console.log(req.body.issues[0]);
-    console.log(req.body.issues[1]);
-    console.log(req.body.issues[2]);
-    console.log(req.body.issues[3]);
-*/
+
     let i = req.body.issues; // for brevity
     queries.getStances(i[0], i[1], i[2], i[3], function(err, result) {
         if (err) return console.log("error: ", err)
@@ -314,8 +322,6 @@ router.post('/getStances', function(req, res, next) { // receives user score and
         var obj = JSON.parse(result);
         res.send(obj);
     });
-    //var text = "{\"stances\":[{\"1\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"2\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"3\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"4\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]},{\"5\":[{\"Far Left\" : \"Restorative Justice\"}, {\"Left\" : \"Rehabilitation\"}, {\"Centre\" : \"Prevention\"}, {\"Right\" : \"Punishment\"}, {\"Far Right\" : \"Increased Sentencing\"}]}]\n}";
-
 });
 
 router.post('/setIssues', function(req, res, next) { // receives user score and inserts into leaderboard
@@ -326,7 +332,6 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     res.setHeader('Access-Control-Allow-Credentials', true);
   //  console.log(req.body.access_token);
     //console.log(req.body.issues);
-    //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
 
 
 
