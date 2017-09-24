@@ -9,7 +9,7 @@ var query;
 const client = new pg.Client(connectionString);
 client.connect();
 
-query = client.query('CREATE TABLE userAccounts( pkid SERIAL PRIMARY KEY, username TEXT NOT NULL, user_password TEXT UNIQUE NOT NULL, isAdmin BOOLEAN NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, currentScore INT, highestScore INT);');
+query = client.query('CREATE TABLE userAccounts(pkid SERIAL PRIMARY KEY, username TEXT NOT NULL, user_password TEXT UNIQUE NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, email TEXT NOT NULL);');
 query = client.query('CREATE TABLE userProfile( pkid SERIAL PRIMARY KEY, userId INT NOT NULL REFERENCES userAccounts(pkid), topic1 TEXT NOT NULL, topic2 TEXT NOT NULL, topic3 TEXT NOT NULL, topic4 TEXT NOT NULL, suppGauteng INT NOT NULL, suppFreestate INT NOT NULL, suppLimpopo INT NOT NULL, suppNorthWest INT NOT NULL, suppNorthCape INT NOT NULL, suppWestCape INT NOT NULL, suppEastCape INT NOT NULL, suppKZN INT NOT NULL, suppMpuma INT NOT NULL, action1 TEXT NULL, action2 TEXT NULL, action3 TEXT NULL);');
 query = client.query('CREATE TABLE AI(pkid SERIAL PRIMARY KEY, userId INT NOT NULL REFERENCES userAccounts(pkid), aiNum INT NOT NULL, topic1 TEXT NOT NULL, topic2 TEXT NOT NULL, topic3 TEXT NOT NULL, topic4 TEXT NOT NULL, suppGauteng INT NOT NULL, suppFreestate INT NOT NULL, suppLimpopo INT NOT NULL, suppNorthWest INT NOT NULL, suppNorthCape INT NOT NULL, suppWestCape INT NOT NULL, suppEastCape INT NOT NULL, suppKZN INT NOT NULL, suppMpuma INT NOT NULL, action1 TEXT NULL, action2 TEXT NULL, action3 TEXT NULL);');
 query = client.query('CREATE TABLE allIssues\n' +
@@ -77,8 +77,8 @@ query = client.query('CREATE TABLE Leaderboard(pkid SERIAL PRIMARY KEY,userId IN
 
 query = client.query('CREATE TABLE tblProvinces(pkid SERIAL PRIMARY KEY, provinceName TEXT NOT NULL, totalfundsAvailable INT NOT NULL, totalManpowerAvailable INT NOT NULL);');
 
-query = client.query('INSERT INTO userAccounts(pkid, username, user_password, isAdmin, firstName, lastName, currentScore , highestScore) values($1, $2, $3, $4, $5, $6, $7, $8)',
-    [3,'Victor','password111',true,'Victor','Twigge',12,12]);
+//query = client.query('INSERT INTO userAccounts(pkid, username, user_password, isAdmin, firstName, lastName, currentScore , highestScore) values($1, $2, $3, $4, $5, $6, $7, $8)',
+  //  [3,'Victor','password111',true,'Victor','Twigge',12,12]);
 
 query = client.query('INSERT INTO userProfile(pkid, userId, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)',[1,3,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','']);
 

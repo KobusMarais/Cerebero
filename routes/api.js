@@ -9,15 +9,17 @@ router.post('/register', function(req,res){
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.name);
-    console.log(req.body.surname);
-    console.log(req.body.email);
+
+    let i = req.body;
+    //generate new token for each user and create entry in db for that user.
+    queries.register(i.name, i.surname, i.email, i.username, i.password, function(err, result) {
+        if (err) return console.log("error: ", err)
+        console.log(result);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
     //Insert code here to check if email or username has been used before
 
-    //generate new token for each user and create entry in db for that user.
-    var text = '{"access_token" : "123abc"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
 });
 
 router.post('/login', function(req,res){
@@ -265,18 +267,12 @@ router.post('/endHighScore', function(req, res, next) { // receives user score a
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.userScore);
-    //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
-    var counter = 0;
-    var tempo;
+
     queries.endHighScore(req.body.access_token, req.body.userScore, function(err, result) {
         if (err) return console.log("error: ", err);
         var obj = JSON.parse(result);
         res.send(obj);
     });
-
-    // var text = '{"scoreboard": [{"1":{"name":"Kobus","score":"123", "position" : "1"}},{"2":{"name": "John","score":"122", "position" : "2"}},{"3":{"name":"Jack","score":"121", "position" : "3"}},{"4":{"name":"Rikard","score":"120", "position" : "4"}},{"5":{"name":"Fred","score":"119", "position" : "5"}},{"6":{"name":"Victor","score":"118", "position" : "6"}},{"7":{"name":"Zoo","score":"117","position" : "7"}},{"8":{"name":"Jess","score":"116", "position" : "8"}},{"9":{"name":"Jacky","score":"115", "position" : "9"}},{"10":{"name":"Jasper","score":"114", "position" : "10"}},{"33":{"name": "Daniel","score":"100", "position" : "33"}}]}';
 });
 
 router.get('/getIssues', function(req, res, next) {
@@ -317,7 +313,6 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     res.setHeader('Access-Control-Allow-Credentials', true);
   //  console.log(req.body.access_token);
     //console.log(req.body.issues);
-    //insert user score into DB and return top 10 scores, then add user score as 11th and get their ranking
 
 
 
