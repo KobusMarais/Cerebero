@@ -41,6 +41,42 @@ module.exports = {
             return sendback;
         });
     },
+    collectFunds : function (accesstoken, province, callback) {
+        const client = new pg.Client(connectionString);
+        client.connect();
+        var obj = new Object();
+        obj.success = 1;
+        var funds = 0;
+        var querytext = "select t.totalfundsavailable as fava, f.user_funds as ufu from tblProvinces t, tblFunds f WHERE t.userId ='"+accesstoken+"' AND f.userId='"+accesstoken+"'  AND provinceName='"+province+"'";
+        query = client.query(querytext);
+        query.on('row', (row) => {
+            console.log("TESTING HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            obj.funds = row['fava'];
+            console.log(obj.funds);
+            funds = row['ufu'] + obj.funds;
+            console.log(funds);
+        });
+        query.on('end', () => {
+            querytext = "UPDATE tblProvinces SET totalfundsAvailable = 0 WHERE userId = '"+accesstoken+"' AND provinceName = '"+province+"';";
+            query = client.query(querytext);
+            query.on('end', () => {
+                //console.log("it c);
+                querytext = "UPDATE tblFunds SET user_funds  = '"+ funds +"' WHERE userId = '"+accesstoken+"';";
+                query = client.query(querytext);
+                query.on('end', () => {
+
+                    obj.AI1Move = "Collect Funds Gauteng";
+                    obj.AI2Move = "Campaign Limpopo";
+                    obj.AI3Move = "Campaign Western Cape";
+                    obj.AI4Move = "Collect Funds Freestate";
+                    var sendback = JSON.stringify(obj);
+                    client.end();
+                    callback(err = null, result = sendback);
+                    return sendback;
+                });
+            });
+        });
+    },
     getFunds : function (accesstoken, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
@@ -144,7 +180,17 @@ module.exports = {
         var starterManpower = 9000;
         var aiStarterManpower = [9000,9000,9000,9000];
 
-        var querytext = "INSERT INTO tblFunds(userId, user_funds, ai1_funds, ai2_funds, ai3_funds, ai4_funds, time) values('"+accesstoken+"','"+starterFunds+"','"+aiStarterFunds[0]+"','"+aiStarterFunds[1]+"','"+aiStarterFunds[2]+"','"+aiStarterFunds[3]+"', '"+time+"'); INSERT INTO tblManPower(userId, user_ManPower, ai1_ManPower, ai2_ManPower, ai3_ManPower, ai4_ManPower) values('"+accesstoken+"','"+starterManpower+"','"+aiStarterManpower[0]+"','"+aiStarterManpower[1]+"','"+aiStarterManpower[2]+"','"+aiStarterManpower[3]+"');";
+        var querytext = "INSERT INTO tblFunds(userId, user_funds, ai1_funds, ai2_funds, ai3_funds, ai4_funds, time) values('"+accesstoken+"','"+starterFunds+"','"+aiStarterFunds[0]+"','"+aiStarterFunds[1]+"','"+aiStarterFunds[2]+"','"+aiStarterFunds[3]+"', '"+time+"'); " +
+            "INSERT INTO tblManPower(userId, user_ManPower, ai1_ManPower, ai2_ManPower, ai3_ManPower, ai4_ManPower) values('"+accesstoken+"','"+starterManpower+"','"+aiStarterManpower[0]+"','"+aiStarterManpower[1]+"','"+aiStarterManpower[2]+"','"+aiStarterManpower[3]+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Gauteng', 90000, 15000, '"+accesstoken+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Freestate', 90000, 15000, '"+accesstoken+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('West Cape', 90000, 15000, '"+accesstoken+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('East Cape', 90000, 15000, '"+accesstoken+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('North Cape', 90000, 15000, '"+accesstoken+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('North West', 90000, 15000, '"+accesstoken+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Mpumalanga', 90000, 15000, '"+accesstoken+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Kwazulu-Natal', 90000, 15000, '"+accesstoken+"');" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Limpopo', 90000, 15000, '"+accesstoken+"');";
 
         query = client.query(querytext);
         query.on('end', () => {
