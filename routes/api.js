@@ -322,18 +322,17 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-  //  console.log(req.body.access_token);
-    //console.log(req.body.issues);
+    //console.log(req.body.access_token);
+    console.log(req.body.issues[0].issue);
+    console.log(req.body.issues[0].stance);
 
-
-
-//convert string to Json Object
-//    console.log(JSON.parse(string));
-
-    console.log(text);
-   var text = '{"success": "1"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    let i = req.body; // for brevity
+    queries.setIssues(i.access_token, i.issues, function(err, result) {
+        if (err) return console.log("error: ", err)
+        console.log(result);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 //query.on('end', () => { client.end(); });
 module.exports = router;

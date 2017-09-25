@@ -138,13 +138,6 @@ module.exports = {
         client.connect();
         var obj = new Object();
 
-        /*var querytext = client.query('INSERT INTO userProfile(pkid, userId, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3, score) values (1,3,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','', 0)"
-       'INSERT INTO AI(pkid, userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)',[1,3,1,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','']);
-       'INSERT INTO AI(pkid, userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)',[2,3,2,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','']);
-       query = client.query('INSERT INTO AI(pkid, userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)',[3,3,3,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','']);
-       query = client.query('INSERT INTO AI(pkid, userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)',[4,3,4,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','']);
-       */
-
         var starterFunds = 0;
         var aiStarterFunds = [200,200,200,200];
         var time = 10;
@@ -170,6 +163,37 @@ module.exports = {
                 callback(err=null,result=sendback);
                 return sendback;
             });
+        });
+    },
+    setIssues: function (accesstoken, i ,callback) {
+        const client = new pg.Client(connectionString);
+        client.connect();
+        var obj = new Object();
+
+
+        var querytext = "INSERT INTO userProfile(userId, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3, score) values ('"+
+            accesstoken+"','"+
+            i[0].issue+ "_"+i[0].stance +"', '"+
+            i[1].issue+ "_"+i[1].stance +"', '"+
+            i[2].issue+ "_"+i[2].stance +"', '"+
+            i[3].issue+ "_"+i[3].stance +
+            "', 10,10,10,10,10,10,10,10,10, '','','', '0');"+
+           "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',1,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','');"+
+             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',2,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','');"+
+             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',3,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','');"+
+             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',4,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','');";
+
+        query = client.query(querytext);
+        query.on('error', function(err) {
+            console.log('Query error: ' + err);
+        });
+        query.on('end', () => {
+            console.log("IT ENDED RIGHT HERE");
+            obj.success = 1;
+            var sendback = JSON.stringify(obj);
+            client.end();
+            callback(err=null,result=sendback);
+            return sendback;
         });
     },
     getScore: function (accesstoken, callback) {
