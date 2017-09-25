@@ -14,7 +14,6 @@ router.post('/register', function(req,res){
     //generate new token for each user and create entry in db for that user.
     queries.register(i.name, i.surname, i.email, i.username, i.password, function(err, result) {
         if (err) return console.log("error: ", err)
-        console.log(result);
         var obj = JSON.parse(result);
         res.send(obj);
     });
@@ -29,14 +28,10 @@ router.post('/login', function(req,res){
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    console.log(req.body.username);
-    console.log(req.body.password);
-
     //insert code here to check if email and password are correct and return accesskey.
     let i = req.body;
     queries.login(i.username, i.password, function(err, result) {
         if (err) return console.log("error: ", err);
-
         var obj = JSON.parse(result);
         res.send(obj);
     });
@@ -224,22 +219,19 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.difficulty); //sets difficulty
+    //console.log(req.body.access_token);
+    //console.log(req.body.difficulty); //sets difficulty
 
     //find access token in DB
     //create and retrieve all starter info for user
 
 
     //return everything that needs to be displayed on client side
-   /* queries.startGame(req.body.access_token, function(err, result) {
+    queries.startGame(req.body.access_token, function(err, result) {
         if (err) return console.log("error: ", err);
         var obj = JSON.parse(result);
         res.send(obj);
-    });*/
-    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    });
 });
 
 
