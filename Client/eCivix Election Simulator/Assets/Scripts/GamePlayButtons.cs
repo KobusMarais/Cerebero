@@ -12,7 +12,11 @@ public class GamePlayButtons : MonoBehaviour {
 	public Button pollProvinceButton;
 	public Button campaignButton;
 
-	public Button endTurnButton;
+    public GameObject errorBox;
+    public Text errorMessage;
+    public Button closeError;
+
+    public Button endTurnButton;
 	public Text endTurnText;
 	public Text AI1Action;
 	public Text AI2Action;
@@ -217,10 +221,17 @@ public class GamePlayButtons : MonoBehaviour {
 
 		Button btn4 = endTurnButton.GetComponent<Button>();
 		btn4.onClick.AddListener(endTurn);
+        errorBox.SetActive(false);
+
+        Button closeErrorbtn = closeError.GetComponent<Button>();
+        closeErrorbtn.onClick.AddListener(closeErrorFun);
 
         getScore();
 	}
-
+    void closeErrorFun()
+    {
+        errorBox.SetActive(false);
+    }
 
     void getScore()
     {
@@ -240,9 +251,9 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-			Debug.Log(www.error);
-			//print(www.error);
-		}
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+        }
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
@@ -256,8 +267,9 @@ public class GamePlayButtons : MonoBehaviour {
 
 		if (ProvincesButtons.provinceName == null)
 		{
-			print("Please select a province to collect funds from");
-		}
+            errorMessage.text = "Please select a province to collect funds from";
+            errorBox.SetActive(true);
+        }
 		else
 		{
 			// Get collected funds for selected province and AI actions
@@ -352,9 +364,10 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-			Debug.Log(www.error);
-			//print(www.error);
-		}
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+
+        }
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
@@ -371,9 +384,12 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www2;
 		if (!string.IsNullOrEmpty(www2.error))
 		{
-			Debug.Log(www2.error);
-			//print(www.error);
-		}
+            errorMessage.text = www2.error;
+            errorBox.SetActive(true);
+
+
+            //print(www.error);
+        }
 		else
 		{
 			var jsonObj = JSON.Parse(www2.text);
@@ -388,13 +404,13 @@ public class GamePlayButtons : MonoBehaviour {
 
 	void pollProvince()
 	{
-		print("You have clicked on the poll province button");
 		pollProvinceText.text = "-$5";
         pollProvinceTextAnim.Play(pollProvinceTextHash, -1, 0f);
 
 		if (ProvincesButtons.provinceName == null) {
-			print ("Please select a province to campaign");
-		} else {
+            errorMessage.text = "Please select a province to campaign";
+            errorBox.SetActive(true);
+        } else {
 			// Get and update user's total manpower / support
 			provincePolled();
 			string url = "http://ecivix.org.za/api/pollProvince";
@@ -417,9 +433,9 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-			Debug.Log(www.error);
-			//print(www.error);
-		}
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+        }
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
@@ -436,12 +452,13 @@ public class GamePlayButtons : MonoBehaviour {
 
 	void campaign()
 	{
-		print("You have clicked on the campaign button");
 
 		if (ProvincesButtons.provinceName == null)
 		{
-			print("Please select a province to campaign");
-		}
+
+            errorMessage.text = "Please select a province to campaign";
+            errorBox.SetActive(true);
+        }
 		else
 		{
 
@@ -539,8 +556,9 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-			Debug.Log(www.error);
-		}
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+        }
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
@@ -557,9 +575,10 @@ public class GamePlayButtons : MonoBehaviour {
         
         if (!string.IsNullOrEmpty(www2.error))
 		{
-			Debug.Log(www2.error);
-			//print(www.error);
-		}
+            errorMessage.text = www2.error;
+            errorBox.SetActive(true);
+            //print(www.error);
+        }
 		else
 		{
 			var jsonObj = JSON.Parse(www2.text);
@@ -577,7 +596,6 @@ public class GamePlayButtons : MonoBehaviour {
         SceneManager.LoadScene("LeaderBoard");
     }
         void endTurn() {
-		print("End turn button clicked");
 
 		weeks--;
 		endTurnText.text = weeks.ToString();
@@ -613,11 +631,11 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-			Debug.Log(www.error);
-		}
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+        }
 		else
 		{
-			print(www.text);
 			var jsonObj = JSON.Parse(www.text);
 			endTurnText.text = jsonObj["Weeks"].Value.ToString();
 

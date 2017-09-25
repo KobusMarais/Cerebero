@@ -20,6 +20,10 @@ public class NewGameDetails : MonoBehaviour
     public GameObject loadScreen;
     public GameObject loadText;
 
+    public GameObject errorBox;
+    public Text errorMessage;
+    public Button closeError;
+
     public Button avatar1;
     public Button avatar2;
     public Button avatar3;
@@ -46,6 +50,13 @@ public class NewGameDetails : MonoBehaviour
 
         loadScreen.SetActive(false);
         loadText.SetActive(false);
+
+        errorBox.SetActive(false);
+
+        
+
+        Button closeErrorbtn = closeError.GetComponent<Button>();
+        closeErrorbtn.onClick.AddListener(closeErrorFun);
 
         Button btn = continueButton.GetComponent<Button>();
         btn.onClick.AddListener(StartGame);
@@ -97,7 +108,9 @@ public class NewGameDetails : MonoBehaviour
     {
         if (partyNameInput.text == "" || difData == "" || !flag)
         {
-            Debug.Log("One or more empty fields");
+            errorMessage.text = "One or more empty fields";
+            errorBox.SetActive(true);
+            
         }
         else
         {
@@ -136,8 +149,8 @@ public class NewGameDetails : MonoBehaviour
 
         if (!string.IsNullOrEmpty(www.error))
         {
-            Debug.Log(www.error);
-
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
             loadScreen.SetActive(false);
             loadText.SetActive(false);
         }
@@ -149,7 +162,12 @@ public class NewGameDetails : MonoBehaviour
         }
     }
 
-    void easyDifficulty()
+    void closeErrorFun()
+    {
+        errorBox.SetActive(false);
+    }
+
+        void easyDifficulty()
     {
         difData = "easy";
     }
