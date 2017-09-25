@@ -30,6 +30,7 @@ public class PanelScript : MonoBehaviour {
 
         menu.SetActive(false);
         leaderBoard.SetActive(false);
+        map.SetActive(false);
 
         Button btn1 = menuButton.GetComponent<Button>();
         btn1.onClick.AddListener(openPanel);
@@ -58,7 +59,7 @@ public class PanelScript : MonoBehaviour {
     {
         //OPEN MENU
         menu.SetActive(true);
-        map.SetActive(false);
+        map.SetActive(true);
         
     }
 
@@ -67,7 +68,7 @@ public class PanelScript : MonoBehaviour {
         //CLOSE MENU
 
         menu.SetActive(false);
-        map.SetActive(true);
+        map.SetActive(false);
 
        // NCButton.interactable = true;
     }
