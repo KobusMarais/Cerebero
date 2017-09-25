@@ -310,7 +310,6 @@ router.post('/getStances', function(req, res, next) { // receives user score and
     let i = req.body.issues; // for brevity
     queries.getStances(i[0], i[1], i[2], i[3], function(err, result) {
         if (err) return console.log("error: ", err)
-        console.log(result);
         var obj = JSON.parse(result);
         res.send(obj);
     });
@@ -329,7 +328,6 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     let i = req.body; // for brevity
     queries.setIssues(i.access_token, i.issues, function(err, result) {
         if (err) return console.log("error: ", err)
-        console.log(result);
         var obj = JSON.parse(result);
         res.send(obj);
     });

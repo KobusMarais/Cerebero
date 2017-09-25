@@ -188,7 +188,6 @@ module.exports = {
             console.log('Query error: ' + err);
         });
         query.on('end', () => {
-            console.log("IT ENDED RIGHT HERE");
             obj.success = 1;
             var sendback = JSON.stringify(obj);
             client.end();
@@ -340,6 +339,7 @@ module.exports = {
         var overall = [];
         var querytext = "INSERT INTO Leaderboard(userId, score) values("+accesskey+", "+score+")";
         query = client.query(querytext);
+        var count = 0;
         query.on('end', () => {
             querytext = "SELECT b.userid, 1+(SELECT count(*) from Leaderboard a WHERE a.score > b.score) as rank, b.score, u.username FROM Leaderboard b, userAccounts u WHERE b.userid = u.pkid ORDER BY rank";
             query = client.query(querytext);
@@ -350,13 +350,35 @@ module.exports = {
                     obj.score = row['score'];
                     obj.position = row['rank'];
                     overall.push(obj);
+                    count++;
                 }
             });
             query.on('end', () => {
-                var sendback = JSON.stringify(overall);
-                client.end();
-                callback(err=null,result=sendback);
-                return sendback;
+                if(count <11)
+                {
+                    querytext = "SELECT b.userid, 1+(SELECT count(*) from Leaderboard a WHERE a.score > b.score) as rank, b.score, u.username FROM Leaderboard b, userAccounts u WHERE b.userid = '"+accesskey+"' AND b.userid = u.pkid AND b.score='"+score+"' ORDER BY rank";
+                    query = client.query(querytext);
+                    query.on('row', (row) => {
+                        obj = new Object();
+                        obj.name = row['username'];
+                        obj.score = row['score'];
+                        obj.position = row['rank'];
+                        overall.push(obj);
+                    });
+                    query.on('end', () => {
+                        var sendback = JSON.stringify(overall);
+                        client.end();
+                        callback(err=null,result=sendback);
+                        return sendback;
+                    });
+                }
+                else
+                {
+                    var sendback = JSON.stringify(overall);
+                    client.end();
+                    callback(err = null, result = sendback);
+                    return sendback;
+                }
             });
         });
     }
