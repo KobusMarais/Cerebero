@@ -169,7 +169,7 @@ public class GamePlayButtons : MonoBehaviour {
 
 
 		// Set new game variables
-		var jsonObj = JSON.Parse(NewGameDetails.newGameJson);
+		var jsonObj = JSON.Parse(IssuesStancesSelection.newGameJson);
 		userName.text = jsonObj["Username"].Value.ToString();
 		userFunds.text = jsonObj["Funds"].Value.ToString();
 		userManpower.text = jsonObj["Manpower"].Value.ToString();
@@ -297,16 +297,16 @@ public class GamePlayButtons : MonoBehaviour {
         Button issue10 = Issue10.GetComponent<Button>();
         issue10.onClick.AddListener(issue10Campaign);
 
-        Issue1Text.text += "1";
-        Issue2Text.text += "2";
-        Issue3Text.text += "3";
-        Issue4Text.text += "4";
-        Issue5Text.text += "5";
-        Issue6Text.text += "6";
-        Issue7Text.text += "7";
-        Issue8Text.text += "8";
-        Issue9Text.text += "9";
-        Issue10Text.text += "10";
+        Issue1Text.text = "1";
+        Issue2Text.text = "2";
+        Issue3Text.text = "3";
+        Issue4Text.text = "4";
+        Issue5Text.text = "5";
+        Issue6Text.text = "6";
+        Issue7Text.text = "7";
+        Issue8Text.text = "8";
+        Issue9Text.text = "9";
+        Issue10Text.text = "10";
 
         getScore();
 	}
@@ -330,7 +330,7 @@ public class GamePlayButtons : MonoBehaviour {
         getScoreHelp();
         string url = "http://ecivix.org.za/api/getScore";
 
-        var requestString = "{'access_token':'123abc'}";
+        var requestString = "{'access_token':'2'}";
 
         byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
@@ -349,7 +349,7 @@ public class GamePlayButtons : MonoBehaviour {
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
-            Score.text = jsonObj["score"].Value.ToString(); 
+           Score.text = jsonObj["score"].Value.ToString(); 
         }
 	}
 
@@ -368,7 +368,7 @@ public class GamePlayButtons : MonoBehaviour {
 			provinceCollect();
 			string url = "http://ecivix.org.za/api/collectFunds";
 
-			var requestString = "{'access_token':'123abc','province':'Gauteng'}";
+			var requestString = "{'access_token':'2','province':'Gauteng'}";
 
 			byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
@@ -379,7 +379,7 @@ public class GamePlayButtons : MonoBehaviour {
 			updateFunds();
 			string url2 = "http://ecivix.org.za/api/getFunds";
 
-			var requestString2 = "{'access_token':'123abc','province':'Gauteng'}";
+			var requestString2 = "{'access_token':'2','province':'Gauteng'}";
 
 			byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
 
@@ -487,7 +487,7 @@ public class GamePlayButtons : MonoBehaviour {
 			var jsonObj = JSON.Parse(www2.text);
             //print(www.text);
 
-            fundsVal = jsonObj["funds"].Value.ToString();
+           fundsVal = jsonObj["funds"].Value.ToString();
             userFunds.text = fundsVal;
 
             infoPanelText.text = "You have collected " + fundsVal + " funds";
@@ -507,7 +507,7 @@ public class GamePlayButtons : MonoBehaviour {
 			provincePolled();
 			string url = "http://ecivix.org.za/api/pollProvince";
 
-			var requestString = "{'access_token':'123abc'}";
+			var requestString = "{'access_token':'2'}";
 
 			byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 
@@ -695,7 +695,7 @@ public class GamePlayButtons : MonoBehaviour {
         provinceCampaign();
         string url2 = "http://ecivix.org.za/api/campaignProvince";
 
-        var requestString2 = "{'access_token':'123abc','province':'Gauteng'}";
+        var requestString2 = "{'access_token':'2','province':'Gauteng'}";
 
         byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
 
@@ -706,7 +706,7 @@ public class GamePlayButtons : MonoBehaviour {
         getManpower();
         string url = "http://ecivix.org.za/api/getManpower";
 
-        var requestString = "{'access_token':'123abc'}";
+        var requestString = "{'access_token':'2'}";
 
         byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 

@@ -68,7 +68,7 @@ public class finnishGame : MonoBehaviour {
 		loadHighscores();
 			string url = "http://ecivix.org.za/api/endHighScore";
 
-			var requestString = "{'access_token':'123abc','userScore':'20'}";
+			var requestString = "{'access_token':'2','userScore':'20'}";
 
 			byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 

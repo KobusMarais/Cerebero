@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using SimpleJSON;
 using System.Text;
+using System;
 
 public class IssuesStancesSelection : MonoBehaviour {
 
@@ -51,7 +52,7 @@ public class IssuesStancesSelection : MonoBehaviour {
     public Text Issue9Stance;
     public Text Issue10Stance;
 
-
+    public static String newGameJson;
     // Use this for initialization
     void Start () {
         loadScreen.SetActive(false);
@@ -430,6 +431,7 @@ public class IssuesStancesSelection : MonoBehaviour {
     {
         yield return new WaitForSeconds(2);
 
+
         SceneManager.LoadScene("MainScreen");
     }
 
@@ -476,20 +478,59 @@ public class IssuesStancesSelection : MonoBehaviour {
 
 	void setIssues()
 	{
-		print("Setting issues");
+		//print("Setting issues");
 
 		setIssuesReturn();
 		string url = "http://ecivix.org.za/api/setIssues";
 
-		var requestString = "{'access_token':'123abc','issues':[" + createIssueStanceArray() + "]}";
+		var requestString = "{'access_token':'2','issues':[" + createIssueStanceArray() + "]}";
 
+        print(requestString);
 		byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 
 		www = new WWW (url, pData);
 		StartCoroutine (setIssuesReturn());
-	}
 
-	IEnumerator setIssuesReturn()
+        
+    }
+
+    IEnumerator Upload()
+    {
+        yield return www;
+
+        print(www.text);
+
+        if (!string.IsNullOrEmpty(www.error))
+        {
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+            loadScreen.SetActive(false);
+            loadText.SetActive(false);
+        }
+        else
+        {
+            
+            newGameJson = www.text;
+
+        }
+    }
+
+    void startGame()
+    {
+        Upload();
+            string url = "http://ecivix.org.za/api/startGame";
+        
+
+            var requestString = "{'access_token':'2', 'difficulty':" + PlayerPrefs.GetString("Player Difficulty") + "}";
+
+            byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+            www = new WWW(url, pData);
+            StartCoroutine(Upload());
+    }
+
+
+    IEnumerator setIssuesReturn()
 	{
 		yield return www;
 		if (!string.IsNullOrEmpty (www.error)) {
@@ -499,11 +540,12 @@ public class IssuesStancesSelection : MonoBehaviour {
 			loadScreen.SetActive(true);
 			loadText.SetActive(true);
 
-            
+            startGame();
 
             StartCoroutine(delayLoading());
 		}
-	}
+        
+    }
 
 	string createIssueStanceArray(){
         string array = "{'issue':'" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue1Stance.text.ToString()) + "'}," +
@@ -516,6 +558,8 @@ public class IssuesStancesSelection : MonoBehaviour {
             "{'issue':'" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue8Stance.text.ToString()) + "'}," +
             "{'issue':'" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue9Stance.text.ToString()) + "'}," +
             "{'issue':'" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue10Stance.text.ToString()) + "'}";
+
+       // print(array);
 
         return array;
 	}
