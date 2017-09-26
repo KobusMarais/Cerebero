@@ -120,7 +120,7 @@ public class NewGameDetails : MonoBehaviour
             Upload();
             string url = "http://ecivix.org.za/api/startGame";
 
-            var requestString = "{\"access_token\":\"123abc\", \"difficulty\":" + difData + "}";
+            var requestString = "{\"access_token\":\"2\", \"difficulty\":" + difData + "}";
 
             byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
