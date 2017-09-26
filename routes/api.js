@@ -57,6 +57,21 @@ router.post('/collectFunds', function(req,res){
     });
     //return success and update funds
 });
+router.post('/getTopic', function(req,res) {
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    console.log(req.body.access_token);
+    let i = req.body;
+    queries.getTopic(i.access_token, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
+});
 
 router.post('/campaignProvince', function(req,res){
 
@@ -70,7 +85,12 @@ router.post('/campaignProvince', function(req,res){
     //find access token in DB
     //calculate support change according to dataset from db
     //save amount of funds user has to db.
-
+    let i = req.body;
+    queries.campaignProvince(i.access_token, i.province, i.topic, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
     //return success and update funds
     var text = '{"success" : "1", "support" : "3000", "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}';
     var obj = JSON.parse(text);

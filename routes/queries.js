@@ -40,6 +40,82 @@ module.exports = {
             callback(err=null,result=sendback);
             return sendback;
         });
+    },getTopic: function (accesstoken, callback) {
+        const client = new pg.Client(connectionString);
+        client.connect();
+        var obj = new Object();
+
+        var querytext = "select * from userProfile WHERE userId = '"+accesstoken +"'";
+        query = client.query(querytext);
+        query.on('row', (row) => {
+            obj.topic1 = row['topic1'];
+            obj.topic2 = row['topic2'];
+            obj.topic3 = row['topic3'];
+            obj.topic4 = row['topic4'];
+        });
+        query.on('end', () => {
+            var sendback = JSON.stringify(obj);
+            client.end();
+            callback(err=null,result=sendback);
+            return sendback;
+        });
+    },
+    campaignProvince: function (accesstoken, province, topic, callback) {
+        const client = new pg.Client(connectionString);
+        client.connect();
+        var obj = new Object();
+        var patt = new RegExp(topic);
+        var mystance = "";
+        var suppercentage = 0;
+
+        var querytext = "select * from userProfile WHERE ((topic1 LIKE '%"+topic+"%') OR (topic2 LIKE '%"+topic+"%') OR (topic3 LIKE '%"+topic+"%') OR (topic4 LIKE '%"+topic+"%')) AND userid = '"+accesstoken+"'";
+        query = client.query(querytext);
+        query.on('row', (row) => {
+            if(patt.test(row['topic1'])){mystance = extractStance(row['topic1'])}
+            if(patt.test(row['topic2'])){mystance = extractStance(row['topic2'])}
+            if(patt.test(row['topic3'])){mystance = extractStance(row['topic3'])}
+            if(patt.test(row['topic4'])){mystance = extractStance(row['topic4'])}
+        });
+        query.on('end', () => {
+            querytext = "SELECT * FROM Stances WHERE stance = '"+mystance+"'";
+            query = client.query(querytext);
+            query.on('row', (row) => {
+                switch (province) {
+                    case "gauteng":
+                        suppercentage = row['suppgauteng'];
+                        break;
+                    case "freestate":
+                        suppercentage = row['suppfreestate'];
+                        break;
+                    case "limpopo":
+                        suppercentage = row['supplimpopo'];
+                        break;
+                    case "northwest":
+                        suppercentage = row['suppnorthwest'];
+                        break;
+                    case "northcape":
+                        suppercentage = row['suppnorthcape'];
+                        break;
+                    case "westcape":
+                        suppercentage = row['suppwestcape'];
+                        break;
+                    case "eastcape":
+                        suppercentage = row['suppeastcape'];
+                        break;
+                    case "kwazulu-natal":
+                        suppercentage = row['suppkzn'];
+                        break;
+                    case "mpumalanga":
+                        suppercentage = row['suppmpuma'];
+                }
+            });
+            query.on('end', () => {
+                var sendback = JSON.stringify(obj);
+                client.end();
+                callback(err = null, result = sendback);
+                return sendback;
+            });
+        });
     },
     collectFunds : function (accesstoken, province, callback) {
         const client = new pg.Client(connectionString);
@@ -50,11 +126,8 @@ module.exports = {
         var querytext = "select t.totalfundsavailable as fava, f.user_funds as ufu from tblProvinces t, tblFunds f WHERE t.userId ='"+accesstoken+"' AND f.userId='"+accesstoken+"'  AND provinceName='"+province+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
-            console.log("TESTING HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             obj.funds = row['fava'];
-            console.log(obj.funds);
             funds = row['ufu'] + obj.funds;
-            console.log(funds);
         });
         query.on('end', () => {
             querytext = "UPDATE tblProvinces SET totalfundsAvailable = 0 WHERE userId = '"+accesstoken+"' AND provinceName = '"+province+"';";
@@ -182,15 +255,15 @@ module.exports = {
 
         var querytext = "INSERT INTO tblFunds(userId, user_funds, ai1_funds, ai2_funds, ai3_funds, ai4_funds, time) values('"+accesstoken+"','"+starterFunds+"','"+aiStarterFunds[0]+"','"+aiStarterFunds[1]+"','"+aiStarterFunds[2]+"','"+aiStarterFunds[3]+"', '"+time+"'); " +
             "INSERT INTO tblManPower(userId, user_ManPower, ai1_ManPower, ai2_ManPower, ai3_ManPower, ai4_ManPower) values('"+accesstoken+"','"+starterManpower+"','"+aiStarterManpower[0]+"','"+aiStarterManpower[1]+"','"+aiStarterManpower[2]+"','"+aiStarterManpower[3]+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Gauteng', 90000, 15000, '"+accesstoken+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Freestate', 90000, 15000, '"+accesstoken+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('West Cape', 90000, 15000, '"+accesstoken+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('East Cape', 90000, 15000, '"+accesstoken+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('North Cape', 90000, 15000, '"+accesstoken+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('North West', 90000, 15000, '"+accesstoken+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Mpumalanga', 90000, 15000, '"+accesstoken+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Kwazulu-Natal', 90000, 15000, '"+accesstoken+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId) values ('Limpopo', 90000, 15000, '"+accesstoken+"');";
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Gauteng', 90000, 15000, '"+accesstoken+"', 90000);" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Freestate', 90000, 15000, '"+accesstoken+"', 80000);" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('West Cape', 90000, 15000, '"+accesstoken+"', 70000);" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('East Cape', 90000, 15000, '"+accesstoken+"', 60000);" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('North Cape', 90000, 15000, '"+accesstoken+"', 50000);" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('North West', 90000, 15000, '"+accesstoken+"', 40000);" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Mpumalanga', 90000, 15000, '"+accesstoken+"', 30000);" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Kwazulu-Natal', 90000, 15000, '"+accesstoken+"', 20000);" +
+            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Limpopo', 90000, 15000, '"+accesstoken+"', 10000);";
 
         query = client.query(querytext);
         query.on('end', () => {
@@ -429,3 +502,7 @@ module.exports = {
         });
     }
 };
+
+function extractStance(fullstr) {
+    return fullstr.slice(fullstr.indexOf("_"), fullstr.length);
+}
