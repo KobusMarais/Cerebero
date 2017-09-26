@@ -77,7 +77,7 @@ router.get('/', function(req, res, next) {
         ');');
     query = client.query('CREATE TABLE Leaderboard(pkid SERIAL PRIMARY KEY,userId INT NOT NULL REFERENCES userAccounts(pkid),score INT NOT NULL);');
 
-    query = client.query('CREATE TABLE tblProvinces(pkid SERIAL PRIMARY KEY, provinceName TEXT NOT NULL, totalfundsAvailable INT NOT NULL, totalManpowerAvailable INT NOT NULL);');
+    query = client.query('CREATE TABLE tblProvinces(pkid SERIAL PRIMARY KEY, provinceName TEXT NOT NULL, totalfundsAvailable INT NOT NULL, totalManpowerAvailable INT NOT NULL, userId INT NOT NULL REFERENCES userAccounts(pkid), totalSupportAvailable INT NOT NULL);');
 
     query = client.query('INSERT INTO userAccounts(username, user_password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Victor', 'password111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
 
@@ -232,7 +232,15 @@ router.get('/', function(req, res, next) {
 
     query = client.query('INSERT INTO tblManPower(userId, user_ManPower, ai1_ManPower, ai2_ManPower, ai3_ManPower, ai4_ManPower) values($1,$2,$3,$4,$5,$6)', [1, 9000, 9000, 9000, 9000, 9000]);
 
-    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable) values ($1,$2,$3)', ['Gauteng', 90000, 15000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['Gauteng', 90000, 15000, 1,30000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['Freestate', 90000, 15000, 1,40000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['West Cape', 90000, 15000, 1,50000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['East Cape', 90000, 15000, 1,60000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['North Cape', 90000, 15000, 1,70000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['North West', 90000, 15000, 1,80000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['Mpumalanga', 90000, 15000, 1,90000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['Kwazulu-Natal', 90000, 15000, 1,20000]);
+    query = client.query('INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ($1,$2,$3,$4,$5)', ['Limpopo', 90000, 15000, 1,10000]);
 
     query = client.query('INSERT INTO Stances(stance,suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, suppNat) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['Right', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 

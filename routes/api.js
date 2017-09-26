@@ -14,7 +14,6 @@ router.post('/register', function(req,res){
     //generate new token for each user and create entry in db for that user.
     queries.register(i.name, i.surname, i.email, i.username, i.password, function(err, result) {
         if (err) return console.log("error: ", err)
-        console.log(result);
         var obj = JSON.parse(result);
         res.send(obj);
     });
@@ -29,14 +28,10 @@ router.post('/login', function(req,res){
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    console.log(req.body.username);
-    console.log(req.body.password);
-
     //insert code here to check if email and password are correct and return accesskey.
     let i = req.body;
     queries.login(i.username, i.password, function(err, result) {
         if (err) return console.log("error: ", err);
-
         var obj = JSON.parse(result);
         res.send(obj);
     });
@@ -54,11 +49,28 @@ router.post('/collectFunds', function(req,res){
     //find access token in DB
     //calculate fund change according to dataset from db
     //save amount of funds user has to db.
-
+    let i = req.body;
+    queries.collectFunds(i.access_token, i.province, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
     //return success and update funds
-    var text = '{"success" : "1", "funds" : "3000", "AI1Move" : "Collect Funds Gauteng", "AI2Move" : "Campaign Limpopo" , "AI3Move" : "Campaign Western Cape", "AI4Move" : "Collect Funds Freestate"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+});
+router.post('/getTopic', function(req,res) {
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    console.log(req.body.access_token);
+    let i = req.body;
+    queries.getTopic(i.access_token, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 
 router.post('/campaignProvince', function(req,res){
@@ -73,7 +85,12 @@ router.post('/campaignProvince', function(req,res){
     //find access token in DB
     //calculate support change according to dataset from db
     //save amount of funds user has to db.
-
+    let i = req.body;
+   /* queries.campaignProvince(i.access_token, i.province, i.topic, function(err, result) {
+        if (err) return console.log("error: ", err);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });*/
     //return success and update funds
     var text = '{"success" : "1", "support" : "3000", "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}';
     var obj = JSON.parse(text);
@@ -224,22 +241,19 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.difficulty); //sets difficulty
+    //console.log(req.body.access_token);
+    //console.log(req.body.difficulty); //sets difficulty
 
     //find access token in DB
     //create and retrieve all starter info for user
 
 
     //return everything that needs to be displayed on client side
-   /* queries.startGame(req.body.access_token, function(err, result) {
+    queries.startGame(req.body.access_token, function(err, result) {
         if (err) return console.log("error: ", err);
         var obj = JSON.parse(result);
         res.send(obj);
-    });*/
-    var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    });
 });
 
 
@@ -318,7 +332,6 @@ router.post('/getStances', function(req, res, next) { // receives user score and
     let i = req.body.issues; // for brevity
     queries.getStances(i[0], i[1], i[2], i[3], function(err, result) {
         if (err) return console.log("error: ", err)
-        console.log(result);
         var obj = JSON.parse(result);
         res.send(obj);
     });
@@ -330,18 +343,16 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-  //  console.log(req.body.access_token);
-    //console.log(req.body.issues);
+    //console.log(req.body.access_token);
+    console.log(req.body.issues[0].issue);
+    console.log(req.body.issues[0].stance);
 
-
-
-//convert string to Json Object
-//    console.log(JSON.parse(string));
-
-    console.log(text);
-   var text = '{"success": "1"}';
-    var obj = JSON.parse(text);
-    res.send(obj);
+    let i = req.body; // for brevity
+    queries.setIssues(i.access_token, i.issues, function(err, result) {
+        if (err) return console.log("error: ", err)
+        var obj = JSON.parse(result);
+        res.send(obj);
+    });
 });
 //query.on('end', () => { client.end(); });
 module.exports = router;
