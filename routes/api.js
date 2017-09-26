@@ -86,11 +86,11 @@ router.post('/campaignProvince', function(req,res){
     //calculate support change according to dataset from db
     //save amount of funds user has to db.
     let i = req.body;
-    queries.campaignProvince(i.access_token, i.province, i.topic, function(err, result) {
+   /* queries.campaignProvince(i.access_token, i.province, i.topic, function(err, result) {
         if (err) return console.log("error: ", err);
         var obj = JSON.parse(result);
         res.send(obj);
-    });
+    });*/
     //return success and update funds
     var text = '{"success" : "1", "support" : "3000", "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}';
     var obj = JSON.parse(text);
