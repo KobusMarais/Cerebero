@@ -39,8 +39,6 @@ public class NewGameDetails : MonoBehaviour
     WWW www;
     bool flag;
 
-    public static String newGameJson;
-
     // Use this for initialization
     void Start()
     {
@@ -117,7 +115,7 @@ public class NewGameDetails : MonoBehaviour
             loadScreen.SetActive(true);
             loadText.SetActive(true);
 
-            Upload();
+            /*Upload();
             string url = "http://ecivix.org.za/api/startGame";
 
             var requestString = "{\"access_token\":\"2\", \"difficulty\":" + difData + "}";
@@ -125,9 +123,13 @@ public class NewGameDetails : MonoBehaviour
             byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
             www = new WWW(url, pData);
-            StartCoroutine(Upload());
+            StartCoroutine(Upload());*/
+            
 
             PlayerPrefs.SetString("Player Party", partyNameInput.text);
+            PlayerPrefs.SetString("Player Difficulty", difData);
+
+            StartCoroutine(delayLoading());
 
         }
 
@@ -141,7 +143,7 @@ public class NewGameDetails : MonoBehaviour
     }
 
 
-    IEnumerator Upload()
+    /*IEnumerator Upload()
     {
         yield return www;
 
@@ -160,14 +162,14 @@ public class NewGameDetails : MonoBehaviour
             StartCoroutine(delayLoading());
             
         }
-    }
+    }*/
 
     void closeErrorFun()
     {
         errorBox.SetActive(false);
     }
 
-        void easyDifficulty()
+    void easyDifficulty()
     {
         difData = "easy";
     }
