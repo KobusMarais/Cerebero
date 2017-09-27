@@ -20,6 +20,8 @@ public class IssuesSelection : MonoBehaviour {
     public Text errorMessage;
     public Button closeError;
 
+    
+
     //	public Text issue1;
     //	public Text issue2;
     //	public Text issue3;
@@ -132,16 +134,16 @@ public class IssuesSelection : MonoBehaviour {
         } else {
 			//print(www.text);
 			var jsonObj = JSON.Parse (www.text);
-			//int arrayLength = jsonObj ["scoreboard"].Count;
-			//print(jsonObj ["issues"][0]);
-			// Loop through provinces and change image color
-
-			int i = 0;
+            //int arrayLength = jsonObj ["scoreboard"].Count;
+            //print(jsonObj ["issues"][0]);
+            // Loop through provinces and change image color
+            int i = 0;
 			foreach (var issue in issueToggleArray)
 			{
-				issue.GetComponentInChildren<Text>().text = removeApos(jsonObj ["issues"] [i].ToString ());
+				issue.GetComponentInChildren<Text>().text = removeApos(jsonObj [i]["topic"].ToString ());
 				//print(issue.GetComponentInChildren<Text>().text);
-				i++;
+
+                i++;
 			}
 
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using SimpleJSON;
 using System.Text;
+using System;
 
 public class IssuesStancesSelection : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class IssuesStancesSelection : MonoBehaviour {
     public GameObject loadScreen;
     public GameObject loadText;
 
+    JSONNode jsonStanceObj;
+    public static string stancesArray;
 
     public GameObject errorBox;
     public Text errorMessage;
@@ -51,15 +54,17 @@ public class IssuesStancesSelection : MonoBehaviour {
     public Text Issue9Stance;
     public Text Issue10Stance;
 
-
+    public static String newGameJson;
     // Use this for initialization
     void Start () {
         loadScreen.SetActive(false);
         loadText.SetActive(false);
 
-		loadIssues ();
+		loadIssues();
+        getStances();
 
-		Issue1Stance.text = "Stance: Center";
+
+        Issue1Stance.text = "Stance: Center";
 		Issue2Stance.text = "Stance: Center";
 		Issue3Stance.text = "Stance: Center";
 		Issue4Stance.text = "Stance: Center";
@@ -95,7 +100,9 @@ public class IssuesStancesSelection : MonoBehaviour {
 
         Button closeErrorbtn = closeError.GetComponent<Button>();
         closeErrorbtn.onClick.AddListener(closeErrorFun);
-        
+
+        //startGame();
+
     }
 
     void closeErrorFun()
@@ -430,6 +437,7 @@ public class IssuesStancesSelection : MonoBehaviour {
     {
         yield return new WaitForSeconds(2);
 
+
         SceneManager.LoadScene("MainScreen");
     }
 
@@ -474,36 +482,127 @@ public class IssuesStancesSelection : MonoBehaviour {
 		}
 	}
 
-	void setIssues()
+    void loadStances()
+    {
+        jsonStanceObj = JSON.Parse(IssuesStancesSelection.stancesArray);
+
+        Issue1Stance.text = jsonStanceObj[0][0][0][2][0];
+        Issue2Stance.text = jsonStanceObj[0][1][0][2][0];
+        Issue3Stance.text = jsonStanceObj[0][2][0][2][0];
+        Issue4Stance.text = jsonStanceObj[0][3][0][2][0];
+
+        Issue5Stance.text = jsonStanceObj[0][4][0][2][0];
+        Issue6Stance.text = jsonStanceObj[0][5][0][2][0];
+        Issue7Stance.text = jsonStanceObj[0][6][0][2][0];
+        Issue8Stance.text = jsonStanceObj[0][7][0][2][0];
+
+        Issue9Stance.text = jsonStanceObj[0][8][0][2][0];
+        Issue10Stance.text = jsonStanceObj[0][9][0][2][0];
+        //print("xyz: " + jsonStanceObj[0][0][0][2][0].ToString());
+    }
+
+    void setIssues()
 	{
-		print("Setting issues");
+		//print("Setting issues");
 
 		setIssuesReturn();
 		string url = "http://ecivix.org.za/api/setIssues";
 
-		var requestString = "{'access_token':'123abc','issues':[" + createIssueStanceArray() + "]}";
-
+		var requestString = "{'access_token':'2','issues':[" + createIssueStanceArray() + "]}";
+        print(requestString);
+       // print(requestString);
 		byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 
 		www = new WWW (url, pData);
 		StartCoroutine (setIssuesReturn());
-	}
 
-	IEnumerator setIssuesReturn()
+        
+    }
+
+    IEnumerator Upload()
+    {
+        yield return www;
+
+        print(www.text);
+
+        if (!string.IsNullOrEmpty(www.error))
+        {
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+        }
+        else
+        {
+            loadScreen.SetActive(true);
+            loadText.SetActive(true);
+            newGameJson = www.text;
+
+            StartCoroutine(delayLoading());
+
+        }
+    }
+
+    void startGame()
+    {
+        Upload();
+            string url = "http://ecivix.org.za/api/startGame";
+        
+
+            var requestString = "{'access_token':'2', 'difficulty':'" + PlayerPrefs.GetString("Player Difficulty") + "'}";
+
+       // print(requestString);
+            byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+            www = new WWW(url, pData);
+            StartCoroutine(Upload());
+    }
+
+    void getStances()
+    {
+        getStancesHelp();
+        string url = "http://ecivix.org.za/api/getStances";
+
+
+        var requestString = "{'access_token':'2', 'issues':['" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "',  '" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "',  '" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "',  '" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "',  '" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "']}";
+
+        print(requestString);
+       // print(requestString);
+        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+        www = new WWW(url, pData);
+       StartCoroutine(getStancesHelp());
+    }
+
+    IEnumerator getStancesHelp()
+    {
+        yield return www;
+        if (!string.IsNullOrEmpty(www.error))
+        {
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+        }
+        else
+        {
+            stancesArray = www.text;
+            loadStances();
+            
+        }
+
+    }
+
+
+
+    IEnumerator setIssuesReturn()
 	{
 		yield return www;
 		if (!string.IsNullOrEmpty (www.error)) {
             errorMessage.text = www.error;
             errorBox.SetActive(true);
         } else {
-			loadScreen.SetActive(true);
-			loadText.SetActive(true);
+            startGame();
 
-            
-
-            StartCoroutine(delayLoading());
-		}
-	}
+        }
+        
+    }
 
 	string createIssueStanceArray(){
         string array = "{'issue':'" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue1Stance.text.ToString()) + "'}," +
@@ -516,6 +615,8 @@ public class IssuesStancesSelection : MonoBehaviour {
             "{'issue':'" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue8Stance.text.ToString()) + "'}," +
             "{'issue':'" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue9Stance.text.ToString()) + "'}," +
             "{'issue':'" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue10Stance.text.ToString()) + "'}";
+
+       // print(array);
 
         return array;
 	}
