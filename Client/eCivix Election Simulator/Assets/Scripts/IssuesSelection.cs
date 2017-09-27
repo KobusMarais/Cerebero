@@ -20,6 +20,8 @@ public class IssuesSelection : MonoBehaviour {
     public Text errorMessage;
     public Button closeError;
 
+    
+
     //	public Text issue1;
     //	public Text issue2;
     //	public Text issue3;
