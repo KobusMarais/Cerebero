@@ -341,6 +341,9 @@ module.exports = {
         query.on('row', (row) => {
             obj.score = row['score'];
         });
+        query.on('error', function(err) {
+            console.log('Query error: ' + err);
+        });
         query.on('end', () => {
             var sendback = JSON.stringify(obj);
             client.end();
@@ -436,6 +439,9 @@ module.exports = {
                     mini = [];
                 }
             });
+        query.on('error', function(err) {
+            console.log('Query error: ' + err);
+        });
             query.on('end', () => {
                 var sendback = JSON.stringify(overall);
                 client.end();
@@ -459,6 +465,9 @@ module.exports = {
             obj = new Object();
             obj.topic = row['topicname'];
             overall.push(obj);
+        });
+        query.on('error', function(err) {
+            console.log('Query error: ' + err);
         });
         query.on('end', () => {
             var sendback = JSON.stringify(overall);

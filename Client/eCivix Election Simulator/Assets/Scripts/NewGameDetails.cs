@@ -20,6 +20,10 @@ public class NewGameDetails : MonoBehaviour
     public GameObject loadScreen;
     public GameObject loadText;
 
+    public GameObject errorBox;
+    public Text errorMessage;
+    public Button closeError;
+
     public Button avatar1;
     public Button avatar2;
     public Button avatar3;
@@ -35,8 +39,6 @@ public class NewGameDetails : MonoBehaviour
     WWW www;
     bool flag;
 
-    public static String newGameJson;
-
     // Use this for initialization
     void Start()
     {
@@ -46,6 +48,13 @@ public class NewGameDetails : MonoBehaviour
 
         loadScreen.SetActive(false);
         loadText.SetActive(false);
+
+        errorBox.SetActive(false);
+
+        
+
+        Button closeErrorbtn = closeError.GetComponent<Button>();
+        closeErrorbtn.onClick.AddListener(closeErrorFun);
 
         Button btn = continueButton.GetComponent<Button>();
         btn.onClick.AddListener(StartGame);
@@ -97,24 +106,30 @@ public class NewGameDetails : MonoBehaviour
     {
         if (partyNameInput.text == "" || difData == "" || !flag)
         {
-            Debug.Log("One or more empty fields");
+            errorMessage.text = "One or more empty fields";
+            errorBox.SetActive(true);
+            
         }
         else
         {
             loadScreen.SetActive(true);
             loadText.SetActive(true);
 
-            Upload();
+            /*Upload();
             string url = "http://ecivix.org.za/api/startGame";
 
-            var requestString = "{\"access_token\":\"123abc\", \"difficulty\":" + difData + "}";
+            var requestString = "{\"access_token\":\"2\", \"difficulty\":" + difData + "}";
 
             byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
             www = new WWW(url, pData);
-            StartCoroutine(Upload());
+            StartCoroutine(Upload());*/
+            
 
             PlayerPrefs.SetString("Player Party", partyNameInput.text);
+            PlayerPrefs.SetString("Player Difficulty", difData);
+
+            StartCoroutine(delayLoading());
 
         }
 
@@ -128,7 +143,7 @@ public class NewGameDetails : MonoBehaviour
     }
 
 
-    IEnumerator Upload()
+    /*IEnumerator Upload()
     {
         yield return www;
 
@@ -136,8 +151,8 @@ public class NewGameDetails : MonoBehaviour
 
         if (!string.IsNullOrEmpty(www.error))
         {
-            Debug.Log(www.error);
-
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
             loadScreen.SetActive(false);
             loadText.SetActive(false);
         }
@@ -147,6 +162,11 @@ public class NewGameDetails : MonoBehaviour
             StartCoroutine(delayLoading());
             
         }
+    }*/
+
+    void closeErrorFun()
+    {
+        errorBox.SetActive(false);
     }
 
     void easyDifficulty()
