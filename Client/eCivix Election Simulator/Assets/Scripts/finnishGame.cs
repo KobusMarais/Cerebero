@@ -36,34 +36,23 @@ public class finnishGame : MonoBehaviour {
 	public Text position11Score;
 	public Text userPosition;
 
-    public GameObject errorBox;
-    public Text errorMessage;
-    public Button closeError;
-
     void Start () {
 
 		getHighscores();
         Button btn = done.GetComponent<Button>();
         btn.onClick.AddListener(endGame);
 
-        errorBox.SetActive(false);
-
-        Button closeErrorbtn = closeError.GetComponent<Button>();
-        closeErrorbtn.onClick.AddListener(closeErrorFun);
 
     }
 	
+	// Update is called once per frame
 	void endGame () {
         SceneManager.LoadScene("WelcomeScreen");
     }
 
-    void closeErrorFun()
-    {
-        errorBox.SetActive(false);
-    }
-
-    void getHighscores()
+	void getHighscores()
 	{
+		print("Loading highscore board");
 
 		loadHighscores();
 			string url = "http://ecivix.org.za/api/endHighScore";
@@ -81,9 +70,9 @@ public class finnishGame : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        }
+			Debug.Log(www.error);
+			print(www.error);
+		}
 		else
 		{
 			//print(www.text);

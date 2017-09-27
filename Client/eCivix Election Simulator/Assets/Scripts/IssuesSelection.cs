@@ -13,36 +13,33 @@ public class IssuesSelection : MonoBehaviour {
     public GameObject loadText;
 	private WWW www;
 	public static List<string> selectedIssues = new List<string> ();
+	public static string stancesArray;
 
 	private GameObject[] issueToggleArray;
 
-    public GameObject errorBox;
-    public Text errorMessage;
-    public Button closeError;
-
-    //	public Text issue1;
-    //	public Text issue2;
-    //	public Text issue3;
-    //	public Text issue4;
-    //	public Text issue5;
-    //	public Text issue6;
-    //	public Text issue7;
-    //	public Text issue8;
-    //	public Text issue9;
-    //	public Text issue10;
-    //	public Text issue11;
-    //	public Text issue12;
-    //	public Text issue13;
-    //	public Text issue14;
-    //	public Text issue15;
-    //	public Text issue16;
-    //	public Text issue17;
-    //	public Text issue18;
-    //	public Text issue19;
-    //	public Text issue20;
-    //	public Text issue21;
-    //	public Text issue22;
-    //	public Text issue23;
+//	public Text issue1;
+//	public Text issue2;
+//	public Text issue3;
+//	public Text issue4;
+//	public Text issue5;
+//	public Text issue6;
+//	public Text issue7;
+//	public Text issue8;
+//	public Text issue9;
+//	public Text issue10;
+//	public Text issue11;
+//	public Text issue12;
+//	public Text issue13;
+//	public Text issue14;
+//	public Text issue15;
+//	public Text issue16;
+//	public Text issue17;
+//	public Text issue18;
+//	public Text issue19;
+//	public Text issue20;
+//	public Text issue21;
+//	public Text issue22;
+//	public Text issue23;
 
     void Start () {
 
@@ -54,16 +51,6 @@ public class IssuesSelection : MonoBehaviour {
 
         loadScreen.SetActive(false);
         loadText.SetActive(false);
-
-        errorBox.SetActive(false);
-
-        Button closeErrorbtn = closeError.GetComponent<Button>();
-        closeErrorbtn.onClick.AddListener(closeErrorFun);
-    }
-
-    void closeErrorFun()
-    {
-        errorBox.SetActive(false);
     }
 
     IEnumerator delayLoading()
@@ -75,8 +62,8 @@ public class IssuesSelection : MonoBehaviour {
 
     void SelectIssues() {
 
-        // temp
         int count = 0;
+
 		foreach (var issue in issueToggleArray)
 		{
 			//issue.GetComponentInChildren<Text>().text = removeApos(jsonObj ["issues"] [i].ToString ());
@@ -85,26 +72,62 @@ public class IssuesSelection : MonoBehaviour {
 				//print(issue.GetComponentInChildren<Text>().text.ToLower());
 				selectedIssues.Add(issue.GetComponentInChildren<Text>().text.ToString());
                 count++;
+
 			}
 		}
 
-        if(count == 10)
+        if(count == 4)
         {
-            loadScreen.SetActive(true);
-            loadText.SetActive(true);
-
-            StartCoroutine(delayLoading());
+            getStances();
         }
         else
         {
-            errorMessage.text = "Please select 10 issues...";
-            errorBox.SetActive(true);
+            Debug.Log("Please choose 4 issues...");
         }
 
-		// temp
-
-       
     }
+
+
+	void getStances()
+	{
+		print("Getting stances");
+
+		saveStances();
+		string url = "http://ecivix.org.za/api/getStances";
+
+		var requestString = "{'access_token':'123abc','issues':[" + createIssueArray() + "]}";
+
+		print (requestString);
+		byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
+
+		www = new WWW (url, pData);
+		StartCoroutine (saveStances());
+	}
+
+	IEnumerator saveStances()
+	{
+		yield return www;
+		if (!string.IsNullOrEmpty (www.error)) {
+			Debug.Log (www.error);
+			print (www.error);
+		} else {
+
+			stancesArray = www.text;
+
+			loadScreen.SetActive(true);
+			loadText.SetActive(true);
+			StartCoroutine(delayLoading());
+		}
+	}
+
+	string createIssueArray() {
+		string array = "'"+IssuesSelection.selectedIssues[0].ToString().ToLower()+"'," +
+			"'"+IssuesSelection.selectedIssues[1].ToString().ToLower()+"'," +
+			"'"+IssuesSelection.selectedIssues[2].ToString().ToLower()+"'," +
+			"'"+IssuesSelection.selectedIssues[3].ToString().ToLower()+"'" ;
+		//print ("Array" + array);
+		return array;
+	}
 
 	void getIssues()
 	{
@@ -127,9 +150,9 @@ public class IssuesSelection : MonoBehaviour {
 	{
 		yield return www;
 		if (!string.IsNullOrEmpty (www.error)) {
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        } else {
+			Debug.Log (www.error);
+			print (www.error);
+		} else {
 			//print(www.text);
 			var jsonObj = JSON.Parse (www.text);
 			//int arrayLength = jsonObj ["scoreboard"].Count;

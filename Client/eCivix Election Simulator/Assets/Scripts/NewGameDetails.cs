@@ -20,10 +20,6 @@ public class NewGameDetails : MonoBehaviour
     public GameObject loadScreen;
     public GameObject loadText;
 
-    public GameObject errorBox;
-    public Text errorMessage;
-    public Button closeError;
-
     public Button avatar1;
     public Button avatar2;
     public Button avatar3;
@@ -50,13 +46,6 @@ public class NewGameDetails : MonoBehaviour
 
         loadScreen.SetActive(false);
         loadText.SetActive(false);
-
-        errorBox.SetActive(false);
-
-        
-
-        Button closeErrorbtn = closeError.GetComponent<Button>();
-        closeErrorbtn.onClick.AddListener(closeErrorFun);
 
         Button btn = continueButton.GetComponent<Button>();
         btn.onClick.AddListener(StartGame);
@@ -108,9 +97,7 @@ public class NewGameDetails : MonoBehaviour
     {
         if (partyNameInput.text == "" || difData == "" || !flag)
         {
-            errorMessage.text = "One or more empty fields";
-            errorBox.SetActive(true);
-            
+            Debug.Log("One or more empty fields");
         }
         else
         {
@@ -120,7 +107,7 @@ public class NewGameDetails : MonoBehaviour
             Upload();
             string url = "http://ecivix.org.za/api/startGame";
 
-            var requestString = "{\"access_token\":\"2\", \"difficulty\":" + difData + "}";
+            var requestString = "{\"access_token\":\"123abc\", \"difficulty\":" + difData + "}";
 
             byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
@@ -149,8 +136,8 @@ public class NewGameDetails : MonoBehaviour
 
         if (!string.IsNullOrEmpty(www.error))
         {
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
+            Debug.Log(www.error);
+
             loadScreen.SetActive(false);
             loadText.SetActive(false);
         }
@@ -162,12 +149,7 @@ public class NewGameDetails : MonoBehaviour
         }
     }
 
-    void closeErrorFun()
-    {
-        errorBox.SetActive(false);
-    }
-
-        void easyDifficulty()
+    void easyDifficulty()
     {
         difData = "easy";
     }

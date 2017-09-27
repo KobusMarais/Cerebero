@@ -12,39 +12,7 @@ public class GamePlayButtons : MonoBehaviour {
 	public Button pollProvinceButton;
 	public Button campaignButton;
 
-    public GameObject errorBox;
-    public Text errorMessage;
-    public Button closeError;
-
-    public Button creditsOpen;
-    public Button creditsClose;
-    public GameObject credits;
-
-    public GameObject campaignTopics;
-    public Button Issue1;
-    public Button Issue2;
-    public Button Issue3;
-    public Button Issue4;
-    public Button Issue5;
-    public Button Issue6;
-    public Button Issue7;
-    public Button Issue8;
-    public Button Issue9;
-    public Button Issue10;
-
-    public Text Issue1Text;
-    public Text Issue2Text;
-    public Text Issue3Text;
-    public Text Issue4Text;
-    public Text Issue5Text;
-    public Text Issue6Text;
-    public Text Issue7Text;
-    public Text Issue8Text;
-    public Text Issue9Text;
-    public Text Issue10Text;
-
-
-    public Button endTurnButton;
+	public Button endTurnButton;
 	public Text endTurnText;
 	public Text AI1Action;
 	public Text AI2Action;
@@ -176,10 +144,7 @@ public class GamePlayButtons : MonoBehaviour {
 		endTurnText.text = jsonObj["Weeks"].Value.ToString();
 		weeks =  int.Parse(jsonObj["Weeks"].Value);
 
-        campaignTopics.SetActive(false);
-
-
-        NCcoin.enabled = false;
+		NCcoin.enabled = false;
 		NCmanpower.enabled = false;
 
 		WCcoin.enabled = false;
@@ -252,78 +217,10 @@ public class GamePlayButtons : MonoBehaviour {
 
 		Button btn4 = endTurnButton.GetComponent<Button>();
 		btn4.onClick.AddListener(endTurn);
-        errorBox.SetActive(false);
-
-        Button closeErrorbtn = closeError.GetComponent<Button>();
-        closeErrorbtn.onClick.AddListener(closeErrorFun);
-
-        credits.SetActive(false);
-
-        Button closecreditbtn = creditsClose.GetComponent<Button>();
-        closecreditbtn.onClick.AddListener(closeCredits);
-
-        Button opencreditbtn = creditsOpen.GetComponent<Button>();
-        opencreditbtn.onClick.AddListener(openCredits);
-
-        
-
-        Button issue1 = Issue1.GetComponent<Button>();
-        issue1.onClick.AddListener(issue1Campaign);
-
-        Button issue2 = Issue2.GetComponent<Button>();
-        issue2.onClick.AddListener(issue2Campaign);
-
-        Button issue3 = Issue3.GetComponent<Button>();
-        issue3.onClick.AddListener(issue3Campaign);
-
-        Button issue4 = Issue4.GetComponent<Button>();
-        issue4.onClick.AddListener(issue4Campaign);
-
-        Button issue5 = Issue5.GetComponent<Button>();
-        issue5.onClick.AddListener(issue5Campaign);
-
-        Button issue6 = Issue6.GetComponent<Button>();
-        issue6.onClick.AddListener(issue6Campaign);
-
-        Button issue7 = Issue7.GetComponent<Button>();
-        issue7.onClick.AddListener(issue7Campaign);
-
-        Button issue8 = Issue8.GetComponent<Button>();
-        issue8.onClick.AddListener(issue8Campaign);
-
-        Button issue9 = Issue9.GetComponent<Button>();
-        issue9.onClick.AddListener(issue9Campaign);
-
-        Button issue10 = Issue10.GetComponent<Button>();
-        issue10.onClick.AddListener(issue10Campaign);
-
-        Issue1Text.text += "1";
-        Issue2Text.text += "2";
-        Issue3Text.text += "3";
-        Issue4Text.text += "4";
-        Issue5Text.text += "5";
-        Issue6Text.text += "6";
-        Issue7Text.text += "7";
-        Issue8Text.text += "8";
-        Issue9Text.text += "9";
-        Issue10Text.text += "10";
 
         getScore();
 	}
-    void closeErrorFun()
-    {
-        errorBox.SetActive(false);
-    }
 
-    void closeCredits()
-    {
-        credits.SetActive(false);
-    }
-
-    void openCredits()
-    {
-        credits.SetActive(true);
-    }
 
     void getScore()
     {
@@ -343,9 +240,9 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        }
+			Debug.Log(www.error);
+			//print(www.error);
+		}
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
@@ -359,9 +256,8 @@ public class GamePlayButtons : MonoBehaviour {
 
 		if (ProvincesButtons.provinceName == null)
 		{
-            errorMessage.text = "Please select a province to collect funds from";
-            errorBox.SetActive(true);
-        }
+			print("Please select a province to collect funds from");
+		}
 		else
 		{
 			// Get collected funds for selected province and AI actions
@@ -456,10 +352,9 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-
-        }
+			Debug.Log(www.error);
+			//print(www.error);
+		}
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
@@ -476,12 +371,9 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www2;
 		if (!string.IsNullOrEmpty(www2.error))
 		{
-            errorMessage.text = www2.error;
-            errorBox.SetActive(true);
-
-
-            //print(www.error);
-        }
+			Debug.Log(www2.error);
+			//print(www.error);
+		}
 		else
 		{
 			var jsonObj = JSON.Parse(www2.text);
@@ -496,13 +388,13 @@ public class GamePlayButtons : MonoBehaviour {
 
 	void pollProvince()
 	{
+		print("You have clicked on the poll province button");
 		pollProvinceText.text = "-$5";
         pollProvinceTextAnim.Play(pollProvinceTextHash, -1, 0f);
 
 		if (ProvincesButtons.provinceName == null) {
-            errorMessage.text = "Please select a province to campaign";
-            errorBox.SetActive(true);
-        } else {
+			print ("Please select a province to campaign");
+		} else {
 			// Get and update user's total manpower / support
 			provincePolled();
 			string url = "http://ecivix.org.za/api/pollProvince";
@@ -525,9 +417,9 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        }
+			Debug.Log(www.error);
+			//print(www.error);
+		}
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
@@ -544,18 +436,98 @@ public class GamePlayButtons : MonoBehaviour {
 
 	void campaign()
 	{
+		print("You have clicked on the campaign button");
 
 		if (ProvincesButtons.provinceName == null)
 		{
-
-            errorMessage.text = "Please select a province to campaign";
-            errorBox.SetActive(true);
-        }
+			print("Please select a province to campaign");
+		}
 		else
 		{
-            campaignTopics.SetActive(true);
-            // Get manpower / support for selected province and AI actions
 
+			// Get manpower / support for selected province and AI actions
+			provinceCampaign();
+			string url2 = "http://ecivix.org.za/api/campaignProvince";
+
+			var requestString2 = "{'access_token':'123abc','province':'Gauteng'}";
+
+			byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
+
+			www2 = new WWW(url2, pData2);
+			StartCoroutine(provinceCampaign());
+
+			// Get and update user's total manpower / support
+			getManpower();
+			string url = "http://ecivix.org.za/api/getManpower";
+
+			var requestString = "{'access_token':'123abc'}";
+
+			byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+			www = new WWW(url, pData);
+			StartCoroutine(getManpower());
+
+
+			campaignText.text = "-$5";
+			campaignTextAnim.Play(campaignTextHash, -1, 0f);
+
+			if (ProvincesButtons.provinceName == "NC")
+			{
+				NCmanpower.enabled = true;
+				NCmanAnim.Play(ncManPowerHash, -1, 0f);
+			}
+
+			if (ProvincesButtons.provinceName == "WC")
+			{
+				WCmanpower.enabled = true;
+				WCmanAnim.Play(wcManPowerHash, -1, 0f);
+			}
+
+			if (ProvincesButtons.provinceName == "EC")
+			{
+				ECmanpower.enabled = true;
+				ECmanAnim.Play(ecManPowerHash, -1, 0f);
+			}
+
+			if (ProvincesButtons.provinceName == "GP")
+			{
+				GPmanpower.enabled = true;
+				GPmanAnim.Play(gpManPowerHash, -1, 0f);
+			}
+
+			if (ProvincesButtons.provinceName == "KZN")
+			{
+				KZNmanpower.enabled = true;
+				KZNmanAnim.Play(kznManPowerHash, -1, 0f);
+			}
+
+			if (ProvincesButtons.provinceName == "MP")
+			{
+				MPmanpower.enabled = true;
+				MPmanAnim.Play(mpManPowerHash, -1, 0f);
+			}
+
+			if (ProvincesButtons.provinceName == "LP")
+			{
+				LPmanpower.enabled = true;
+				LPmanAnim.Play(lpManPowerHash, -1, 0f);
+			}
+
+			if (ProvincesButtons.provinceName == "NW")
+			{
+				NWmanpower.enabled = true;
+				NWmanAnim.Play(nwManPowerHash, -1, 0f);
+			}
+
+			if (ProvincesButtons.provinceName == "FS")
+			{
+				FSmanpower.enabled = true;
+				FSmanAnim.Play(fsManPowerHash, -1, 0f);
+			}
+
+            infoPanel.SetActive(true);
+            infoPanelAnim.Play(infoPanelHash, -1, 0f);
+            infoPanelHeadingText.text = ProvincesButtons.provinceName;
 
         }
 	}
@@ -567,9 +539,8 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        }
+			Debug.Log(www.error);
+		}
 		else
 		{
 			var jsonObj = JSON.Parse(www.text);
@@ -586,10 +557,9 @@ public class GamePlayButtons : MonoBehaviour {
         
         if (!string.IsNullOrEmpty(www2.error))
 		{
-            errorMessage.text = www2.error;
-            errorBox.SetActive(true);
-            //print(www.error);
-        }
+			Debug.Log(www2.error);
+			//print(www.error);
+		}
 		else
 		{
 			var jsonObj = JSON.Parse(www2.text);
@@ -607,6 +577,7 @@ public class GamePlayButtons : MonoBehaviour {
         SceneManager.LoadScene("LeaderBoard");
     }
         void endTurn() {
+		print("End turn button clicked");
 
 		weeks--;
 		endTurnText.text = weeks.ToString();
@@ -637,155 +608,16 @@ public class GamePlayButtons : MonoBehaviour {
 
 	}
 
-
-    void issue1Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue2Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue3Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue4Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue5Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue6Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue7Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue8Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue9Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issue10Campaign()
-    {
-        issueCampaign();
-    }
-
-    void issueCampaign()
-    {
-        campaignTopics.SetActive(false);
-
-        provinceCampaign();
-        string url2 = "http://ecivix.org.za/api/campaignProvince";
-
-        var requestString2 = "{'access_token':'123abc','province':'Gauteng'}";
-
-        byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
-
-        www2 = new WWW(url2, pData2);
-        StartCoroutine(provinceCampaign());
-
-        // Get and update user's total manpower / support
-        getManpower();
-        string url = "http://ecivix.org.za/api/getManpower";
-
-        var requestString = "{'access_token':'123abc'}";
-
-        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
-
-        www = new WWW(url, pData);
-        StartCoroutine(getManpower());
-
-
-        campaignText.text = "-$5";
-        campaignTextAnim.Play(campaignTextHash, -1, 0f);
-
-        if (ProvincesButtons.provinceName == "NC")
-        {
-            NCmanpower.enabled = true;
-            NCmanAnim.Play(ncManPowerHash, -1, 0f);
-        }
-
-        if (ProvincesButtons.provinceName == "WC")
-        {
-            WCmanpower.enabled = true;
-            WCmanAnim.Play(wcManPowerHash, -1, 0f);
-        }
-
-        if (ProvincesButtons.provinceName == "EC")
-        {
-            ECmanpower.enabled = true;
-            ECmanAnim.Play(ecManPowerHash, -1, 0f);
-        }
-
-        if (ProvincesButtons.provinceName == "GP")
-        {
-            GPmanpower.enabled = true;
-            GPmanAnim.Play(gpManPowerHash, -1, 0f);
-        }
-
-        if (ProvincesButtons.provinceName == "KZN")
-        {
-            KZNmanpower.enabled = true;
-            KZNmanAnim.Play(kznManPowerHash, -1, 0f);
-        }
-
-        if (ProvincesButtons.provinceName == "MP")
-        {
-            MPmanpower.enabled = true;
-            MPmanAnim.Play(mpManPowerHash, -1, 0f);
-        }
-
-        if (ProvincesButtons.provinceName == "LP")
-        {
-            LPmanpower.enabled = true;
-            LPmanAnim.Play(lpManPowerHash, -1, 0f);
-        }
-
-        if (ProvincesButtons.provinceName == "NW")
-        {
-            NWmanpower.enabled = true;
-            NWmanAnim.Play(nwManPowerHash, -1, 0f);
-        }
-
-        if (ProvincesButtons.provinceName == "FS")
-        {
-            FSmanpower.enabled = true;
-            FSmanAnim.Play(fsManPowerHash, -1, 0f);
-        }
-
-        infoPanel.SetActive(true);
-        infoPanelAnim.Play(infoPanelHash, -1, 0f);
-        infoPanelHeadingText.text = ProvincesButtons.provinceName;
-    }
-
-    IEnumerator getWeeks()
+	IEnumerator getWeeks()
 	{
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        }
+			Debug.Log(www.error);
+		}
 		else
 		{
+			print(www.text);
 			var jsonObj = JSON.Parse(www.text);
 			endTurnText.text = jsonObj["Weeks"].Value.ToString();
 
