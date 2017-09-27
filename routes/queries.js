@@ -52,6 +52,12 @@ module.exports = {
             obj.topic2 = row['topic2'];
             obj.topic3 = row['topic3'];
             obj.topic4 = row['topic4'];
+            obj.topic5 = row['topic5'];
+            obj.topic6 = row['topic6'];
+            obj.topic7 = row['topic7'];
+            obj.topic8 = row['topic8'];
+            obj.topic9 = row['topic9'];
+            obj.topic10 = row['topic10'];
         });
         query.on('end', () => {
             var sendback = JSON.stringify(obj);
@@ -68,13 +74,19 @@ module.exports = {
         var mystance = "";
         var suppercentage = 0;
 
-        var querytext = "select * from userProfile WHERE ((topic1 LIKE '%"+topic+"%') OR (topic2 LIKE '%"+topic+"%') OR (topic3 LIKE '%"+topic+"%') OR (topic4 LIKE '%"+topic+"%')) AND userid = '"+accesstoken+"'";
+        var querytext = "select * from userProfile WHERE ((topic1 LIKE '%"+topic+"%') OR (topic2 LIKE '%"+topic+"%') OR (topic3 LIKE '%"+topic+"%') OR (topic4 LIKE '%"+topic+"%') OR (topic5 LIKE '%\"+topic+\"%') OR (topic6 LIKE '%\"+topic+\"%') OR (topic7 LIKE '%\"+topic+\"%') OR (topic8 LIKE '%\"+topic+\"%') OR (topic9 LIKE '%\"+topic+\"%') OR (topic10 LIKE '%\"+topic+\"%')) AND userid = '"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             if(patt.test(row['topic1'])){mystance = extractStance(row['topic1'])}
             if(patt.test(row['topic2'])){mystance = extractStance(row['topic2'])}
             if(patt.test(row['topic3'])){mystance = extractStance(row['topic3'])}
             if(patt.test(row['topic4'])){mystance = extractStance(row['topic4'])}
+            if(patt.test(row['topic5'])){mystance = extractStance(row['topic5'])}
+            if(patt.test(row['topic6'])){mystance = extractStance(row['topic6'])}
+            if(patt.test(row['topic7'])){mystance = extractStance(row['topic7'])}
+            if(patt.test(row['topic8'])){mystance = extractStance(row['topic8'])}
+            if(patt.test(row['topic9'])){mystance = extractStance(row['topic9'])}
+            if(patt.test(row['topic10'])){mystance = extractStance(row['topic10'])}
         });
         query.on('end', () => {
             querytext = "SELECT * FROM Stances WHERE stance = '"+mystance+"'";
@@ -290,17 +302,23 @@ module.exports = {
         var obj = new Object();
 
 
-        var querytext = "INSERT INTO userProfile(userId, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3, score) values ('"+
+        var querytext = "INSERT INTO userProfile(userId, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3, score) values ('"+
             accesstoken+"','"+
             i[0].issue+ "_"+i[0].stance +"', '"+
             i[1].issue+ "_"+i[1].stance +"', '"+
             i[2].issue+ "_"+i[2].stance +"', '"+
-            i[3].issue+ "_"+i[3].stance +
+            i[3].issue+ "_"+i[3].stance +"', '"+
+            i[4].issue+ "_"+i[4].stance +"', '"+
+            i[5].issue+ "_"+i[5].stance +"', '"+
+            i[6].issue+ "_"+i[6].stance +"', '"+
+            i[7].issue+ "_"+i[7].stance +"', '"+
+            i[8].issue+ "_"+i[8].stance +"', '"+
+            i[9].issue+ "_"+i[9].stance +
             "', 10,10,10,10,10,10,10,10,10, '','','', '0');"+
-           "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',1,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','');"+
-             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',2,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','');"+
-             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',3,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','');"+
-             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',4,'Crime Right', 'Crime Right', 'Crime Right', 'Crime Right', 10,10,10,10,10,10,10,10,10, '','','');";
+           "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',1,'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 10,10,10,10,10,10,10,10,10, '','','');"+
+             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',2,'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 10,10,10,10,10,10,10,10,10, '','','');"+
+             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',3,'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 10,10,10,10,10,10,10,10,10, '','','');"+
+             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',4,'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 10,10,10,10,10,10,10,10,10, '','','');";
 
         query = client.query(querytext);
         query.on('error', function(err) {
@@ -395,7 +413,7 @@ module.exports = {
             return sendback;
         });
     },
-    getStances: function (a, b, c, d, callback) {
+    getStances: function (i, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
 
@@ -404,7 +422,7 @@ module.exports = {
         var obj = new Object();
 
         var counting =0;
-        var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ a +"' OR topicname = '" + b+ "' OR topicname = '" +c +  "' OR topicname = '"+ d +"'";
+        var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ i[0] +"' OR topicname = '" + i[1]+ "' OR topicname = '" +i[2] +  "' OR topicname = '"+ i[3] +"' OR topicname = '"+ i[4] +"' OR topicname = '"+ i[5] +"' OR topicname = '"+ i[6] +"' OR topicname = '"+ i[7] +"' OR topicname = '"+ i[8] +"' OR topicname = '"+ i[9] +"'";
         query = client.query(querytext);
             query.on('row', (row) => {
                 obj = new Object();
