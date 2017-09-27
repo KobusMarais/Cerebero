@@ -366,7 +366,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"access_token\": \"2\",\r\n\t\"issues\":[{\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\":\"racism\", \"stance\":\"far right\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}]\r\n}"
+					"raw": "{\r\n\t\"access_token\": \"2\",\r\n\t\"issues\":[{\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\":\"racism\", \"stance\":\"far right\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}]\r\n}"
 				},
 				"description": ""
 			},
@@ -386,7 +386,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"access_token\": \"2\",\r\n\t\"issues\":[\"Same-Sex Marriage\", \"Racism\", \"Abortion\", \"Prostitution\"]\r\n}"
+					"raw": "{\r\n\t\"access_token\": \"2\",\r\n\t\"issues\":[\"Same-Sex Marriage\", \"Racism\", \"Abortion\", \"Prostitution\", \"Mining\", \"Crime\", \"Unemployment\", \"Housing\", \"Tax Of High Income Earners\", \"Social Grants\"]\r\n}"
 				},
 				"description": ""
 			},

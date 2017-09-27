@@ -330,7 +330,7 @@ router.post('/getStances', function(req, res, next) { // receives user score and
     res.setHeader('Access-Control-Allow-Credentials', true);
 
     let i = req.body.issues; // for brevity
-    queries.getStances(i[0], i[1], i[2], i[3], function(err, result) {
+    queries.getStances(i, function(err, result) {
         if (err) return console.log("error: ", err)
         var obj = JSON.parse(result);
         res.send(obj);
