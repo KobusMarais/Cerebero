@@ -329,6 +329,8 @@ router.post('/getStances', function(req, res, next) { // receives user score and
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
+    console.log("THIS IS THE LENGTH:");
+    console.log(req.body.issues.length);
     let i = req.body.issues; // for brevity
     queries.getStances(i, function(err, result) {
         if (err) return console.log("error: ", err)

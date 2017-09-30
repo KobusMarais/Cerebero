@@ -419,16 +419,7 @@ module.exports = {
     getStances: function (i, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
-        i[0] = "Crime";
-        i[1] = "Crime";
-        i[2] = "Crime";
-        i[3] = "Crime";
-        i[4] = "Crime";
-        i[5] = "Crime";
-        i[6] = "Crime";
-        i[7] = "Crime";
-        i[8] = "Crime";
-        i[9] = "Crime";
+
 
         var overall = [];
         var mini = [];
