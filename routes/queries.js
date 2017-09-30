@@ -420,6 +420,7 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
 
+
         var overall = [];
         var mini = [];
         var obj = new Object();
