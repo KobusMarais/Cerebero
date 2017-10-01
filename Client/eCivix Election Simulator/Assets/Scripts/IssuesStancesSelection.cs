@@ -430,7 +430,7 @@ public class IssuesStancesSelection : MonoBehaviour {
 
     void SelectStances()
     {
-		setIssues ();
+		setIssues();
     }
 
     IEnumerator delayLoading()
@@ -583,6 +583,7 @@ public class IssuesStancesSelection : MonoBehaviour {
         else
         {
             stancesArray = www.text;
+            //print(stancesArray);
             loadStances();
             
         }

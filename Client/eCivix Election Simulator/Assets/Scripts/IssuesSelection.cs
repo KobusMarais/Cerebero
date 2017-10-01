@@ -114,12 +114,7 @@ public class IssuesSelection : MonoBehaviour {
 
 		loadIssues();
 		string url = "http://ecivix.org.za/api/getIssues";
-
-		//var requestString = "{'access_token':'123abc','userScore':'20'}";
-		//var requestString = "{}";
-
-
-		//byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
+        
 
 		www = new WWW (url);
 		StartCoroutine (loadIssues());

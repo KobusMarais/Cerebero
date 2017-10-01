@@ -114,16 +114,6 @@ public class NewGameDetails : MonoBehaviour
         {
             loadScreen.SetActive(true);
             loadText.SetActive(true);
-
-            /*Upload();
-            string url = "http://ecivix.org.za/api/startGame";
-
-            var requestString = "{\"access_token\":\"2\", \"difficulty\":" + difData + "}";
-
-            byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
-
-            www = new WWW(url, pData);
-            StartCoroutine(Upload());*/
             
 
             PlayerPrefs.SetString("Player Party", partyNameInput.text);
@@ -141,28 +131,7 @@ public class NewGameDetails : MonoBehaviour
 
         SceneManager.LoadScene("IssuesSelection");
     }
-
-
-    /*IEnumerator Upload()
-    {
-        yield return www;
-
-       // print(www.text);
-
-        if (!string.IsNullOrEmpty(www.error))
-        {
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-            loadScreen.SetActive(false);
-            loadText.SetActive(false);
-        }
-        else
-        {
-            newGameJson = www.text;
-            StartCoroutine(delayLoading());
-            
-        }
-    }*/
+    
 
     void closeErrorFun()
     {
