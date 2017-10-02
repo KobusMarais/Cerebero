@@ -334,7 +334,12 @@ public class GamePlayButtons : MonoBehaviour {
 
         byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
-        www = new WWW(url, pData);
+        WWWForm form = new WWWForm();
+
+        var headers = form.headers;
+        headers.Add("content-type", "application/json");
+
+        www = new WWW(url, pData, headers);
         StartCoroutine(getScoreHelp());
     }
 
@@ -372,8 +377,13 @@ public class GamePlayButtons : MonoBehaviour {
 
 			byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
-			www = new WWW(url, pData);
-			StartCoroutine(provinceCollect());
+            WWWForm form = new WWWForm();
+
+            var headers = form.headers;
+            headers.Add("content-type", "application/json");
+
+            www = new WWW(url, pData, headers);
+            StartCoroutine(provinceCollect());
 
 			// Update user's total funds.
 			updateFunds();
@@ -383,7 +393,9 @@ public class GamePlayButtons : MonoBehaviour {
 
 			byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
 
-			www2 = new WWW(url2, pData2);
+            
+
+            www2 = new WWW(url2, pData2, headers);
 			StartCoroutine(updateFunds());
 
 			collectFundsText.text = "-$5";
@@ -511,8 +523,13 @@ public class GamePlayButtons : MonoBehaviour {
 
 			byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 
-			www = new WWW (url, pData);
-			StartCoroutine (provincePolled());
+            WWWForm form = new WWWForm();
+
+            var headers = form.headers;
+            headers.Add("content-type", "application/json");
+
+            www = new WWW(url, pData, headers);
+            StartCoroutine (provincePolled());
 
             infoPanel.SetActive(true);
             infoPanelAnim.Play(infoPanelPollHash, -1, 0f);
@@ -699,7 +716,13 @@ public class GamePlayButtons : MonoBehaviour {
 
         byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
 
-        www2 = new WWW(url2, pData2);
+        WWWForm form = new WWWForm();
+
+        var headers = form.headers;
+        headers.Add("content-type", "application/json");
+        
+
+        www2 = new WWW(url2, pData2, headers);
         StartCoroutine(provinceCampaign());
 
         // Get and update user's total manpower / support
