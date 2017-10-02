@@ -446,7 +446,16 @@ public class IssuesStancesSelection : MonoBehaviour {
 		// Re-arrange issues
 		//jsonStanceObj = JSON.Parse(stancesArray);
 
+
+		IssuesSelection.selectedIssues.Clear ();
+
 		//selectedIssues
+
+		for (int j = 0; j < 10; j++) {
+			IssuesSelection.selectedIssues.Add (jsonStanceObj[j][2][0]);
+		}
+
+
 		int i = 0;
 		foreach (var issue in IssuesSelection.selectedIssues) {
 			i++;
@@ -494,6 +503,7 @@ public class IssuesStancesSelection : MonoBehaviour {
 				break;
 			}
 		}
+
 	}
 
     void loadStances()
