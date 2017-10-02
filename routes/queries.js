@@ -431,6 +431,7 @@ module.exports = {
         query = client.query(querytext);
             query.on('row', (row) => {
                 obj = new Object();
+                obj.issue = row['topicname'];
                 obj.stance = row['topicstance'];
                 obj.description = row['topicdescription'];
                 mini.push(obj);
