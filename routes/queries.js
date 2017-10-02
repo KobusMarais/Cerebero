@@ -341,9 +341,6 @@ module.exports = {
         query.on('row', (row) => {
             obj.score = row['score'];
         });
-        query.on('error', function(err) {
-            console.log('Query error: ' + err);
-        });
         query.on('end', () => {
             var sendback = JSON.stringify(obj);
             client.end();
@@ -420,7 +417,6 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
 
-
         var overall = [];
         var mini = [];
         var obj = new Object();
@@ -440,9 +436,6 @@ module.exports = {
                     mini = [];
                 }
             });
-        query.on('error', function(err) {
-            console.log('Query error: ' + err);
-        });
             query.on('end', () => {
                 var sendback = JSON.stringify(overall);
                 client.end();
@@ -466,9 +459,6 @@ module.exports = {
             obj = new Object();
             obj.topic = row['topicname'];
             overall.push(obj);
-        });
-        query.on('error', function(err) {
-            console.log('Query error: ' + err);
         });
         query.on('end', () => {
             var sendback = JSON.stringify(overall);

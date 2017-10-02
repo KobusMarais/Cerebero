@@ -127,7 +127,7 @@ public class IssuesSelection : MonoBehaviour {
             errorMessage.text = www.error;
             errorBox.SetActive(true);
         } else {
-			//print(www.text);
+			print("loadIssuesReturn" + www.text);
 			var jsonObj = JSON.Parse (www.text);
             //int arrayLength = jsonObj ["scoreboard"].Count;
             //print(jsonObj ["issues"][0]);

@@ -10,6 +10,7 @@ using System;
 public class IssuesStancesSelection : MonoBehaviour {
 
 	private WWW www;
+	private WWW www2;
     public GameObject loadScreen;
     public GameObject loadText;
 
@@ -113,31 +114,31 @@ public class IssuesStancesSelection : MonoBehaviour {
     void issue1Slider(float value)
     {
         //Issue1Stance.text = "Value: " + value;
-		Issue1Stance.text = "Stance:";
+		//Issue1Stance.text = "Stance:";
 
         if(value == 1)
         {
-            Issue1Stance.text += " Far Left";
+			Issue1Stance.text = jsonStanceObj[0][0][1];
         }
 
         if (value == 2)
         {
-            Issue1Stance.text += " Left";
+			Issue1Stance.text = jsonStanceObj[0][1][1];
         }
 
         if (value == 3)
         {
-            Issue1Stance.text += " Center";
+			Issue1Stance.text = jsonStanceObj[0][2][1];
         }
 
         if (value == 4)
         {
-            Issue1Stance.text += " Right";
+			Issue1Stance.text = jsonStanceObj[0][3][1];
         }
 
         if (value == 5)
         {
-            Issue1Stance.text += " Far Right";
+			Issue1Stance.text = jsonStanceObj[0][4][1];
         }
         
     }
@@ -145,286 +146,286 @@ public class IssuesStancesSelection : MonoBehaviour {
     void issue2Slider(float value)
     {
 		//Issue2Stance.text = "Value: " + value;
-		Issue2Stance.text = "Stance:";
+		//Issue2Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue2Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue2Stance.text = jsonStanceObj[1][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue2Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue2Stance.text = jsonStanceObj[1][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue2Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue2Stance.text = jsonStanceObj[1][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue2Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue2Stance.text = jsonStanceObj[1][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue2Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue2Stance.text = jsonStanceObj[1][4][1];
+		}
 
     }
 
     void issue3Slider(float value)
     {
 		//Issue3Stance.text = "Value: " + value;
-		Issue3Stance.text = "Stance:";
+		//Issue3Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue3Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue3Stance.text = jsonStanceObj[2][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue3Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue3Stance.text = jsonStanceObj[2][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue3Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue3Stance.text = jsonStanceObj[2][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue3Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue3Stance.text = jsonStanceObj[2][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue3Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue3Stance.text = jsonStanceObj[2][4][1];
+		}
 
     }
 
     void issue4Slider(float value)
     {
 		//Issue4Stance.text = "Value: " + value;
-		Issue4Stance.text = "Stance:";
+		//Issue4Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue4Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue4Stance.text = jsonStanceObj[3][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue4Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue4Stance.text = jsonStanceObj[3][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue4Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue4Stance.text = jsonStanceObj[3][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue4Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue4Stance.text = jsonStanceObj[3][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue4Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue4Stance.text = jsonStanceObj[3][4][1];
+		}
 
     }
     void issue5Slider(float value)
     {
         //Issue1Stance.text = "Value: " + value;
-        Issue5Stance.text = "Stance:";
+        //Issue5Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue5Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue5Stance.text = jsonStanceObj[4][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue5Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue5Stance.text = jsonStanceObj[4][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue5Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue5Stance.text = jsonStanceObj[4][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue5Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue5Stance.text = jsonStanceObj[4][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue5Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue5Stance.text = jsonStanceObj[4][4][1];
+		}
 
     }
 
     void issue6Slider(float value)
     {
         //Issue2Stance.text = "Value: " + value;
-        Issue6Stance.text = "Stance:";
+        //Issue6Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue6Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue6Stance.text = jsonStanceObj[5][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue6Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue6Stance.text = jsonStanceObj[5][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue6Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue6Stance.text = jsonStanceObj[5][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue6Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue6Stance.text = jsonStanceObj[5][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue6Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue6Stance.text = jsonStanceObj[5][4][1];
+		}
 
     }
 
     void issue7Slider(float value)
     {
         //Issue3Stance.text = "Value: " + value;
-        Issue7Stance.text = "Stance:";
+        //Issue7Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue7Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue7Stance.text = jsonStanceObj[6][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue7Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue7Stance.text = jsonStanceObj[6][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue7Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue7Stance.text = jsonStanceObj[6][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue7Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue7Stance.text = jsonStanceObj[6][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue7Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue7Stance.text = jsonStanceObj[6][4][1];
+		}
 
     }
 
     void issue8Slider(float value)
     {
         //Issue4Stance.text = "Value: " + value;
-        Issue8Stance.text = "Stance:";
+        //Issue8Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue8Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue8Stance.text = jsonStanceObj[7][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue8Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue8Stance.text = jsonStanceObj[7][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue8Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue8Stance.text = jsonStanceObj[7][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue8Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue8Stance.text = jsonStanceObj[7][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue8Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue8Stance.text = jsonStanceObj[7][4][1];
+		}
 
     }
     void issue9Slider(float value)
     {
         //Issue1Stance.text = "Value: " + value;
-        Issue9Stance.text = "Stance:";
+        //Issue9Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue9Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue9Stance.text = jsonStanceObj[8][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue9Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue9Stance.text = jsonStanceObj[8][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue9Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue9Stance.text = jsonStanceObj[8][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue9Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue9Stance.text = jsonStanceObj[8][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue9Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue9Stance.text = jsonStanceObj[8][4][1];
+		}
 
     }
 
     void issue10Slider(float value)
     {
         //Issue2Stance.text = "Value: " + value;
-        Issue10Stance.text = "Stance:";
+        //Issue10Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            Issue10Stance.text += " Far Left";
-        }
+		if(value == 1)
+		{
+			Issue10Stance.text = jsonStanceObj[9][0][1];
+		}
 
-        if (value == 2)
-        {
-            Issue10Stance.text += " Left";
-        }
+		if (value == 2)
+		{
+			Issue10Stance.text = jsonStanceObj[9][1][1];
+		}
 
-        if (value == 3)
-        {
-            Issue10Stance.text += " Center";
-        }
+		if (value == 3)
+		{
+			Issue10Stance.text = jsonStanceObj[9][2][1];
+		}
 
-        if (value == 4)
-        {
-            Issue10Stance.text += " Right";
-        }
+		if (value == 4)
+		{
+			Issue10Stance.text = jsonStanceObj[9][3][1];
+		}
 
-        if (value == 5)
-        {
-            Issue10Stance.text += " Far Right";
-        }
+		if (value == 5)
+		{
+			Issue10Stance.text = jsonStanceObj[9][4][1];
+		}
 
     }
 
@@ -484,46 +485,65 @@ public class IssuesStancesSelection : MonoBehaviour {
 
     void loadStances()
     {
-        jsonStanceObj = JSON.Parse(IssuesStancesSelection.stancesArray);
+		print ("whatsup");
+        jsonStanceObj = JSON.Parse(stancesArray);
+		//print ("Dude: " + jsonStanceObj.ToString());
+		//print ("Dude1: " + jsonStanceObj[0][2][1].ToString());
+		Issue1Stance.text = jsonStanceObj[0][2][1];
+		Issue2Stance.text = jsonStanceObj[1][2][1];
+		Issue3Stance.text = jsonStanceObj[2][2][1];
+		Issue4Stance.text = jsonStanceObj[3][2][1];
 
-        Issue1Stance.text = jsonStanceObj[0][0][0][2][0];
-        Issue2Stance.text = jsonStanceObj[0][1][0][2][0];
-        Issue3Stance.text = jsonStanceObj[0][2][0][2][0];
-        Issue4Stance.text = jsonStanceObj[0][3][0][2][0];
+		Issue5Stance.text = jsonStanceObj[4][2][1];
+		Issue6Stance.text = jsonStanceObj[5][2][1];
+		Issue7Stance.text = jsonStanceObj[6][2][1];
+		Issue8Stance.text = jsonStanceObj[7][2][1];
 
-        Issue5Stance.text = jsonStanceObj[0][4][0][2][0];
-        Issue6Stance.text = jsonStanceObj[0][5][0][2][0];
-        Issue7Stance.text = jsonStanceObj[0][6][0][2][0];
-        Issue8Stance.text = jsonStanceObj[0][7][0][2][0];
-
-        Issue9Stance.text = jsonStanceObj[0][8][0][2][0];
-        Issue10Stance.text = jsonStanceObj[0][9][0][2][0];
+		Issue9Stance.text = jsonStanceObj[8][2][1];
+		Issue10Stance.text = jsonStanceObj[9][2][1];
         //print("xyz: " + jsonStanceObj[0][0][0][2][0].ToString());
     }
 
     void setIssues()
 	{
-		//print("Setting issues");
+		print("Setting issues");
 
 		setIssuesReturn();
 		string url = "http://ecivix.org.za/api/setIssues";
 
-		var requestString = "{'access_token':'2','issues':[" + createIssueStanceArray() + "]}";
-        print(requestString);
+		var requestString = "{\"access_token\":\"2\",\"issues\":[" + createIssueStanceArray() + "]}";
+        print("setIssuesString: " + requestString);
        // print(requestString);
 		byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 
-		www = new WWW (url, pData);
+        WWWForm form = new WWWForm();
+
+        var headers = form.headers;
+        headers.Add("content-type", "application/json");
+
+
+        www = new WWW (url, pData, headers);
 		StartCoroutine (setIssuesReturn());
 
         
     }
 
+	IEnumerator setIssuesReturn()
+	{
+		yield return www;
+		if (!string.IsNullOrEmpty (www.error)) {
+			errorMessage.text = www.error;
+			errorBox.SetActive(true);
+		} else {
+			print ("setIssuesReturn_Response: " + www.text);
+			startGame();
+		}
+
+	}
+
     IEnumerator Upload()
     {
         yield return www;
-
-        print(www.text);
 
         if (!string.IsNullOrEmpty(www.error))
         {
@@ -532,6 +552,7 @@ public class IssuesStancesSelection : MonoBehaviour {
         }
         else
         {
+			print("Upload: " + www.text);
             loadScreen.SetActive(true);
             loadText.SetActive(true);
             newGameJson = www.text;
@@ -544,16 +565,20 @@ public class IssuesStancesSelection : MonoBehaviour {
     void startGame()
     {
         Upload();
-            string url = "http://ecivix.org.za/api/startGame";
+        string url = "http://ecivix.org.za/api/startGame";
         
 
-            var requestString = "{'access_token':'2', 'difficulty':'" + PlayerPrefs.GetString("Player Difficulty") + "'}";
+		var requestString = "{\"access_token\":\"2\", \"difficulty\":\"" + PlayerPrefs.GetString("Player Difficulty") + "\"}";
 
-       // print(requestString);
-            byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+       	//print("StartGame" + requestString);
+        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+        WWWForm form = new WWWForm();
 
-            www = new WWW(url, pData);
-            StartCoroutine(Upload());
+        var headers = form.headers;
+        headers.Add("content-type", "application/json");
+
+        www = new WWW(url, pData, headers);
+        StartCoroutine(Upload());
     }
 
     void getStances()
@@ -562,77 +587,71 @@ public class IssuesStancesSelection : MonoBehaviour {
         string url = "http://ecivix.org.za/api/getStances";
 
 
-        var requestString = "{'access_token':'2', 'issues':['" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "', '" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "',  '" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "',  '" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "',  '" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "',  '" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "']}";
+		//var requestString = "{\"access_token\": \"2\",\"issues\":[\"" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "\"]}";
+		//var requestString = "{\"access_token\": \"2\",\"issues\":[\"Same-Sex Marriage\", \"Racism\", \"Abortion\", \"Prostitution\", \"Mining\", \"Crime\", \"Unemployment\", \"Housing\", \"Tax Of High Income Earners\", \"Social Grants\"]}";
+		var requestString = "{\"access_token\": \"2\",\"issues\":[\"" + IssuesSelection.selectedIssues[0].ToString() + "\",\"" + IssuesSelection.selectedIssues[1].ToString() + "\",\"" + IssuesSelection.selectedIssues[2].ToString() + "\",\"" + IssuesSelection.selectedIssues[3].ToString() + "\",\"" + IssuesSelection.selectedIssues[4].ToString() + "\",\"" + IssuesSelection.selectedIssues[5].ToString() + "\",\"" + IssuesSelection.selectedIssues[6].ToString() + "\",\"" + IssuesSelection.selectedIssues[7].ToString() + "\",\"" + IssuesSelection.selectedIssues[8].ToString() + "\",\"" + IssuesSelection.selectedIssues[9].ToString() + "\"]}";
 
-        print(requestString);
-       // print(requestString);
+        WWWForm form = new WWWForm();
+
+        var headers = form.headers;
+        headers.Add("content-type", "application/json");
+
+        print("requestString: " + requestString);
+        //print("getStances");
         byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
-        www = new WWW(url, pData);
+
+		www2 = new WWW(url, pData, headers);
        StartCoroutine(getStancesHelp());
     }
 
     IEnumerator getStancesHelp()
     {
-        yield return www;
-        if (!string.IsNullOrEmpty(www.error))
+        yield return www2;
+        if (!string.IsNullOrEmpty(www2.error))
         {
-            errorMessage.text = www.error;
+			print("Error: " + www2.error);
+            errorMessage.text = www2.error;
             errorBox.SetActive(true);
         }
         else
         {
-            stancesArray = www.text;
-            //print(stancesArray);
+            stancesArray = www2.text;
+            //print("Biatch: " + stancesArray);
             loadStances();
             
         }
 
     }
 
-
-
-    IEnumerator setIssuesReturn()
-	{
-		yield return www;
-		if (!string.IsNullOrEmpty (www.error)) {
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        } else {
-            startGame();
-
-        }
-        
-    }
-
 	string createIssueStanceArray(){
-        string array = "{'issue':'" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue1Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue2Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue3Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue4Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue5Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue6Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue7Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue8Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue9Stance.text.ToString()) + "'}," +
-            "{'issue':'" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "', 'stance':'" + trimStanceText(Issue10Stance.text.ToString()) + "'}";
+		string array = "{\"issue\":\"" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "\", \"stance\":\"" + stance(issue1.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "\", \"stance\":\"" + stance(issue2.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "\", \"stance\":\"" + stance(issue3.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "\", \"stance\":\"" + stance(issue4.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "\", \"stance\":\"" + stance(issue5.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "\", \"stance\":\"" + stance(issue6.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "\", \"stance\":\"" + stance(issue7.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "\", \"stance\":\"" + stance(issue8.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "\", \"stance\":\"" + stance(issue9.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "\", \"stance\":\"" + stance(issue10.value) + "\"}";
 
-       // print(array);
+		//print("createIssueStanceArray: " + array);
 
         return array;
 	}
 
-	string trimStanceText(string t){
+	string stance(float t){
 
-		if (t == "Stance: Far Left")
+		if (t == 1)
 			return "far left";
-		if (t == "Stance: Left")
+		if (t == 2)
 			return "left";
-		if (t == "Stance: Center")
+		if (t == 3)
 			return "centre";
-		if (t == "Stance: Right")
+		if (t == 4)
 			return "right";
-		if (t == "Stance: Far Right")
+		if (t == 5)
 			return "far right";
 
 		return "";
