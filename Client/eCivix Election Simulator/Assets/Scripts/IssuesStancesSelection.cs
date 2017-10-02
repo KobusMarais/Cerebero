@@ -5,43 +5,77 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using SimpleJSON;
 using System.Text;
+using System;
 
 public class IssuesStancesSelection : MonoBehaviour {
 
 	private WWW www;
+	private WWW www2;
     public GameObject loadScreen;
     public GameObject loadText;
-	JSONNode jsonStanceObj;
+
+    JSONNode jsonStanceObj;
+    public static string stancesArray;
+
+    public GameObject errorBox;
+    public Text errorMessage;
+    public Button closeError;
 
     public Button startButton;
     public Slider issue1;
     public Slider issue2;
     public Slider issue3;
     public Slider issue4;
+    public Slider issue5;
+    public Slider issue6;
+    public Slider issue7;
+    public Slider issue8;
+    public Slider issue9;
+    public Slider issue10;
 
     public Text Issue1Text;
     public Text Issue2Text;
     public Text Issue3Text;
     public Text Issue4Text;
+    public Text Issue5Text;
+    public Text Issue6Text;
+    public Text Issue7Text;
+    public Text Issue8Text;
+    public Text Issue9Text;
+    public Text Issue10Text;
 
     public Text Issue1Stance;
     public Text Issue2Stance;
     public Text Issue3Stance;
     public Text Issue4Stance;
+    public Text Issue5Stance;
+    public Text Issue6Stance;
+    public Text Issue7Stance;
+    public Text Issue8Stance;
+    public Text Issue9Stance;
+    public Text Issue10Stance;
 
-
+    public static String newGameJson;
     // Use this for initialization
     void Start () {
         loadScreen.SetActive(false);
         loadText.SetActive(false);
 
-		loadIssues ();
-		loadStances ();
+		loadIssues();
+        getStances();
 
-		//Issue1Stance.text = "Stance: Center";
-		//Issue2Stance.text = "Stance: Center";
-		//Issue3Stance.text = "Stance: Center";
-		//Issue4Stance.text = "Stance: Center";
+
+        Issue1Stance.text = "Stance: Center";
+		Issue2Stance.text = "Stance: Center";
+		Issue3Stance.text = "Stance: Center";
+		Issue4Stance.text = "Stance: Center";
+        Issue5Stance.text = "Stance: Center";
+        Issue6Stance.text = "Stance: Center";
+        Issue7Stance.text = "Stance: Center";
+        Issue8Stance.text = "Stance: Center";
+        Issue9Stance.text = "Stance: Center";
+        Issue10Stance.text = "Stance: Center";
+
 
 
         //Issue1Text.text = "Issue 1 asdf";
@@ -56,6 +90,25 @@ public class IssuesStancesSelection : MonoBehaviour {
         issue2.onValueChanged.AddListener(issue2Slider);
         issue3.onValueChanged.AddListener(issue3Slider);
         issue4.onValueChanged.AddListener(issue4Slider);
+        issue5.onValueChanged.AddListener(issue5Slider);
+        issue6.onValueChanged.AddListener(issue6Slider);
+        issue7.onValueChanged.AddListener(issue7Slider);
+        issue8.onValueChanged.AddListener(issue8Slider);
+        issue9.onValueChanged.AddListener(issue9Slider);
+        issue10.onValueChanged.AddListener(issue10Slider);
+
+        errorBox.SetActive(false);
+
+        Button closeErrorbtn = closeError.GetComponent<Button>();
+        closeErrorbtn.onClick.AddListener(closeErrorFun);
+
+        //startGame();
+
+    }
+
+    void closeErrorFun()
+    {
+        errorBox.SetActive(false);
     }
 
     void issue1Slider(float value)
@@ -65,32 +118,27 @@ public class IssuesStancesSelection : MonoBehaviour {
 
         if(value == 1)
         {
-            //Issue1Stance.text += " Far Left";
-			Issue1Stance.text = jsonStanceObj [0] [0] [0] [0] [0];
+			Issue1Stance.text = jsonStanceObj[0][0][1];
         }
 
         if (value == 2)
         {
-            //Issue1Stance.text += " Left";
-			Issue1Stance.text = jsonStanceObj [0] [0] [0] [1] [0];
+			Issue1Stance.text = jsonStanceObj[0][1][1];
         }
 
         if (value == 3)
         {
-            //Issue1Stance.text += " Center";
-			Issue1Stance.text = jsonStanceObj [0] [0] [0] [2] [0];
+			Issue1Stance.text = jsonStanceObj[0][2][1];
         }
 
         if (value == 4)
         {
-            //Issue1Stance.text += " Right";
-			Issue1Stance.text = jsonStanceObj [0] [0] [0] [3] [0];
+			Issue1Stance.text = jsonStanceObj[0][3][1];
         }
 
         if (value == 5)
         {
-            //Issue1Stance.text += " Far Right";
-			Issue1Stance.text = jsonStanceObj [0] [0] [0] [4] [0];
+			Issue1Stance.text = jsonStanceObj[0][4][1];
         }
         
     }
@@ -100,35 +148,30 @@ public class IssuesStancesSelection : MonoBehaviour {
 		//Issue2Stance.text = "Value: " + value;
 		//Issue2Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            //Issue2Stance.text += " Far Left";
-			Issue2Stance.text = jsonStanceObj [0] [1] [0] [0] [0];
-        }
+		if(value == 1)
+		{
+			Issue2Stance.text = jsonStanceObj[1][0][1];
+		}
 
-        if (value == 2)
-        {
-            //Issue2Stance.text += " Left";
-			Issue2Stance.text = jsonStanceObj [0] [1] [0] [1] [0];
-        }
+		if (value == 2)
+		{
+			Issue2Stance.text = jsonStanceObj[1][1][1];
+		}
 
-        if (value == 3)
-        {
-            //Issue2Stance.text += " Center";
-			Issue2Stance.text = jsonStanceObj [0] [1] [0] [2] [0];
-        }
+		if (value == 3)
+		{
+			Issue2Stance.text = jsonStanceObj[1][2][1];
+		}
 
-        if (value == 4)
-        {
-            //Issue2Stance.text += " Right";
-			Issue2Stance.text = jsonStanceObj [0] [1] [0] [3] [0];
-        }
+		if (value == 4)
+		{
+			Issue2Stance.text = jsonStanceObj[1][3][1];
+		}
 
-        if (value == 5)
-        {
-            //Issue2Stance.text += " Far Right";
-			Issue2Stance.text = jsonStanceObj [0] [1] [0] [4] [0];
-        }
+		if (value == 5)
+		{
+			Issue2Stance.text = jsonStanceObj[1][4][1];
+		}
 
     }
 
@@ -137,35 +180,30 @@ public class IssuesStancesSelection : MonoBehaviour {
 		//Issue3Stance.text = "Value: " + value;
 		//Issue3Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            //Issue3Stance.text += " Far Left";
-			Issue3Stance.text = jsonStanceObj [0] [2] [0] [0] [0];
-        }
+		if(value == 1)
+		{
+			Issue3Stance.text = jsonStanceObj[2][0][1];
+		}
 
-        if (value == 2)
-        {
-            //Issue3Stance.text += " Left";
-			Issue3Stance.text = jsonStanceObj [0] [2] [0] [1] [0];
-        }
+		if (value == 2)
+		{
+			Issue3Stance.text = jsonStanceObj[2][1][1];
+		}
 
-        if (value == 3)
-        {
-            //Issue3Stance.text += " Center";
-			Issue3Stance.text = jsonStanceObj [0] [2] [0] [2] [0];
-        }
+		if (value == 3)
+		{
+			Issue3Stance.text = jsonStanceObj[2][2][1];
+		}
 
-        if (value == 4)
-        {
-            //Issue3Stance.text += " Right";
-			Issue3Stance.text = jsonStanceObj [0] [2] [0] [3] [0];
-        }
+		if (value == 4)
+		{
+			Issue3Stance.text = jsonStanceObj[2][3][1];
+		}
 
-        if (value == 5)
-        {
-            //Issue3Stance.text += " Far Right";
-			Issue3Stance.text = jsonStanceObj [0] [2] [0] [4] [0];
-        }
+		if (value == 5)
+		{
+			Issue3Stance.text = jsonStanceObj[2][4][1];
+		}
 
     }
 
@@ -174,47 +212,232 @@ public class IssuesStancesSelection : MonoBehaviour {
 		//Issue4Stance.text = "Value: " + value;
 		//Issue4Stance.text = "Stance:";
 
-        if (value == 1)
-        {
-            //Issue4Stance.text += " Far Left";
-			Issue4Stance.text = jsonStanceObj [0] [3] [0] [0] [0];
-        }
+		if(value == 1)
+		{
+			Issue4Stance.text = jsonStanceObj[3][0][1];
+		}
 
-        if (value == 2)
-        {
-            //Issue4Stance.text += " Left";
-			Issue4Stance.text = jsonStanceObj [0] [3] [0] [1] [0];
-        }
+		if (value == 2)
+		{
+			Issue4Stance.text = jsonStanceObj[3][1][1];
+		}
 
-        if (value == 3)
-        {
-            //Issue4Stance.text += " Center";
-			Issue4Stance.text = jsonStanceObj [0] [3] [0] [2] [0];
-        }
+		if (value == 3)
+		{
+			Issue4Stance.text = jsonStanceObj[3][2][1];
+		}
 
-        if (value == 4)
-        {
-            //Issue4Stance.text += " Right";
-			Issue4Stance.text = jsonStanceObj [0] [3] [0] [3] [0];
-        }
+		if (value == 4)
+		{
+			Issue4Stance.text = jsonStanceObj[3][3][1];
+		}
 
-        if (value == 5)
-        {
-            //Issue4Stance.text += " Far Right";
-			Issue4Stance.text = jsonStanceObj [0] [3] [0] [4] [0];
-        }
+		if (value == 5)
+		{
+			Issue4Stance.text = jsonStanceObj[3][4][1];
+		}
+
+    }
+    void issue5Slider(float value)
+    {
+        //Issue1Stance.text = "Value: " + value;
+        //Issue5Stance.text = "Stance:";
+
+		if(value == 1)
+		{
+			Issue5Stance.text = jsonStanceObj[4][0][1];
+		}
+
+		if (value == 2)
+		{
+			Issue5Stance.text = jsonStanceObj[4][1][1];
+		}
+
+		if (value == 3)
+		{
+			Issue5Stance.text = jsonStanceObj[4][2][1];
+		}
+
+		if (value == 4)
+		{
+			Issue5Stance.text = jsonStanceObj[4][3][1];
+		}
+
+		if (value == 5)
+		{
+			Issue5Stance.text = jsonStanceObj[4][4][1];
+		}
+
+    }
+
+    void issue6Slider(float value)
+    {
+        //Issue2Stance.text = "Value: " + value;
+        //Issue6Stance.text = "Stance:";
+
+		if(value == 1)
+		{
+			Issue6Stance.text = jsonStanceObj[5][0][1];
+		}
+
+		if (value == 2)
+		{
+			Issue6Stance.text = jsonStanceObj[5][1][1];
+		}
+
+		if (value == 3)
+		{
+			Issue6Stance.text = jsonStanceObj[5][2][1];
+		}
+
+		if (value == 4)
+		{
+			Issue6Stance.text = jsonStanceObj[5][3][1];
+		}
+
+		if (value == 5)
+		{
+			Issue6Stance.text = jsonStanceObj[5][4][1];
+		}
+
+    }
+
+    void issue7Slider(float value)
+    {
+        //Issue3Stance.text = "Value: " + value;
+        //Issue7Stance.text = "Stance:";
+
+		if(value == 1)
+		{
+			Issue7Stance.text = jsonStanceObj[6][0][1];
+		}
+
+		if (value == 2)
+		{
+			Issue7Stance.text = jsonStanceObj[6][1][1];
+		}
+
+		if (value == 3)
+		{
+			Issue7Stance.text = jsonStanceObj[6][2][1];
+		}
+
+		if (value == 4)
+		{
+			Issue7Stance.text = jsonStanceObj[6][3][1];
+		}
+
+		if (value == 5)
+		{
+			Issue7Stance.text = jsonStanceObj[6][4][1];
+		}
+
+    }
+
+    void issue8Slider(float value)
+    {
+        //Issue4Stance.text = "Value: " + value;
+        //Issue8Stance.text = "Stance:";
+
+		if(value == 1)
+		{
+			Issue8Stance.text = jsonStanceObj[7][0][1];
+		}
+
+		if (value == 2)
+		{
+			Issue8Stance.text = jsonStanceObj[7][1][1];
+		}
+
+		if (value == 3)
+		{
+			Issue8Stance.text = jsonStanceObj[7][2][1];
+		}
+
+		if (value == 4)
+		{
+			Issue8Stance.text = jsonStanceObj[7][3][1];
+		}
+
+		if (value == 5)
+		{
+			Issue8Stance.text = jsonStanceObj[7][4][1];
+		}
+
+    }
+    void issue9Slider(float value)
+    {
+        //Issue1Stance.text = "Value: " + value;
+        //Issue9Stance.text = "Stance:";
+
+		if(value == 1)
+		{
+			Issue9Stance.text = jsonStanceObj[8][0][1];
+		}
+
+		if (value == 2)
+		{
+			Issue9Stance.text = jsonStanceObj[8][1][1];
+		}
+
+		if (value == 3)
+		{
+			Issue9Stance.text = jsonStanceObj[8][2][1];
+		}
+
+		if (value == 4)
+		{
+			Issue9Stance.text = jsonStanceObj[8][3][1];
+		}
+
+		if (value == 5)
+		{
+			Issue9Stance.text = jsonStanceObj[8][4][1];
+		}
+
+    }
+
+    void issue10Slider(float value)
+    {
+        //Issue2Stance.text = "Value: " + value;
+        //Issue10Stance.text = "Stance:";
+
+		if(value == 1)
+		{
+			Issue10Stance.text = jsonStanceObj[9][0][1];
+		}
+
+		if (value == 2)
+		{
+			Issue10Stance.text = jsonStanceObj[9][1][1];
+		}
+
+		if (value == 3)
+		{
+			Issue10Stance.text = jsonStanceObj[9][2][1];
+		}
+
+		if (value == 4)
+		{
+			Issue10Stance.text = jsonStanceObj[9][3][1];
+		}
+
+		if (value == 5)
+		{
+			Issue10Stance.text = jsonStanceObj[9][4][1];
+		}
 
     }
 
     void SelectStances()
     {
-		//print (createIssueStanceArray ());
-		setIssues ();
+		setIssues();
     }
 
     IEnumerator delayLoading()
     {
         yield return new WaitForSeconds(2);
+
 
         SceneManager.LoadScene("MainScreen");
     }
@@ -224,7 +447,6 @@ public class IssuesStancesSelection : MonoBehaviour {
 		//selectedIssues
 		int i = 0;
 		foreach (var issue in IssuesSelection.selectedIssues) {
-			print (issue.ToString());
 			i++;
 			switch (i) {
 			case 1:
@@ -239,63 +461,177 @@ public class IssuesStancesSelection : MonoBehaviour {
 			case 4:
 				Issue4Text.text = issue.ToString();
 				break;
+            case 5:
+                Issue5Text.text = issue.ToString();
+				break;
+			case 6:
+				Issue6Text.text = issue.ToString();
+				break;
+			case 7:
+				Issue7Text.text = issue.ToString();
+				break;
+			case 8:
+				Issue8Text.text = issue.ToString();
+				break;
+            case 9:
+				Issue9Text.text = issue.ToString();
+				break;
+			case 10:
+				Issue10Text.text = issue.ToString();
+				break;
 			}
 		}
 	}
 
-	void loadStances() {
-		jsonStanceObj = JSON.Parse (IssuesSelection.stancesArray);
+    void loadStances()
+    {
+		print ("whatsup");
+        jsonStanceObj = JSON.Parse(stancesArray);
+		//print ("Dude: " + jsonStanceObj.ToString());
+		//print ("Dude1: " + jsonStanceObj[0][2][1].ToString());
+		Issue1Stance.text = jsonStanceObj[0][2][1];
+		Issue2Stance.text = jsonStanceObj[1][2][1];
+		Issue3Stance.text = jsonStanceObj[2][2][1];
+		Issue4Stance.text = jsonStanceObj[3][2][1];
 
-		Issue1Stance.text = jsonStanceObj [0] [0] [0] [2] [0];
-		Issue2Stance.text = jsonStanceObj [0] [1] [0] [2] [0];
-		Issue3Stance.text = jsonStanceObj [0] [2] [0] [2] [0];
-		Issue4Stance.text = jsonStanceObj [0] [3] [0] [2] [0];
-		//print("xyz: " + jsonStanceObj[0][0][0][2][0].ToString());
-	}
+		Issue5Stance.text = jsonStanceObj[4][2][1];
+		Issue6Stance.text = jsonStanceObj[5][2][1];
+		Issue7Stance.text = jsonStanceObj[6][2][1];
+		Issue8Stance.text = jsonStanceObj[7][2][1];
 
-	void setIssues()
+		Issue9Stance.text = jsonStanceObj[8][2][1];
+		Issue10Stance.text = jsonStanceObj[9][2][1];
+        //print("xyz: " + jsonStanceObj[0][0][0][2][0].ToString());
+    }
+
+    void setIssues()
 	{
 		print("Setting issues");
 
 		setIssuesReturn();
 		string url = "http://ecivix.org.za/api/setIssues";
 
-		var requestString = "{'access_token':'123abc','issues':[" + createIssueStanceArray() + "]}";
-
+		var requestString = "{\"access_token\":\"2\",\"issues\":[" + createIssueStanceArray() + "]}";
+        print("setIssuesString: " + requestString);
+       // print(requestString);
 		byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 
-		www = new WWW (url, pData);
+		var headers = new Hashtable();
+		headers.Add("Content-Type", "application/json");
+
+		www = new WWW (url, pData, headers);
 		StartCoroutine (setIssuesReturn());
-	}
+
+        
+    }
 
 	IEnumerator setIssuesReturn()
 	{
 		yield return www;
 		if (!string.IsNullOrEmpty (www.error)) {
-			Debug.Log (www.error);
-			print (www.error);
+			errorMessage.text = www.error;
+			errorBox.SetActive(true);
 		} else {
-			print(www.text);
-			loadScreen.SetActive(true);
-			loadText.SetActive(true);
-
-			StartCoroutine(delayLoading());
+			print ("setIssuesReturn_Response: " + www.text);
+			startGame();
 		}
+
 	}
 
-	string createIssueStanceArray(){
-		/*string array = "{'issue':'"+IssuesSelection.selectedIssues[0].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue1Stance.text.ToString()) +"'}," +
-			"{'issue':'"+IssuesSelection.selectedIssues[1].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue2Stance.text.ToString()) +"'}," +
-			"{'issue':'"+IssuesSelection.selectedIssues[2].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue3Stance.text.ToString()) +"'}," +
-			"{'issue':'"+IssuesSelection.selectedIssues[3].ToString().ToLower()+"', 'stance':'"+ trimStanceText(Issue4Stance.text.ToString()) +"'}";
-		*/
-		string array = "{'issue':'"+IssuesSelection.selectedIssues[0].ToString().ToLower()+"', 'stance':'"+ stance(issue1.value) +"'}," +
-			"{'issue':'"+IssuesSelection.selectedIssues[1].ToString().ToLower()+"', 'stance':'"+ stance(issue2.value) +"'}," +
-			"{'issue':'"+IssuesSelection.selectedIssues[2].ToString().ToLower()+"', 'stance':'"+ stance(issue3.value) +"'}," +
-			"{'issue':'"+IssuesSelection.selectedIssues[3].ToString().ToLower()+"', 'stance':'"+ stance(issue4.value) +"'}";
+    IEnumerator Upload()
+    {
+        yield return www;
 
-		//print ("boom: " + array);
-		return array;
+        if (!string.IsNullOrEmpty(www.error))
+        {
+            errorMessage.text = www.error;
+            errorBox.SetActive(true);
+        }
+        else
+        {
+			print("Upload: " + www.text);
+            loadScreen.SetActive(true);
+            loadText.SetActive(true);
+            newGameJson = www.text;
+
+            StartCoroutine(delayLoading());
+
+        }
+    }
+
+    void startGame()
+    {
+        Upload();
+        string url = "http://ecivix.org.za/api/startGame";
+        
+
+		var requestString = "{\"access_token\":\"2\", \"difficulty\":\"" + PlayerPrefs.GetString("Player Difficulty") + "\"}";
+
+       	//print("StartGame" + requestString);
+        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+		var headers = new Hashtable();
+		headers.Add("Content-Type", "application/json");
+			
+
+		www = new WWW(url, pData, headers);
+        StartCoroutine(Upload());
+    }
+
+    void getStances()
+    {
+        getStancesHelp();
+        string url = "http://ecivix.org.za/api/getStances";
+
+
+		//var requestString = "{\"access_token\": \"2\",\"issues\":[\"" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "\"]}";
+		//var requestString = "{\"access_token\": \"2\",\"issues\":[\"Same-Sex Marriage\", \"Racism\", \"Abortion\", \"Prostitution\", \"Mining\", \"Crime\", \"Unemployment\", \"Housing\", \"Tax Of High Income Earners\", \"Social Grants\"]}";
+		var requestString = "{\"access_token\": \"2\",\"issues\":[\"" + IssuesSelection.selectedIssues[0].ToString() + "\",\"" + IssuesSelection.selectedIssues[1].ToString() + "\",\"" + IssuesSelection.selectedIssues[2].ToString() + "\",\"" + IssuesSelection.selectedIssues[3].ToString() + "\",\"" + IssuesSelection.selectedIssues[4].ToString() + "\",\"" + IssuesSelection.selectedIssues[5].ToString() + "\",\"" + IssuesSelection.selectedIssues[6].ToString() + "\",\"" + IssuesSelection.selectedIssues[7].ToString() + "\",\"" + IssuesSelection.selectedIssues[8].ToString() + "\",\"" + IssuesSelection.selectedIssues[9].ToString() + "\"]}";
+
+		var headers = new Hashtable();
+		headers.Add("Content-Type", "application/json");
+
+        print("requestString: " + requestString);
+        //print("getStances");
+        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+		www2 = new WWW(url, pData, headers);
+       StartCoroutine(getStancesHelp());
+    }
+
+    IEnumerator getStancesHelp()
+    {
+        yield return www2;
+        if (!string.IsNullOrEmpty(www2.error))
+        {
+			print("Error: " + www2.error);
+            errorMessage.text = www2.error;
+            errorBox.SetActive(true);
+        }
+        else
+        {
+            stancesArray = www2.text;
+            //print("Biatch: " + stancesArray);
+            loadStances();
+            
+        }
+
+    }
+
+	string createIssueStanceArray(){
+		string array = "{\"issue\":\"" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "\", \"stance\":\"" + stance(issue1.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "\", \"stance\":\"" + stance(issue2.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "\", \"stance\":\"" + stance(issue3.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "\", \"stance\":\"" + stance(issue4.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "\", \"stance\":\"" + stance(issue5.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "\", \"stance\":\"" + stance(issue6.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "\", \"stance\":\"" + stance(issue7.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "\", \"stance\":\"" + stance(issue8.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "\", \"stance\":\"" + stance(issue9.value) + "\"}," +
+			"{\"issue\":\"" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "\", \"stance\":\"" + stance(issue10.value) + "\"}";
+
+		//print("createIssueStanceArray: " + array);
+
+        return array;
 	}
 
 	string stance(float t){
