@@ -204,6 +204,7 @@ module.exports = {
         var querytext = "select * from tblManPower where userId ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
+            obj.province = "gauteng";
             obj.manpower = row['user_manpower'];
         });
         query.on('end', () => {
