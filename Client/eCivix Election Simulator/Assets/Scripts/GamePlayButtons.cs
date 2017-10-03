@@ -167,7 +167,6 @@ public class GamePlayButtons : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-
 		// Set new game variables
 		var jsonObj = JSON.Parse(IssuesStancesSelection.newGameJson);
 		userName.text = jsonObj["Username"].Value.ToString();
@@ -268,33 +267,43 @@ public class GamePlayButtons : MonoBehaviour {
         
 
         Button issue1 = Issue1.GetComponent<Button>();
+		issue1.onClick.RemoveAllListeners();
         issue1.onClick.AddListener(issue1Campaign);
 
         Button issue2 = Issue2.GetComponent<Button>();
+		issue2.onClick.RemoveAllListeners();
         issue2.onClick.AddListener(issue2Campaign);
 
         Button issue3 = Issue3.GetComponent<Button>();
+		issue3.onClick.RemoveAllListeners();
         issue3.onClick.AddListener(issue3Campaign);
 
         Button issue4 = Issue4.GetComponent<Button>();
+		issue4.onClick.RemoveAllListeners();
         issue4.onClick.AddListener(issue4Campaign);
 
         Button issue5 = Issue5.GetComponent<Button>();
+		issue5.onClick.RemoveAllListeners();
         issue5.onClick.AddListener(issue5Campaign);
 
         Button issue6 = Issue6.GetComponent<Button>();
+		issue6.onClick.RemoveAllListeners();
         issue6.onClick.AddListener(issue6Campaign);
 
         Button issue7 = Issue7.GetComponent<Button>();
+		issue7.onClick.RemoveAllListeners();
         issue7.onClick.AddListener(issue7Campaign);
 
         Button issue8 = Issue8.GetComponent<Button>();
+		issue8.onClick.RemoveAllListeners();
         issue8.onClick.AddListener(issue8Campaign);
 
         Button issue9 = Issue9.GetComponent<Button>();
+		issue9.onClick.RemoveAllListeners();
         issue9.onClick.AddListener(issue9Campaign);
 
         Button issue10 = Issue10.GetComponent<Button>();
+		issue10.onClick.RemoveAllListeners();
         issue10.onClick.AddListener(issue10Campaign);
 
 		Issue1Text.text = IssuesSelection.selectedIssues [0].ToString ();
@@ -368,22 +377,27 @@ public class GamePlayButtons : MonoBehaviour {
 			provinceCollect();
 			string url = "http://ecivix.org.za/api/collectFunds";
 
-			var requestString = "{'access_token':'2','province':'Gauteng'}";
+			var requestString = "{\"access_token\":\"2\",\"province\":\"Freestate\"}";
 
 			byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
-			www = new WWW(url, pData);
+			WWWForm formColl = new WWWForm();
+			var headersColl = formColl.headers;
+			headersColl["Content-Type"] = "application/json";
+
+			www = new WWW(url, pData, headersColl);
 			StartCoroutine(provinceCollect());
 
 			// Update user's total funds.
 			updateFunds();
 			string url2 = "http://ecivix.org.za/api/getFunds";
 
-			var requestString2 = "{'access_token':'2','province':'Gauteng'}";
+			var requestString2 = "{\"access_token\":\"2\",\"province\":\"Freestate\"}";
 
 			byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
 
-			www2 = new WWW(url2, pData2);
+
+			www2 = new WWW(url2, pData2, headersColl);
 			StartCoroutine(updateFunds());
 
 			collectFundsText.text = "-$5";
@@ -462,6 +476,7 @@ public class GamePlayButtons : MonoBehaviour {
         }
 		else
 		{
+			print ("collect: " + www.text);
 			var jsonObj = JSON.Parse(www.text);
 			AI1Action.text = jsonObj["AI1Move"].Value.ToString();
 			AI2Action.text = jsonObj["AI2Move"].Value.ToString();
@@ -507,11 +522,15 @@ public class GamePlayButtons : MonoBehaviour {
 			provincePolled();
 			string url = "http://ecivix.org.za/api/pollProvince";
 
-			var requestString = "{'access_token':'2'}";
+			var requestString = "{\"access_token\":\"2\",\"province\": \"Gauteng\"}";
 
 			byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 
-			www = new WWW (url, pData);
+			WWWForm formPoll = new WWWForm();
+			var headersPoll = formPoll.headers;
+			headersPoll["Content-Type"] = "application/json";
+
+			www = new WWW (url, pData, headersPoll);
 			StartCoroutine (provincePolled());
 
             infoPanel.SetActive(true);
@@ -530,6 +549,7 @@ public class GamePlayButtons : MonoBehaviour {
         }
 		else
 		{
+			print ("polled: " + www.text);
 			var jsonObj = JSON.Parse(www.text);
 			AI1Action.text = jsonObj["AI1Move"].Value.ToString();
 			AI2Action.text = jsonObj["AI2Move"].Value.ToString();
@@ -598,6 +618,10 @@ public class GamePlayButtons : MonoBehaviour {
 			AI2Action.text = jsonObj["AI2Move"].Value.ToString();
 			AI3Action.text = jsonObj["AI3Move"].Value.ToString();
 			AI4Action.text = jsonObj["AI4Move"].Value.ToString();
+
+			var supportAmount = jsonObj["support"].Value.ToString();
+
+			infoPanelText.text = "You gained " + supportAmount +  " in support!";
 		}
 	}
 
@@ -693,20 +717,20 @@ public class GamePlayButtons : MonoBehaviour {
     {
         campaignTopics.SetActive(false);
 
-        provinceCampaign();
-        string url2 = "http://ecivix.org.za/api/campaignProvince";
+		provinceCampaign ();
+		string url2 = "http://ecivix.org.za/api/campaignProvince";
 
 		var requestString2 = "{\"access_token\":\"2\",\"province\":\"Gauteng\", \"topic\":\"Crime\"}";
 
-        byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
+		byte[] pData2 = Encoding.ASCII.GetBytes (requestString2.ToCharArray ());
 
-		WWWForm form2 = new WWWForm();
+		WWWForm form2 = new WWWForm ();
 		var headers2 = form2.headers;
-		headers2.Add("content-type", "application/json");
+		headers2.Add ("content-type", "application/json");
 
-		www2 = new WWW(url2, pData2, headers2);
-        StartCoroutine(provinceCampaign());
-
+		www2 = new WWW (url2, pData2, headers2);
+		StartCoroutine (provinceCampaign ());
+		/*
         // Get and update user's total manpower / support
         getManpower();
         string url = "http://ecivix.org.za/api/getManpower";
@@ -722,7 +746,7 @@ public class GamePlayButtons : MonoBehaviour {
 
 		www = new WWW(url, pData, headers);
         StartCoroutine(getManpower());
-
+		*/
 
         campaignText.text = "-$5";
         campaignTextAnim.Play(campaignTextHash, -1, 0f);
