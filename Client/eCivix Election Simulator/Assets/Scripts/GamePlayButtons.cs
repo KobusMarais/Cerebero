@@ -297,16 +297,16 @@ public class GamePlayButtons : MonoBehaviour {
         Button issue10 = Issue10.GetComponent<Button>();
         issue10.onClick.AddListener(issue10Campaign);
 
-        Issue1Text.text = "1";
-        Issue2Text.text = "2";
-        Issue3Text.text = "3";
-        Issue4Text.text = "4";
-        Issue5Text.text = "5";
-        Issue6Text.text = "6";
-        Issue7Text.text = "7";
-        Issue8Text.text = "8";
-        Issue9Text.text = "9";
-        Issue10Text.text = "10";
+		Issue1Text.text = IssuesSelection.selectedIssues [0].ToString ();
+		Issue2Text.text = IssuesSelection.selectedIssues [1].ToString ();
+		Issue3Text.text = IssuesSelection.selectedIssues [2].ToString ();
+		Issue4Text.text = IssuesSelection.selectedIssues [3].ToString ();
+		Issue5Text.text = IssuesSelection.selectedIssues [4].ToString ();
+		Issue6Text.text = IssuesSelection.selectedIssues [5].ToString ();
+		Issue7Text.text = IssuesSelection.selectedIssues [6].ToString ();
+		Issue8Text.text = IssuesSelection.selectedIssues [7].ToString ();
+		Issue9Text.text = IssuesSelection.selectedIssues [8].ToString ();
+		Issue10Text.text = IssuesSelection.selectedIssues [9].ToString ();
 
         getScore();
 	}
@@ -592,6 +592,7 @@ public class GamePlayButtons : MonoBehaviour {
         }
 		else
 		{
+			print (www2.text);
 			var jsonObj = JSON.Parse(www2.text);
 			AI1Action.text = jsonObj["AI1Move"].Value.ToString();
 			AI2Action.text = jsonObj["AI2Move"].Value.ToString();
@@ -695,11 +696,15 @@ public class GamePlayButtons : MonoBehaviour {
         provinceCampaign();
         string url2 = "http://ecivix.org.za/api/campaignProvince";
 
-        var requestString2 = "{'access_token':'2','province':'Gauteng'}";
+		var requestString2 = "{\"access_token\":\"2\",\"province\":\"Gauteng\", \"topic\":\"Crime\"}";
 
         byte[] pData2 = Encoding.ASCII.GetBytes(requestString2.ToCharArray());
 
-        www2 = new WWW(url2, pData2);
+		WWWForm form2 = new WWWForm();
+		var headers2 = form2.headers;
+		headers2.Add("content-type", "application/json");
+
+		www2 = new WWW(url2, pData2, headers2);
         StartCoroutine(provinceCampaign());
 
         // Get and update user's total manpower / support
@@ -710,7 +715,12 @@ public class GamePlayButtons : MonoBehaviour {
 
         byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
-        www = new WWW(url, pData);
+
+		WWWForm form = new WWWForm();
+		var headers = form.headers;
+		headers.Add("content-type", "application/json");
+
+		www = new WWW(url, pData, headers);
         StartCoroutine(getManpower());
 
 

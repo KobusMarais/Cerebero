@@ -455,7 +455,7 @@ public class IssuesStancesSelection : MonoBehaviour {
 			IssuesSelection.selectedIssues.Add (jsonStanceObj[j][2][0]);
 		}
 
-
+		//print ("test: " + IssuesSelection.selectedIssues [0].ToString ());
 		int i = 0;
 		foreach (var issue in IssuesSelection.selectedIssues) {
 			i++;
