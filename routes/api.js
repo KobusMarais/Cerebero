@@ -127,10 +127,9 @@ router.post('/campaignProvince', function(req,res){
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.province);
 
-    if(!req.body.province || !req.body.access_token)
+
+    if(!req.body.province || !req.body.access_token || !req.body.topic || !req.body.campaigntype)
     {
         console.log("campaignProvince API call access_token or province not set");
         var obj = new Object();

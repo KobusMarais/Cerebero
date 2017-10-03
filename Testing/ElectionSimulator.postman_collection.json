@@ -229,9 +229,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"1\",\r\n  \"province\": \"Gauteng\",\r\n  \"topic\": \"Crime\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"2\",\r\n  \"province\": \"gauteng\",\r\n  \"topic\": \"crime\",\r\n  \"campaigntype\" : \"rally\"\r\n}\r\n"
 				},
-				"description": ""
+				"description": "campaign type can be either \"rally\" or \"telemarketing\" or \"socialmedia\""
 			},
 			"response": []
 		},
