@@ -10,15 +10,6 @@ router.post('/register', function(req,res){
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-<<<<<<< HEAD
-    let i = req.body;
-    //generate new token for each user and create entry in db for that user.
-    queries.register(i.name, i.surname, i.email, i.username, i.password, function(err, result) {
-        if (err) return console.log("error: ", err)
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
     if(!req.body.name || !req.body.email || !req.body.username || !req.body.password)
     {
         console.log("register API call name or email or username or password not set");
@@ -37,7 +28,6 @@ router.post('/register', function(req,res){
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
     //Insert code here to check if email or username has been used before
 
 });
@@ -50,14 +40,6 @@ router.post('/login', function(req,res){
     res.setHeader('Access-Control-Allow-Credentials', true);
 
     //insert code here to check if email and password are correct and return accesskey.
-<<<<<<< HEAD
-    let i = req.body;
-    queries.login(i.username, i.password, function(err, result) {
-        if (err) return console.log("error: ", err);
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
     if(!req.body.username || !req.body.password)
     {
         console.log("login API call username or password not set");
@@ -75,7 +57,6 @@ router.post('/login', function(req,res){
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 });
 
 router.post('/collectFunds', function(req,res){
@@ -85,19 +66,7 @@ router.post('/collectFunds', function(req,res){
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-<<<<<<< HEAD
-    console.log(req.body.access_token);
-    console.log(req.body.province);
-    //find access token in DB
-    //calculate fund change according to dataset from db
-    //save amount of funds user has to db.
-    let i = req.body;
-    queries.collectFunds(i.access_token, i.province, function(err, result) {
-        if (err) return console.log("error: ", err);
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
+
     //console.log(req.body.access_token);
     //console.log(req.body.province);
     if(!req.body.province || !req.body.access_token)
@@ -120,7 +89,7 @@ router.post('/collectFunds', function(req,res){
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
+
     //return success and update funds
 });
 router.post('/getTopic', function(req,res) {
@@ -130,15 +99,7 @@ router.post('/getTopic', function(req,res) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-<<<<<<< HEAD
-    console.log(req.body.access_token);
-    let i = req.body;
-    queries.getTopic(i.access_token, function(err, result) {
-        if (err) return console.log("error: ", err);
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
+
     //console.log(req.body.access_token);
     if(!req.body.access_token)
     {
@@ -157,7 +118,6 @@ router.post('/getTopic', function(req,res) {
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 });
 
 router.post('/campaignProvince', function(req,res){
@@ -169,15 +129,7 @@ router.post('/campaignProvince', function(req,res){
     res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     console.log(req.body.province);
-<<<<<<< HEAD
-    //find access token in DB
-    //calculate support change according to dataset from db
-    //save amount of funds user has to db.
-    let i = req.body;
-   /* queries.campaignProvince(i.access_token, i.province, i.topic, function(err, result) {
-        if (err) return console.log("error: ", err);
-        var obj = JSON.parse(result);
-=======
+
     if(!req.body.province || !req.body.access_token)
     {
         console.log("campaignProvince API call access_token or province not set");
@@ -200,7 +152,7 @@ router.post('/campaignProvince', function(req,res){
         //return success and update funds
         var text = '{"success" : "1", "support" : "3000", "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}';
         var obj = JSON.parse(text);
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
+
         res.send(obj);
     }
 });
@@ -211,13 +163,7 @@ router.post('/pollProvince', function(req,res){
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-<<<<<<< HEAD
-    console.log(req.body.access_token);
-    console.log(req.body.province);
-    //find access token in DB
-    //retrieve opponent's in that province from db
-    //return support to user
-=======
+
     //console.log(req.body.access_token);
     //console.log(req.body.province);
 
@@ -233,7 +179,7 @@ router.post('/pollProvince', function(req,res){
         //find access token in DB
         //retrieve opponent's in that province from db
         //return support to user
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
+
 
         var text = '{"User": "40", "AI1" : "10", "AI2" : "10", "AI3": "20", "AI4" : "20", "AI1Move" : "Poll Gauteng", "AI2Move" : "Poll Limpopo" , "AI3Move" : "Collect Funds Freestate", "AI4Move" : "Campaign Western Cape"}';
         var obj = JSON.parse(text);
@@ -251,13 +197,7 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
     //find access token in DB
     //retrieve user funds from db
     //return user funds
-<<<<<<< HEAD
-    queries.getFunds(req.body.access_token, function(err, result) {
-        if (err) return console.log("error: ", err)
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
+
     if(!req.body.access_token)
     {
         console.log("getFunds API call access_token not set");
@@ -273,7 +213,7 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
+
 });
 
 router.post('/getFundsProvince', function(req, res, next) { //this is how many funds available per province
@@ -286,13 +226,7 @@ router.post('/getFundsProvince', function(req, res, next) { //this is how many f
     //find access token in DB
     //retrieve province available funds from db
     //return province funds funds
-<<<<<<< HEAD
-    queries.getFundsProvince(req.body.access_token, function(err, result) {
-        if (err) return console.log("error: ", err)
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
+
     if(!req.body.access_token)
     {
         console.log("getFundsProvince API call access_token not set");
@@ -309,7 +243,6 @@ router.post('/getFundsProvince', function(req, res, next) { //this is how many f
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 
 });
 
@@ -322,15 +255,7 @@ router.post('/getProfile', function(req, res, next) {
     console.log(req.body.access_token);
     //find access token in DB
     //retrieve user info from DB
-<<<<<<< HEAD
 
-    //return user data
-    queries.getProfile(req.body.access_token, function(err, result) {
-        if (err) return console.log("error: ", err)
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
     if(!req.body.access_token)
     {
         console.log("getProfile API call access_token not set");
@@ -348,7 +273,6 @@ router.post('/getProfile', function(req, res, next) {
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 });
 
 router.post('/getScore', function(req, res, next) {
@@ -360,9 +284,7 @@ router.post('/getScore', function(req, res, next) {
 
     //find access token in DB
     //retrieve user score from DB
-<<<<<<< HEAD
 
-=======
     if(!req.body.access_token)
     {
         console.log("getScore API call access_token not set");
@@ -372,7 +294,7 @@ router.post('/getScore', function(req, res, next) {
         var obj = JSON.parse(result);
         res.send(obj);
     } else {
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
+
     //return score
     queries.getScore(req.body.access_token, function(err, result) {
         if (err) return console.log("error: ", err)
@@ -392,15 +314,7 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
     //find access token in DB
     //retrieve user score from DB
     //get current manpower support user has from db
-<<<<<<< HEAD
 
-    //return manpower user has currently
-    queries.getManpower(req.body.access_token, function(err, result) {
-        if (err) return console.log("error: ", err)
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
     if(!req.body.access_token)
     {
         console.log("getManpower API call access_token or province not set");
@@ -417,7 +331,7 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
+
 });
 
 router.post('/getSupport', function(req, res, next) { // each province has its own support
@@ -430,8 +344,7 @@ router.post('/getSupport', function(req, res, next) { // each province has its o
     //find access token in DB
     //retrieve user support for that province from DB
     //get current support user has in that province from db
-<<<<<<< HEAD
-=======
+
     if(!req.body.province || !req.body.access_token)
     {
         console.log("getSupport API call access_token or province not set");
@@ -441,7 +354,6 @@ router.post('/getSupport', function(req, res, next) { // each province has its o
         var obj = JSON.parse(result);
         res.send(obj);
     } else {
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 
         queries.getSupport(req.body.access_token, req.body.province, function (err, result) {
             if (err) return console.log("error: ", err)
@@ -475,9 +387,7 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
 
     //find access token in DB
     //create and retrieve all starter info for user
-<<<<<<< HEAD
 
-=======
     if(!req.body.difficulty || !req.body.access_token)
     {
         console.log("startGame API call access_token or difficulty not set");
@@ -487,7 +397,6 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
         var obj = JSON.parse(result);
         res.send(obj);
     }  else {
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 
         //return everything that needs to be displayed on client side
         queries.startGame(req.body.access_token, function (err, result) {
@@ -506,13 +415,7 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
-    console.log(req.body.difficulty); //sets difficulty
 
-<<<<<<< HEAD
-    //find access token in DB
-    //create and retrieve all starter info for user
-=======
     if(!req.body.difficulty || !req.body.access_token)
     {
         console.log("setAI API call access_token or issues not set");
@@ -530,7 +433,7 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
         var text = '{"Username" : "Jack", "Funds" : "0", "TotalSupport" : "0", "Manpower": "0", "Weeks" : "3"}';
         var obj = JSON.parse(text);
         res.send(obj);
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
+
 
     }
 });
@@ -541,12 +444,7 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-<<<<<<< HEAD
-    console.log(req.body.access_token);
-    //find access token in DB
-    //run AI
-    //Decrease time before election and returns it
-=======
+
 //    console.log(req.body.access_token);
     if(!req.body.access_token)
     {
@@ -560,7 +458,7 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
         //find access token in DB
         //run AI
         //Decrease time before election and returns it
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
+
 
         queries.endTurn(req.body.access_token, function (err, result) {
             if (err) return console.log("error: ", err);
@@ -576,14 +474,7 @@ router.post('/endHighScore', function(req, res, next) { // receives user score a
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-<<<<<<< HEAD
 
-    queries.endHighScore(req.body.access_token, req.body.userScore, function(err, result) {
-        if (err) return console.log("error: ", err);
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
     if(!req.body.access_token || !req.body.userScore)
     {
         console.log("endHighScore API call access_token or userScore not set");
@@ -600,7 +491,6 @@ router.post('/endHighScore', function(req, res, next) { // receives user score a
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 });
 
 router.get('/getIssues', function(req, res, next) {
@@ -624,14 +514,6 @@ router.post('/getStances', function(req, res, next) { // receives user score and
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-<<<<<<< HEAD
-    let i = req.body.issues; // for brevity
-    queries.getStances(i, function(err, result) {
-        if (err) return console.log("error: ", err)
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
     console.log("THIS IS THE LENGTH:");
     if(!req.body.issues || !req.body.access_token)
     {
@@ -650,7 +532,6 @@ router.post('/getStances', function(req, res, next) { // receives user score and
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 });
 
 router.post('/setIssues', function(req, res, next) { // receives user score and inserts into leaderboard
@@ -660,17 +541,7 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     //console.log(req.body.access_token);
-<<<<<<< HEAD
-    console.log(req.body.issues[0].issue);
-    console.log(req.body.issues[0].stance);
 
-    let i = req.body; // for brevity
-    queries.setIssues(i.access_token, i.issues, function(err, result) {
-        if (err) return console.log("error: ", err)
-        var obj = JSON.parse(result);
-        res.send(obj);
-    });
-=======
     if(!req.body.issues || !req.body.access_token)
     {
         console.log("setIssues API call access_token or issues not set");
@@ -687,7 +558,6 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
             res.send(obj);
         });
     }
->>>>>>> 029ac8d5a5c1838a83b7bdaf6f60fca812cc3d8b
 });
 //query.on('end', () => { client.end(); });
 module.exports = router;
