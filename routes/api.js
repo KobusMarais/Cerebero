@@ -66,6 +66,7 @@ router.post('/collectFunds', function(req,res){
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
+
     //console.log(req.body.access_token);
     //console.log(req.body.province);
     if(!req.body.province || !req.body.access_token)
@@ -88,6 +89,7 @@ router.post('/collectFunds', function(req,res){
             res.send(obj);
         });
     }
+
     //return success and update funds
 });
 router.post('/getTopic', function(req,res) {
@@ -97,6 +99,7 @@ router.post('/getTopic', function(req,res) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
+
     //console.log(req.body.access_token);
     if(!req.body.access_token)
     {
@@ -126,6 +129,7 @@ router.post('/campaignProvince', function(req,res){
     res.setHeader('Access-Control-Allow-Credentials', true);
     console.log(req.body.access_token);
     console.log(req.body.province);
+
     if(!req.body.province || !req.body.access_token)
     {
         console.log("campaignProvince API call access_token or province not set");
@@ -148,6 +152,7 @@ router.post('/campaignProvince', function(req,res){
         //return success and update funds
         var text = '{"success" : "1", "support" : "3000", "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}';
         var obj = JSON.parse(text);
+
         res.send(obj);
     }
 });
@@ -158,6 +163,7 @@ router.post('/pollProvince', function(req,res){
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
+
     //console.log(req.body.access_token);
     //console.log(req.body.province);
 
@@ -173,6 +179,7 @@ router.post('/pollProvince', function(req,res){
         //find access token in DB
         //retrieve opponent's in that province from db
         //return support to user
+
 
         var text = '{"User": "40", "AI1" : "10", "AI2" : "10", "AI3": "20", "AI4" : "20", "AI1Move" : "Poll Gauteng", "AI2Move" : "Poll Limpopo" , "AI3Move" : "Collect Funds Freestate", "AI4Move" : "Campaign Western Cape"}';
         var obj = JSON.parse(text);
@@ -190,6 +197,7 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
     //find access token in DB
     //retrieve user funds from db
     //return user funds
+
     if(!req.body.access_token)
     {
         console.log("getFunds API call access_token not set");
@@ -205,6 +213,7 @@ router.post('/getFunds', function(req, res, next) { //this is a national overall
             res.send(obj);
         });
     }
+
 });
 
 router.post('/getFundsProvince', function(req, res, next) { //this is how many funds available per province
@@ -217,6 +226,7 @@ router.post('/getFundsProvince', function(req, res, next) { //this is how many f
     //find access token in DB
     //retrieve province available funds from db
     //return province funds funds
+
     if(!req.body.access_token)
     {
         console.log("getFundsProvince API call access_token not set");
@@ -242,9 +252,10 @@ router.post('/getProfile', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    //console.log(req.body.access_token);
+    console.log(req.body.access_token);
     //find access token in DB
     //retrieve user info from DB
+
     if(!req.body.access_token)
     {
         console.log("getProfile API call access_token not set");
@@ -273,6 +284,7 @@ router.post('/getScore', function(req, res, next) {
 
     //find access token in DB
     //retrieve user score from DB
+
     if(!req.body.access_token)
     {
         console.log("getScore API call access_token not set");
@@ -282,6 +294,7 @@ router.post('/getScore', function(req, res, next) {
         var obj = JSON.parse(result);
         res.send(obj);
     } else {
+
     //return score
     queries.getScore(req.body.access_token, function(err, result) {
         if (err) return console.log("error: ", err)
@@ -297,10 +310,11 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-   // console.log(req.body.access_token);
+    console.log(req.body.access_token);
     //find access token in DB
     //retrieve user score from DB
     //get current manpower support user has from db
+
     if(!req.body.access_token)
     {
         console.log("getManpower API call access_token or province not set");
@@ -317,6 +331,7 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
             res.send(obj);
         });
     }
+
 });
 
 router.post('/getSupport', function(req, res, next) { // each province has its own support
@@ -329,6 +344,7 @@ router.post('/getSupport', function(req, res, next) { // each province has its o
     //find access token in DB
     //retrieve user support for that province from DB
     //get current support user has in that province from db
+
     if(!req.body.province || !req.body.access_token)
     {
         console.log("getSupport API call access_token or province not set");
@@ -371,6 +387,7 @@ router.post('/startGame', function(req, res, next) { // initialises all values a
 
     //find access token in DB
     //create and retrieve all starter info for user
+
     if(!req.body.difficulty || !req.body.access_token)
     {
         console.log("startGame API call access_token or difficulty not set");
@@ -398,8 +415,6 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    //console.log(req.body.access_token);
-    //console.log(req.body.difficulty); //sets difficulty
 
     if(!req.body.difficulty || !req.body.access_token)
     {
@@ -419,6 +434,7 @@ router.post('/setAI', function(req, res, next) { // initialises all values at th
         var obj = JSON.parse(text);
         res.send(obj);
 
+
     }
 });
 
@@ -428,6 +444,7 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
+
 //    console.log(req.body.access_token);
     if(!req.body.access_token)
     {
@@ -441,6 +458,7 @@ router.post('/endTurn', function(req, res, next) { // AIs make their final move 
         //find access token in DB
         //run AI
         //Decrease time before election and returns it
+
 
         queries.endTurn(req.body.access_token, function (err, result) {
             if (err) return console.log("error: ", err);
@@ -456,6 +474,7 @@ router.post('/endHighScore', function(req, res, next) { // receives user score a
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
+
     if(!req.body.access_token || !req.body.userScore)
     {
         console.log("endHighScore API call access_token or userScore not set");
@@ -522,6 +541,7 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     //console.log(req.body.access_token);
+
     if(!req.body.issues || !req.body.access_token)
     {
         console.log("setIssues API call access_token or issues not set");

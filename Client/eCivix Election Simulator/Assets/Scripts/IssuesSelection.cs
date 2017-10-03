@@ -114,12 +114,7 @@ public class IssuesSelection : MonoBehaviour {
 
 		loadIssues();
 		string url = "http://ecivix.org.za/api/getIssues";
-
-		//var requestString = "{'access_token':'123abc','userScore':'20'}";
-		//var requestString = "{}";
-
-
-		//byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
+        
 
 		www = new WWW (url);
 		StartCoroutine (loadIssues());
@@ -132,7 +127,7 @@ public class IssuesSelection : MonoBehaviour {
             errorMessage.text = www.error;
             errorBox.SetActive(true);
         } else {
-			//print(www.text);
+			print("loadIssuesReturn" + www.text);
 			var jsonObj = JSON.Parse (www.text);
             //int arrayLength = jsonObj ["scoreboard"].Count;
             //print(jsonObj ["issues"][0]);
