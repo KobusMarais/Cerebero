@@ -9,7 +9,7 @@ module.exports = {
         client.connect();
         var obj = new Object();
 
-        var querytext = "INSERT INTO userAccounts(username, user_password, firstName, lastName, email) values('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+email+"') RETURNING pkid";
+        var querytext = "INSERT INTO useraccounts(username, password, firstName, lastName, email) values('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+email+"') RETURNING pkid";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj.access_token = row['pkid'];
@@ -27,10 +27,10 @@ module.exports = {
         var obj = new Object();
         obj.access_token = -1;
 
-        var querytext = "select * from userAccounts WHERE username ='"+username+"' AND user_password = '"+password+"'\n";
+        var querytext = "select * from useraccounts WHERE username ='"+username+"' AND password = '"+password+"'\n";
         query = client.query(querytext);
         query.on('row', (row) => {
-            if(username == row['username'] && password == row['user_password']) {
+            if(username == row['username'] && password == row['password']) {
                 obj.access_token = row['pkid'];
             }
         });
@@ -45,7 +45,7 @@ module.exports = {
         client.connect();
         var obj = new Object();
 
-        var querytext = "select * from userProfile WHERE userId = '"+accesstoken +"'";
+        var querytext = "select * from userprofile WHERE userid = '"+accesstoken +"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj.topic1 = row['topic1'];
@@ -74,7 +74,7 @@ module.exports = {
         var mystance = "";
         var suppercentage = 0;
 
-        var querytext = "select * from userProfile WHERE ((topic1 LIKE '%"+topic+"%') OR (topic2 LIKE '%"+topic+"%') OR (topic3 LIKE '%"+topic+"%') OR (topic4 LIKE '%"+topic+"%') OR (topic5 LIKE '%\"+topic+\"%') OR (topic6 LIKE '%\"+topic+\"%') OR (topic7 LIKE '%\"+topic+\"%') OR (topic8 LIKE '%\"+topic+\"%') OR (topic9 LIKE '%\"+topic+\"%') OR (topic10 LIKE '%\"+topic+\"%')) AND userid = '"+accesstoken+"'";
+        var querytext = "select * from userprofile WHERE ((topic1 LIKE '%"+topic+"%') OR (topic2 LIKE '%"+topic+"%') OR (topic3 LIKE '%"+topic+"%') OR (topic4 LIKE '%"+topic+"%') OR (topic5 LIKE '%\"+topic+\"%') OR (topic6 LIKE '%\"+topic+\"%') OR (topic7 LIKE '%\"+topic+\"%') OR (topic8 LIKE '%\"+topic+\"%') OR (topic9 LIKE '%\"+topic+\"%') OR (topic10 LIKE '%\"+topic+\"%')) AND userid = '"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             if(patt.test(row['topic1'])){mystance = extractStance(row['topic1'])}
@@ -89,36 +89,36 @@ module.exports = {
             if(patt.test(row['topic10'])){mystance = extractStance(row['topic10'])}
         });
         query.on('end', () => {
-            querytext = "SELECT * FROM Stances WHERE stance = '"+mystance+"'";
+            querytext = "SELECT * FROM stances WHERE stance = '"+mystance+"'";
             query = client.query(querytext);
             query.on('row', (row) => {
                 switch (province) {
                     case "gauteng":
-                        suppercentage = row['suppgauteng'];
+                        suppercentage = row['gauteng'];
                         break;
                     case "freestate":
-                        suppercentage = row['suppfreestate'];
+                        suppercentage = row['freestate'];
                         break;
                     case "limpopo":
-                        suppercentage = row['supplimpopo'];
+                        suppercentage = row['limpopo'];
                         break;
                     case "northwest":
-                        suppercentage = row['suppnorthwest'];
+                        suppercentage = row['northwest'];
                         break;
                     case "northcape":
-                        suppercentage = row['suppnorthcape'];
+                        suppercentage = row['northcape'];
                         break;
                     case "westcape":
-                        suppercentage = row['suppwestcape'];
+                        suppercentage = row['westcape'];
                         break;
                     case "eastcape":
-                        suppercentage = row['suppeastcape'];
+                        suppercentage = row['eastcape'];
                         break;
                     case "kwazulu-natal":
-                        suppercentage = row['suppkzn'];
+                        suppercentage = row['kwazulunatal'];
                         break;
                     case "mpumalanga":
-                        suppercentage = row['suppmpuma'];
+                        suppercentage = row['mpumalanga'];
                 }
             });
             query.on('end', () => {
@@ -129,7 +129,7 @@ module.exports = {
             });
         });
     },
-    collectFunds : function (accesstoken, province, callback) {
+    collectFunds : function (accesstoken, province, callback) { //REDO THIS ONE
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
@@ -162,7 +162,7 @@ module.exports = {
             });
         });
     },
-    getFunds : function (accesstoken, callback) {
+    getFunds : function (accesstoken, callback) { //REDO THIS ONE
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
@@ -182,7 +182,7 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var querytext = "select * from userAccounts where pkid ='"+accesstoken+"'";
+        var querytext = "select * from useraccounts where pkid ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj.name = row['firstname'];
@@ -197,11 +197,11 @@ module.exports = {
             return sendback;
         });
     },
-    getManpower: function (accesstoken, callback) {
+    getManpower: function (accesstoken, callback) { //REDO THIS ONE
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var querytext = "select * from tblManPower where userId ='"+accesstoken+"'";
+        var querytext = "select * from tblmanpower where userid ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj.manpower = row['user_manpower'];
@@ -212,7 +212,7 @@ module.exports = {
             callback(err=null,result=sendback);
             return sendback;
         });
-    },getSupport: function (accesstoken,province, callback) {
+    },getSupport: function (accesstoken,province, callback) { //REDO THIS ONE
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
@@ -254,7 +254,7 @@ module.exports = {
             callback(err=null,result=sendback);
             return sendback;
         });
-    },startGame: function (accesstoken, callback) {
+    },startGame: function (accesstoken, callback) { //REDO THIS ONE
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
@@ -302,7 +302,7 @@ module.exports = {
         var obj = new Object();
 
 
-        var querytext = "INSERT INTO userProfile(userId, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3, score) values ('"+
+        var querytext = "INSERT INTO userprofile(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, score, funds) values ('"+
             accesstoken+"','"+
             i[0].issue+ "_"+i[0].stance +"', '"+
             i[1].issue+ "_"+i[1].stance +"', '"+
@@ -314,11 +314,11 @@ module.exports = {
             i[7].issue+ "_"+i[7].stance +"', '"+
             i[8].issue+ "_"+i[8].stance +"', '"+
             i[9].issue+ "_"+i[9].stance +
-            "', 10,10,10,10,10,10,10,10,10, '','','', '0');"+
-           "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',1,'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 10,10,10,10,10,10,10,10,10, '','','');"+
-             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',2,'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 10,10,10,10,10,10,10,10,10, '','','');"+
-             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',3,'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 10,10,10,10,10,10,10,10,10, '','','');"+
-             "INSERT INTO AI(userId, aiNum, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, suppGauteng, suppFreestate, suppLimpopo, suppNorthWest, suppNorthCape, suppWestCape, suppEastCape, suppKZN, suppMpuma, action1, action2, action3) values ('"+accesstoken+"',4,'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 10,10,10,10,10,10,10,10,10, '','','');";
+            "','0', '0');"+
+           "INSERT INTO ai1(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
+             "INSERT INTO ai2(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
+             "INSERT INTO ai3(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
+             "INSERT INTO ai4(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');";
 
         query = client.query(querytext);
         query.on('error', function(err) {
@@ -336,7 +336,7 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var querytext = "select * from userProfile where userId ='"+accesstoken+"'";
+        var querytext = "select * from userprofile where userId ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj.score = row['score'];
@@ -353,7 +353,7 @@ module.exports = {
         client.connect();
         var obj = new Object();
         var overall = [];
-        querytext = "SELECT b.userid, 1+(SELECT count(*) from Leaderboard a WHERE a.score > b.score) as rank, b.score, u.username FROM Leaderboard b, userAccounts u WHERE b.userid = u.pkid ORDER BY rank";
+        querytext = "SELECT b.userid, 1+(SELECT count(*) from leaderboard a WHERE a.score > b.score) as rank, b.score, u.username FROM leaderboard b, useraccounts u WHERE b.userid = u.pkid ORDER BY rank";
         query = client.query(querytext);
         query.on('row', (row) => {
             if (row['rank'] <= 10 ) {
@@ -371,7 +371,7 @@ module.exports = {
             return sendback;
         });
     },
-    endTurn: function (accesstoken, callback) {
+    endTurn: function (accesstoken, callback) { //REDO THIS ONE
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
@@ -393,18 +393,52 @@ module.exports = {
             });
         });
     },
-    getFundsProvince : function (accesstoken, callback) {
+    getFundsProvince : function (accesstoken, callback) { //REDO THIS ONE
         const client = new pg.Client(connectionString);
         client.connect();
-        var obj = new Object();
+        var obj, obj1, obj2, obj3, obj4, obj5, obj6, obj7, obj8 = new Object();
         var overall = [];
-        var querytext = "select * from tblprovinces";
+        var querytext = "select a.totalfundsavailable as gauteng, b.totalfundsavailable as limpopo, c.totalfundsavailable as kwazulunatal, d.totalfundsavailable as westcape, e.totalfundsavailable as eastcape, f.totalfundsavailable as northcape, g.totalfundsavailable as mpumalanga, h.totalfundsavailable as northwest, i.totalfundsavailable as freestate \n" +
+            "from tblgauteng a, tbllimpopo b, tblkwazulunatal c, tblwestcape d, tbleastcape e, tblnorthcape f,tblmpumalanga g,tblnorthwest h,tblfreestate i\n" +
+            "where a.userid = '"+accesstoken+"' AND b.userid ='"+accesstoken+"' AND c.userid ='"+accesstoken+"' AND d.userid ='"+accesstoken+"'AND e.userid ='"+accesstoken+"'AND f.userid ='"+accesstoken+"'AND g.userid ='"+accesstoken+"'AND h.userid ='"+accesstoken+"'AND i.userid ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj = new Object();
-            obj.province = row['provincename'];
-            obj.funds = row['totalfundsavailable'];
+            obj.province = 'gauteng';
+            obj.funds = row['gauteng'];
+            obj1 = new Object();
+            obj1.province = 'limpopo';
+            obj1.funds = row['limpopo'];
+            obj2 = new Object();
+            obj2.province = 'kwazulu-natal';
+            obj2.funds = row['kwazulunatal'];
+            obj3 = new Object();
+            obj3.province = 'westcape';
+            obj3.funds = row['westcape'];
+            obj4 = new Object();
+            obj4.province = 'eastcape';
+            obj4.funds = row['eastcape'];
+            obj5 = new Object();
+            obj5.province = 'northcape';
+            obj5.funds = row['northcape'];
+            obj6 = new Object();
+            obj6.province = 'mpumalanga';
+            obj6.funds = row['mpumalanga'];
+            obj7 = new Object();
+            obj7.province = 'northwest';
+            obj7.funds = row['northwest'];
+            obj8 = new Object();
+            obj8.province = 'freestate';
+            obj8.funds = row['freestate'];
             overall.push(obj);
+            overall.push(obj1);
+            overall.push(obj2);
+            overall.push(obj3);
+            overall.push(obj4);
+            overall.push(obj5);
+            overall.push(obj6);
+            overall.push(obj7);
+            overall.push(obj8);
         });
         query.on('end', () => {
             var sendback = JSON.stringify(overall);
@@ -422,7 +456,7 @@ module.exports = {
         var obj = new Object();
 
         var counting =0;
-        var querytext = "SELECT * FROM allIssues WHERE topicname = '"+ i[0] +"' OR topicname = '" + i[1]+ "' OR topicname = '" +i[2] +  "' OR topicname = '"+ i[3] +"' OR topicname = '"+ i[4] +"' OR topicname = '"+ i[5] +"' OR topicname = '"+ i[6] +"' OR topicname = '"+ i[7] +"' OR topicname = '"+ i[8] +"' OR topicname = '"+ i[9] +"'";
+        var querytext = "SELECT * FROM allissues WHERE topicname = '"+ i[0] +"' OR topicname = '" + i[1]+ "' OR topicname = '" +i[2] +  "' OR topicname = '"+ i[3] +"' OR topicname = '"+ i[4] +"' OR topicname = '"+ i[5] +"' OR topicname = '"+ i[6] +"' OR topicname = '"+ i[7] +"' OR topicname = '"+ i[8] +"' OR topicname = '"+ i[9] +"'";
         query = client.query(querytext);
             query.on('row', (row) => {
                 obj = new Object();
@@ -454,7 +488,7 @@ module.exports = {
         var overall = [];
         var obj = new Object();
 
-        var querytext = "SELECT DISTINCT topicname FROM allIssues";
+        var querytext = "SELECT DISTINCT topicname FROM allissues";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj = new Object();
@@ -475,11 +509,11 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         var overall = [];
-        var querytext = "INSERT INTO Leaderboard(userId, score) values("+accesskey+", "+score+")";
+        var querytext = "INSERT INTO leaderboard(userid, score) values("+accesskey+", "+score+")";
         query = client.query(querytext);
         var count = 0;
         query.on('end', () => {
-            querytext = "SELECT b.userid, 1+(SELECT count(*) from Leaderboard a WHERE a.score > b.score) as rank, b.score, u.username FROM Leaderboard b, userAccounts u WHERE b.userid = u.pkid ORDER BY rank";
+            querytext = "SELECT b.userid, 1+(SELECT count(*) from leaderboard a WHERE a.score > b.score) as rank, b.score, u.username FROM leaderboard b, useraccounts u WHERE b.userid = u.pkid ORDER BY rank";
             query = client.query(querytext);
             query.on('row', (row) => {
                 if (row['rank'] <= 10 || (row['score']== score) && (row['userid']== accesskey)) {
@@ -494,7 +528,7 @@ module.exports = {
             query.on('end', () => {
                 if(count <11)
                 {
-                    querytext = "SELECT b.userid, 1+(SELECT count(*) from Leaderboard a WHERE a.score > b.score) as rank, b.score, u.username FROM Leaderboard b, userAccounts u WHERE b.userid = '"+accesskey+"' AND b.userid = u.pkid AND b.score='"+score+"' ORDER BY rank";
+                    querytext = "SELECT b.userid, 1+(SELECT count(*) from leaderboard a WHERE a.score > b.score) as rank, b.score, u.username FROM leaderboard b, useraccounts u WHERE b.userid = '"+accesskey+"' AND b.userid = u.pkid AND b.score='"+score+"' ORDER BY rank";
                     query = client.query(querytext);
                     query.on('row', (row) => {
                         obj = new Object();
