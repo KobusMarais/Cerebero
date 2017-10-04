@@ -27,7 +27,7 @@ module.exports = {
         var obj = new Object();
         obj.access_token = -1;
 
-        var querytext = "select * from useraccounts WHERE username ='"+username+"' AND password = '"+password+"'\n";
+        var querytext = "select * from useraccounts WHERE username ='"+username+"' AND password = '"+password+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             if(username == row['username'] && password == row['password']) {
