@@ -229,7 +229,7 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var province = 500000;
+        var province = "gauteng";
         var querytext = "select * from userProfile where userId ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
