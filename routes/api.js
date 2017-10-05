@@ -309,7 +309,6 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
     //find access token in DB
     //retrieve user score from DB
     //get current manpower support user has from db

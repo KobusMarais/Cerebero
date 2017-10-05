@@ -201,52 +201,68 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var querytext = "select * from tblmanpower where userid ='"+accesstoken+"'";
+        var querytext = "select a.usermanpoweravailable as gauteng, b.usermanpoweravailable as limpopo, c.usermanpoweravailable as freestate, d.usermanpoweravailable as kwazulunatal, e.usermanpoweravailable as mpumalanga, f.usermanpoweravailable as northwest, g.usermanpoweravailable as northcape, h.usermanpoweravailable as westcape, i.usermanpoweravailable as eastcape\n" +
+            "from tblgauteng a, tbllimpopo b, tblfreestate c, tblkwazulunatal d, tblmpumalanga e, tblnorthwest f, tblnorthcape g, tblwestcape h, tbleastcape i\n" +
+            "where a.userid = '"+accesstoken+"' AND b.userid='"+accesstoken+"' AND c.userid='"+accesstoken+"' AND d.userid='"+accesstoken+"' AND e.userid='"+accesstoken+"' AND f.userid='"+accesstoken+"' AND g.userid='"+accesstoken+"'AND h.userid='"+accesstoken+"'AND i.userid='"+accesstoken+"' ";
         query = client.query(querytext);
         query.on('row', (row) => {
-            obj.manpower = row['user_manpower'];
+            obj.gauteng = row['gauteng'];
+            obj.limpopo = row['limpopo'];
+            obj.northwest = row['northwest'];
+            obj.westcape = row['westcape'];
+            obj.eastcape = row['eastcape'];
+            obj.northcape = row['northcape'];
+            obj.freestate = row['freestate'];
+            obj.mpumalanga = row['mpumalanga'];
+            obj.kwazulunatal = row['kwazulunatal'];
         });
         query.on('end', () => {
+            if(!obj.gauteng)
+            {
+                obj = new Object();
+                obj.success = 0;
+            }
             var sendback = JSON.stringify(obj);
             client.end();
             callback(err=null,result=sendback);
             return sendback;
         });
-    },getSupport: function (accesstoken,province, callback) { //REDO THIS ONE
+    }, getSupport: function (accesstoken,province, callback){
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var querytext = "select * from userProfile where userId ='"+accesstoken+"'";
+        var querytext = "";
+        switch (province) {
+            case "gauteng":
+                querytext = "select usersupport from tblgauteng where userId ='"+accesstoken+"'";
+                break;
+            case "freestate":
+                querytext = "select usersupport from tblfreestate where userId ='"+accesstoken+"'";
+                break;
+            case "limpopo":
+                querytext = "select usersupport from tbllimpopo where userId ='"+accesstoken+"'";
+                break;
+            case "northwest":
+                querytext = "select usersupport from tblnorthwest where userId ='"+accesstoken+"'";
+                break;
+            case "northcape":
+                querytext = "select usersupport from tblnorthcape where userId ='"+accesstoken+"'";
+                break;
+            case "westcape":
+                querytext = "select usersupport from tblwestcape where userId ='"+accesstoken+"'";
+                break;
+            case "eastcape":
+                querytext = "select usersupport from tbleastcape where userId ='"+accesstoken+"'";
+                break;
+            case "kwazulunatal":
+                querytext = "select usersupport from tblkwazulunatal where userId ='"+accesstoken+"'";
+                break;
+            case "mpumalanga":
+                querytext = "select usersupport from tblmpumalanga where userId ='"+accesstoken+"'";
+        }
         query = client.query(querytext);
         query.on('row', (row) => {
-            switch (province) {
-                case "gauteng":
-                    obj.support = row['suppgauteng'];
-                    break;
-                case "freestate":
-                    obj.support = row['suppfreestate'];
-                    break;
-                case "limpopo":
-                    obj.support = row['supplimpopo'];
-                    break;
-                case "northwest":
-                    obj.support = row['suppnorthwest'];
-                    break;
-                case "northcape":
-                    obj.support = row['suppnorthcape'];
-                    break;
-                case "westcape":
-                    obj.support = row['suppwestcape'];
-                    break;
-                case "eastcape":
-                    obj.support = row['suppeastcape'];
-                    break;
-                case "kwazulu-natal":
-                    obj.support = row['suppkzn'];
-                    break;
-                case "mpumalanga":
-                    obj.support = row['suppmpuma'];
-            }
+            obj.support = row['usersupport'];
         });
         query.on('end', () => {
             var sendback = JSON.stringify(obj);
@@ -265,17 +281,7 @@ module.exports = {
         var starterManpower = 9000;
         var aiStarterManpower = [9000,9000,9000,9000];
 
-        var querytext = "INSERT INTO tblFunds(userId, user_funds, ai1_funds, ai2_funds, ai3_funds, ai4_funds, time) values('"+accesstoken+"','"+starterFunds+"','"+aiStarterFunds[0]+"','"+aiStarterFunds[1]+"','"+aiStarterFunds[2]+"','"+aiStarterFunds[3]+"', '"+time+"'); " +
-            "INSERT INTO tblManPower(userId, user_ManPower, ai1_ManPower, ai2_ManPower, ai3_ManPower, ai4_ManPower) values('"+accesstoken+"','"+starterManpower+"','"+aiStarterManpower[0]+"','"+aiStarterManpower[1]+"','"+aiStarterManpower[2]+"','"+aiStarterManpower[3]+"');" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Gauteng', 90000, 15000, '"+accesstoken+"', 90000);" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Freestate', 90000, 15000, '"+accesstoken+"', 80000);" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('West Cape', 90000, 15000, '"+accesstoken+"', 70000);" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('East Cape', 90000, 15000, '"+accesstoken+"', 60000);" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('North Cape', 90000, 15000, '"+accesstoken+"', 50000);" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('North West', 90000, 15000, '"+accesstoken+"', 40000);" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Mpumalanga', 90000, 15000, '"+accesstoken+"', 30000);" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Kwazulu-Natal', 90000, 15000, '"+accesstoken+"', 20000);" +
-            "INSERT INTO tblProvinces(provinceName, totalfundsAvailable, totalManpowerAvailable, userId, totalSupportAvailable) values ('Limpopo', 90000, 15000, '"+accesstoken+"', 10000);";
+        var querytext = "";
 
         query = client.query(querytext);
         query.on('end', () => {
