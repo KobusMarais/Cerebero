@@ -117,7 +117,16 @@ public class IssuesSelection : MonoBehaviour {
         
 
 		www = new WWW (url);
-		StartCoroutine (loadIssues());
+        while(!www.isDone)
+        {
+            loadScreen.SetActive(true);
+            loadText.SetActive(true);
+        }
+
+        loadScreen.SetActive(false);
+        loadText.SetActive(false);
+
+        StartCoroutine (loadIssues());
 	}
 
 	IEnumerator loadIssues()
