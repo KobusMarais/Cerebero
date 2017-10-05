@@ -225,10 +225,11 @@ module.exports = {
 
         var sendback = JSON.stringify(obj);
         return sendback;
-    },getSupport: function (accesstoken,province, callback) {
+    },getSupport: function (accesstoken, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
+        var province = 500000;
         var querytext = "select * from userProfile where userId ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
@@ -300,6 +301,10 @@ module.exports = {
                 obj.TotalSupport = row['totalsupport'];
                 obj.Manpower = starterManpower;
                 obj.Weeks = time;
+                obj.AI1 = "First party";
+                obj.AI2 = "Second party";
+                obj.AI3 = "Third party";
+                obj.AI4 = "Fourth party";
             });
             query.on('end', () => {
                 var sendback = JSON.stringify(obj);
