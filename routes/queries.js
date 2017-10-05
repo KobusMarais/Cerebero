@@ -201,9 +201,10 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var querytext = "select * from tblManPower where userId ='"+accesstoken+"'";
-        query = client.query(querytext);
-        query.on('row', (row) => {
+        //var querytext = "select * from tblManPower where userId ='"+accesstoken+"'";
+        //query = client.query(querytext);
+        /*query.on('row', (row) => {
+
             obj.manpower = row['user_manpower'];
         });
         query.on('end', () => {
@@ -211,7 +212,19 @@ module.exports = {
             client.end();
             callback(err=null,result=sendback);
             return sendback;
-        });
+        });*/
+        obj.gauteng = 500;
+        obj.limpopo = 400;
+        obj.northwest = 200;
+        obj.westcaoe = 900;
+        obj.eastcape = 700;
+        obj.northcape = 50;
+        obj.freestate = 150;
+        obj.mpumalanga = 390;
+        obj.kwazulunatal = 900;
+
+        var sendback = JSON.stringify(obj);
+        return sendback;
     },getSupport: function (accesstoken,province, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
