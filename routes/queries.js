@@ -166,10 +166,10 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var querytext = "select * from tblFunds WHERE userId ='"+accesstoken+"'";
+        var querytext = "select * from userprofile WHERE userId ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
-                obj.funds = row['user_funds'];
+                obj.funds = row['funds'];
         });
         query.on('end', () => {
             var sendback = JSON.stringify(obj);
@@ -197,7 +197,7 @@ module.exports = {
             return sendback;
         });
     },
-    getManpower: function (accesstoken, callback) { //REDO THIS ONE
+    getManpower: function (accesstoken, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
@@ -227,44 +227,21 @@ module.exports = {
             callback(err=null,result=sendback);
             return sendback;
         });
-    }, getSupport: function (accesstoken,province, callback){
+    }, getSupport: function (accesstoken, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var querytext = "";
-        switch (province) {
-            case "gauteng":
-                querytext = "select usersupport from tblgauteng where userId ='"+accesstoken+"'";
-                break;
-            case "freestate":
-                querytext = "select usersupport from tblfreestate where userId ='"+accesstoken+"'";
-                break;
-            case "limpopo":
-                querytext = "select usersupport from tbllimpopo where userId ='"+accesstoken+"'";
-                break;
-            case "northwest":
-                querytext = "select usersupport from tblnorthwest where userId ='"+accesstoken+"'";
-                break;
-            case "northcape":
-                querytext = "select usersupport from tblnorthcape where userId ='"+accesstoken+"'";
-                break;
-            case "westcape":
-                querytext = "select usersupport from tblwestcape where userId ='"+accesstoken+"'";
-                break;
-            case "eastcape":
-                querytext = "select usersupport from tbleastcape where userId ='"+accesstoken+"'";
-                break;
-            case "kwazulunatal":
-                querytext = "select usersupport from tblkwazulunatal where userId ='"+accesstoken+"'";
-                break;
-            case "mpumalanga":
-                querytext = "select usersupport from tblmpumalanga where userId ='"+accesstoken+"'";
-        }
+        var province = "gauteng";
+        var querytext = "select (a.usersupport + b.usersupport + c.usersupport + d.usersupport + e.usersupport + f.usersupport + g.usersupport + h.usersupport + i.usersupport ) as total from tblgauteng a, tbllimpopo b, tblmpumalanga c, tblkwazulunatal d, tblnorthwest e, tblnorthcape f, tblwestcape g, tbleastcape h, tblfreestate i where a.userId ='"+accesstoken+"' AND b.userId = '"+accesstoken+"' AND c.userId ='"+accesstoken+"' AND d.userId = '"+accesstoken+"' AND e.userId = '"+accesstoken+"' AND f.userId = '"+accesstoken+"' AND g.userId = '"+accesstoken+"' AND h.userId = '"+accesstoken+"' AND i.userId = '"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
-            obj.support = row['usersupport'];
+            obj.support = row['total'];
         });
         query.on('end', () => {
+            if(!obj.support)
+            {
+                obj.success = 0;
+            }
             var sendback = JSON.stringify(obj);
             client.end();
             callback(err=null,result=sendback);
@@ -279,33 +256,40 @@ module.exports = {
         var aiStarterFunds = [200,200,200,200];
         var time = 10;
         var starterManpower = 9000;
-        var aiStarterManpower = [9000,9000,9000,9000];
-
-        var querytext = "";
+        var querytext = "select u.username, (a.usersupport + b.usersupport + c.usersupport + d.usersupport + e.usersupport + f.usersupport + g.usersupport + h.usersupport + i.usersupport ) as total \n" +
+            "from tblgauteng a, tbllimpopo b, tblmpumalanga c, tblkwazulunatal d, tblnorthwest e, tblnorthcape f, tblwestcape g, tbleastcape h, tblfreestate i, useraccounts u\n" +
+            "WHERE u.pkid = '"+accesstoken+"' AND b.userid=u.pkid AND c.userid = u.pkid AND d.userid = u.pkid AND e.userid = u.pkid AND f.userid = u.pkid AND g.userid = u.pkid AND h.userid = u.pkid AND i.userid = u.pkid ";
 
         query = client.query(querytext);
-        query.on('end', () => {
-            querytext = "SELECT u.username, (SUM(p.suppgauteng) + SUM(p.suppfreestate) + SUM(p.suppkzn) + SUM(p.suppmpuma) + SUM(p.suppeastcape) + SUM(p.suppwestcape) + SUM(p.suppnorthcape) + SUM(p.suppnorthwest) + SUM(p.supplimpopo)) as totalsupport FROM userAccounts u, userProfile p WHERE u.pkid = '"+accesstoken+"' AND p.userid=u.pkid GROUP BY u.pkid";
-            query = client.query(querytext);
-            query.on('row', (row) => {
+        query.on('row', (row) => {
                 obj.Username = row['username'];
                 obj.Funds = starterFunds;
-                obj.TotalSupport = row['totalsupport'];
-                obj.Manpower = starterManpower;
+                obj.TotalSupport = row['total'];
                 obj.Weeks = time;
-            });
-            query.on('end', () => {
-                var sendback = JSON.stringify(obj);
-                client.end();
-                callback(err=null,result=sendback);
-                return sendback;
-            });
+                obj.AI1 = "First party";
+                obj.AI2 = "Second party";
+                obj.AI3 = "Third party";
+                obj.AI4 = "Fourth party";
+        });
+        query.on('end', () => {
+            if(!obj.Username)
+            {
+                obj = new Object();
+                obj.success = 0;
+            }
+            var sendback = JSON.stringify(obj);
+            client.end();
+            callback(err=null,result=sendback);
+            return sendback;
         });
     },
     setIssues: function (accesstoken, i ,callback) {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
+        var gautengfunds =6750000, limpopofunds = 1500000, northwestfunds = 1350000, freestatefunds = 1050000, mpumalangafunds = 1500000, kwazulufunds = 3150000, northcapefunds =450000, westcapefunds=2850000, eastcapefunds =1500000;
+        var gautengpop = 12272263, limpopopop = 5404868, northwestpop =3509953, freestatepop = 2745590, mpumalangapop = 4039939, kwazulupop = 10267300, northcapepop =1145861, westcapepop= 5822734, eastcapepop =6562053;
+        var gautengmanpower = 1680, limpopomanpower = 810, northwestmanpower =480, freestatemanpower =420, mpumalangamanpower = 540, kwazulumanpower = 1590, northcapemanpower =180, westcapemanpower= 780, eastcapemanpower= 1020;
 
 
         var querytext = "INSERT INTO userprofile(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, score, funds) values ('"+
@@ -324,7 +308,16 @@ module.exports = {
            "INSERT INTO ai1(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
              "INSERT INTO ai2(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
              "INSERT INTO ai3(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
-             "INSERT INTO ai4(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');";
+             "INSERT INTO ai4(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
+             "INSERT INTO tblgauteng(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+gautengfunds+"', '"+gautengmanpower+"', '"+gautengpop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+gautengfunds+"');"+
+             "INSERT INTO tbllimpopo(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+limpopofunds+"', '"+limpopomanpower+"', '"+limpopopop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+limpopofunds+"');"+
+             "INSERT INTO tblnorthwest(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+northwestfunds+"', '"+northwestmanpower+"', '"+northwestpop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+northwestfunds+"');"+
+             "INSERT INTO tblnorthcape(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+northcapefunds+"', '"+northcapemanpower+"', '"+northcapepop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+northcapefunds+"');"+
+             "INSERT INTO tblwestcape(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+westcapefunds+"', '"+westcapemanpower+"', '"+westcapepop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+westcapefunds+"');"+
+             "INSERT INTO tbleastcape(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+eastcapefunds+"', '"+eastcapemanpower+"', '"+eastcapepop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+eastcapefunds+"');"+
+             "INSERT INTO tblkwazulunatal(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+kwazulufunds+"', '"+kwazulumanpower+"', '"+kwazulupop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+kwazulufunds+"');"+
+             "INSERT INTO tblfreestate(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+freestatefunds+"', '"+freestatemanpower+"', '"+freestatepop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+freestatefunds+"');"+
+             "INSERT INTO tblmpumalanga(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values('"+accesstoken+"', '"+mpumalangafunds+"', '"+mpumalangamanpower+"', '"+mpumalangapop+"', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '"+mpumalangafunds+"');";
 
         query = client.query(querytext);
         query.on('error', function(err) {
@@ -332,6 +325,22 @@ module.exports = {
         });
         query.on('end', () => {
             obj.success = 1;
+            var sendback = JSON.stringify(obj);
+            client.end();
+            callback(err=null,result=sendback);
+            return sendback;
+        });
+    },endResult: function (accesstoken, callback) {
+        const client = new pg.Client(connectionString);
+        client.connect();
+        var obj = new Object();
+        var querytext = "select * from userProfile where userId ='"+accesstoken+"'";
+        query = client.query(querytext);
+        query.on('row', (row) => {
+            obj.success = 1;
+            obj.score = row['score'];
+        });
+        query.on('end', () => {
             var sendback = JSON.stringify(obj);
             client.end();
             callback(err=null,result=sendback);
