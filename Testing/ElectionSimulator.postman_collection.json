@@ -126,7 +126,7 @@
 		{
 			"name": "getSupport",
 			"request": {
-				"url": "http://localhost:3000/api/getSupport",
+				"url": "http://ecivix.org.za/api/getSupport",
 				"method": "POST",
 				"header": [
 					{
@@ -137,7 +137,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\",\r\n  \"province\":\"mpumalanga\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"2\"\r\n}"
 				},
 				"description": ""
 			},
@@ -407,6 +407,26 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"access_token\": \"2\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "endResult",
+			"request": {
+				"url": "http://localhost:3000/api/endResult",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"access_token\": \"1\"\r\n}"
 				},
 				"description": ""
 			},
