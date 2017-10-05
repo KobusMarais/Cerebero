@@ -290,9 +290,9 @@ module.exports = {
         var gautengfunds =6750000, limpopofunds = 1500000, northwestfunds = 1350000, freestatefunds = 1050000, mpumalangafunds = 1500000, kwazulufunds = 3150000, northcapefunds =450000, westcapefunds=2850000, eastcapefunds =1500000;
         var gautengpop = 12272263, limpopopop = 5404868, northwestpop =3509953, freestatepop = 2745590, mpumalangapop = 4039939, kwazulupop = 10267300, northcapepop =1145861, westcapepop= 5822734, eastcapepop =6562053;
         var gautengmanpower = 1680, limpopomanpower = 810, northwestmanpower =480, freestatemanpower =420, mpumalangamanpower = 540, kwazulumanpower = 1590, northcapemanpower =180, westcapemanpower= 780, eastcapemanpower= 1020;
+        var timetoelection = 10;
 
-
-        var querytext = "INSERT INTO userprofile(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, score, funds) values ('"+
+        var querytext = "INSERT INTO userprofile(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, score, funds, time) values ('"+
             accesstoken+"','"+
             i[0].issue+ "_"+i[0].stance +"', '"+
             i[1].issue+ "_"+i[1].stance +"', '"+
@@ -304,7 +304,7 @@ module.exports = {
             i[7].issue+ "_"+i[7].stance +"', '"+
             i[8].issue+ "_"+i[8].stance +"', '"+
             i[9].issue+ "_"+i[9].stance +
-            "','0', '0');"+
+            "','0', '0', '"+timetoelection+"');"+
            "INSERT INTO ai1(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
              "INSERT INTO ai2(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
              "INSERT INTO ai3(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ('"+accesstoken+"','Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', '0');"+
@@ -391,13 +391,13 @@ module.exports = {
         client.connect();
         var obj = new Object();
         var timex;
-        var querytext = "SELECT * FROM tblFunds where userId ='"+accesstoken+"'";
+        var querytext = "SELECT time FROM userprofile where userid ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             timex = row['time']-1;
         });
         query.on('end', () => {
-            querytext = "UPDATE tblFunds SET time = '"+ timex+"' where userId ='"+accesstoken+"'";
+            querytext = "UPDATE userprofile SET time = '"+ timex+"' where userid ='"+accesstoken+"'";
             query = client.query(querytext);
             query.on('end', () => {
                 obj.Weeks = timex;

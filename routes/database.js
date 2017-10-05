@@ -31,7 +31,8 @@ router.get('/', function(req, res, next) {
         'topic9 TEXT NOT NULL,' +
         'topic10 TEXT NOT NULL, ' +
         'score INT NOT NULL, ' +
-        'funds INT NOT NULL);');
+        'funds INT NOT NULL,' +
+        'time INT NOT NULL);');
 
     query = client.query('CREATE TABLE ai1(' +
         'pkid SERIAL PRIMARY KEY, ' +
@@ -345,8 +346,7 @@ router.get('/', function(req, res, next) {
 
 
     query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Victor', 'password111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-
-    query = client.query('INSERT INTO userprofile(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10,score, funds) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)', [1, 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 1000 ,1000]);
+    query = client.query('INSERT INTO userprofile(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10,score, funds, time) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13, $14)', [1, 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 1000 ,1000, 10]);
 
     query = client.query('INSERT INTO ai1(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11, $12)', [1, 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 1000]);
     query = client.query('INSERT INTO ai2(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11, $12)', [1, 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 1000]);
