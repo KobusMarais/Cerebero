@@ -324,11 +324,25 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
         res.send(obj);
     }  else {
         //return manpower user has currently
-        queries.getManpower(req.body.access_token, function (err, result) {
+        /*queries.getManpower(req.body.access_token, function (err, result) {
             if (err) return console.log("error: ", err)
             var obj = JSON.parse(result);
             res.send(obj);
-        });
+        });*/
+        var obj = new Object();
+        obj.gauteng = 500;
+        obj.limpopo = 400;
+        obj.northwest = 200;
+        obj.westcaoe = 900;
+        obj.eastcape = 700;
+        obj.northcape = 50;
+        obj.freestate = 150;
+        obj.mpumalanga = 390;
+        obj.kwazulunatal = 900;
+
+        var sendback = JSON.stringify(obj);
+        var tempor = JSON.parse(sendback);
+        res.send(tempor);
     }
 
 });

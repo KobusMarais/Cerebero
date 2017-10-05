@@ -78,6 +78,7 @@ public class GamePlayButtons : MonoBehaviour {
 
 	private WWW www;
 	private WWW www2;
+	private WWW www3;
 	public Text userFunds;
 	public Text userManpower;
 
@@ -135,6 +136,16 @@ public class GamePlayButtons : MonoBehaviour {
 	public Image FSmanpower;
 	public Animator FSmanAnim;
 
+	public Text NCmanp;
+	public Text WCmanp;
+	public Text ECmanp;
+	public Text GPmanp;
+	public Text KZNmanp;
+	public Text LPmanp;
+	public Text MPmanp;
+	public Text NWmanp;
+	public Text FSmanp;
+
     public Text infoPanelText;
     public Text infoPanelHeadingText;
     public GameObject infoPanel;
@@ -180,8 +191,11 @@ public class GamePlayButtons : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+		print ("newGameJson: " + IssuesStancesSelection.newGameJson);
+
 		// Set new game variables
 		var jsonObj = JSON.Parse(IssuesStancesSelection.newGameJson);
+		//print("userName: " + jsonObj["Username"].Value.ToString());
 		userName.text = jsonObj["Username"].Value.ToString();
 		userFunds.text = jsonObj["Funds"].Value.ToString();
 		userManpower.text = jsonObj["Manpower"].Value.ToString();
@@ -350,6 +364,7 @@ public class GamePlayButtons : MonoBehaviour {
         closecampaigntype.onClick.AddListener(closeCTypes);
 
         getScore();
+		fetchManpower ();
 	}
     void closeErrorFun()
     {
@@ -381,11 +396,15 @@ public class GamePlayButtons : MonoBehaviour {
         getScoreHelp();
         string url = "http://ecivix.org.za/api/getScore";
 
-        var requestString = "{'access_token':'2'}";
+        var requestString = "{\"access_token\":\"2\"}";
 
         byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
 
-        www = new WWW(url, pData);
+		WWWForm form = new WWWForm();
+		var headers = form.headers;
+		headers["Content-Type"] = "application/json";
+
+		www = new WWW(url, pData, headers);
         StartCoroutine(getScoreHelp());
     }
 
@@ -394,6 +413,7 @@ public class GamePlayButtons : MonoBehaviour {
 		yield return www;
 		if (!string.IsNullOrEmpty(www.error))
 		{
+			print ("getScoreError: "+ www.error);
             errorMessage.text = www.error;
             errorBox.SetActive(true);
         }
@@ -626,19 +646,26 @@ public class GamePlayButtons : MonoBehaviour {
 	{
 
 		//print ("You have clicked on the campaign button");
-		yield return www;
-		if (!string.IsNullOrEmpty(www.error))
+		yield return www3;
+		if (!string.IsNullOrEmpty(www3.error))
 		{
-            errorMessage.text = www.error;
+            errorMessage.text = www3.error;
             errorBox.SetActive(true);
         }
 		else
 		{
-			var jsonObj = JSON.Parse(www.text);
-            manPowerVal = jsonObj["manpower"].Value.ToString();
-            userManpower.text = manPowerVal;
+			var jsonObj = JSON.Parse(www3.text);
+			GPmanp.text = jsonObj["gauteng"].Value.ToString();
+			LPmanp.text = jsonObj["limpopo"].Value.ToString();
+			KZNmanp.text = jsonObj["kwazulunatal"].Value.ToString();
+			NWmanp.text = jsonObj["northwest"].Value.ToString();
+			NCmanp.text = jsonObj["northcape"].Value.ToString();
+			WCmanp.text = jsonObj["westcape"].Value.ToString();
+			ECmanp.text = jsonObj["eastcape"].Value.ToString();
+			FSmanp.text = jsonObj["freestate"].Value.ToString();
+			//userManpower.text = manPowerVal;
 
-            infoPanelText.text = "You have received " + manPowerVal + " manpower";
+			//infoPanelText.text = "You have received " + manPowerVal + " manpower";
         }
 	}
 
@@ -783,6 +810,27 @@ public class GamePlayButtons : MonoBehaviour {
         issueCampaign();
     }
 
+	void fetchManpower() {
+		// Get and update user's total manpower / support
+
+		/*
+		getManpower();
+		string url = "http://ecivix.org.za/api/getManpower";
+
+		var requestString = "{\"access_token\":\"2\"}";
+
+		byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+
+		WWWForm form = new WWWForm();
+		var headers = form.headers;
+		headers["Content-Type"] = "application/json";
+
+		www3 = new WWW(url, pData, headers);
+		StartCoroutine(getManpower());
+		*/
+	}
+
     void issueCampaign()
     {
         campaignTypes.SetActive(false);
@@ -796,27 +844,13 @@ public class GamePlayButtons : MonoBehaviour {
 
 		WWWForm form2 = new WWWForm ();
 		var headers2 = form2.headers;
-		headers2.Add ("content-type", "application/json");
+		headers2["Content-Type"] = "application/json";
 
 		www2 = new WWW (url2, pData2, headers2);
 		StartCoroutine (provinceCampaign ());
-		/*
-        // Get and update user's total manpower / support
-        getManpower();
-        string url = "http://ecivix.org.za/api/getManpower";
 
-        var requestString = "{'access_token':'2'}";
+		fetchManpower ();
 
-        byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
-
-
-		WWWForm form = new WWWForm();
-		var headers = form.headers;
-		headers.Add("content-type", "application/json");
-
-		www = new WWW(url, pData, headers);
-        StartCoroutine(getManpower());
-		*/
 
         campaignText.text = "-$5";
         campaignTextAnim.Play(campaignTextHash, -1, 0f);

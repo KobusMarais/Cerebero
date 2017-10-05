@@ -9,12 +9,12 @@ using System;
 
 public class IssuesStancesSelection : MonoBehaviour {
 
+	JSONNode jsonStanceObj;
 	private WWW www;
 	private WWW www2;
     public GameObject loadScreen;
     public GameObject loadText;
 
-    JSONNode jsonStanceObj;
     public static string stancesArray;
 
     public GameObject errorBox;
@@ -61,7 +61,7 @@ public class IssuesStancesSelection : MonoBehaviour {
         loadScreen.SetActive(false);
         loadText.SetActive(false);
 
-        getStances();
+        
 		//loadIssues();
 
         Issue1Stance.text = "Stance: Center";
@@ -102,6 +102,7 @@ public class IssuesStancesSelection : MonoBehaviour {
         closeErrorbtn.onClick.AddListener(closeErrorFun);
 
         //startGame();
+		getStances();
 
     }
 
@@ -546,7 +547,7 @@ public class IssuesStancesSelection : MonoBehaviour {
         WWWForm form = new WWWForm();
 
         var headers = form.headers;
-        headers.Add("content-type", "application/json");
+		headers["Content-Type"] = "application/json";
 
 
         www = new WWW (url, pData, headers);
@@ -602,7 +603,7 @@ public class IssuesStancesSelection : MonoBehaviour {
         WWWForm form = new WWWForm();
 
         var headers = form.headers;
-        headers.Add("content-type", "application/json");
+		headers["Content-Type"] = "application/json";
 
         www = new WWW(url, pData, headers);
         StartCoroutine(Upload());
@@ -621,7 +622,7 @@ public class IssuesStancesSelection : MonoBehaviour {
         WWWForm form = new WWWForm();
 
         var headers = form.headers;
-        headers.Add("content-type", "application/json");
+		headers["Content-Type"] = "application/json";
 
         print("requestString: " + requestString);
         //print("getStances");
