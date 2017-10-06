@@ -200,6 +200,7 @@ public class GamePlayButtons : MonoBehaviour {
     string manPowerVal;
 
     int userSupportCurrent;
+    int userFundsCurrent;
 
     // Use this for initialization
     void Start () {
@@ -216,7 +217,7 @@ public class GamePlayButtons : MonoBehaviour {
         weeks = int.Parse(jsonObj["Weeks"].Value);
 
         userSupportCurrent = int.Parse(jsonObj["TotalSupport"].Value);
-
+        userFundsCurrent = int.Parse(jsonObj["Funds"].Value);
 
         AI1Name.text = jsonObj["AI1"].Value.ToString();
         AI2Name.text = jsonObj["AI2"].Value.ToString();
@@ -457,6 +458,8 @@ public class GamePlayButtons : MonoBehaviour {
            Score.text = jsonObj["score"].Value.ToString(); 
         }
 	}
+    
+  
 
     void collectFunds()
 	{
@@ -581,6 +584,11 @@ public class GamePlayButtons : MonoBehaviour {
 			AI3Action.text = jsonObj["AI3Move"].Value.ToString();
 			AI4Action.text = jsonObj["AI4Move"].Value.ToString();
 			infoPanelText.text = "You have collected " + jsonObj["funds"].Value.ToString() + " funds";
+
+            int fundsVal = int.Parse(jsonObj["funds"].Value);
+
+            userFundsCurrent += fundsVal;
+            userFunds.text = userFundsCurrent.ToString();
         }
 	}
      
@@ -601,7 +609,7 @@ public class GamePlayButtons : MonoBehaviour {
             //print(www.text);
 
            fundsVal = jsonObj["funds"].Value.ToString();
-            userFunds.text = fundsVal;
+           userFunds.text = fundsVal;
 
             
         }
@@ -989,7 +997,7 @@ public class GamePlayButtons : MonoBehaviour {
 			print ("weeksRemaining: " + weeksRemaining);
 
 			// Make this != "0" to test and go to leaderboard
-			if(weeksRemaining != "0")
+			if(weeksRemaining == "0")
             {
 				print ("Done!!");
 
