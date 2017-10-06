@@ -225,11 +225,10 @@ module.exports = {
 
         var sendback = JSON.stringify(obj);
         return sendback;
-    },getSupport: function (accesstoken, callback) {
+    },getSupport: function (accesstoken,province, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
-        var province = "gauteng";
         var querytext = "select * from userProfile where userId ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
@@ -301,10 +300,6 @@ module.exports = {
                 obj.TotalSupport = row['totalsupport'];
                 obj.Manpower = starterManpower;
                 obj.Weeks = time;
-                obj.AI1 = "First party";
-                obj.AI2 = "Second party";
-                obj.AI3 = "Third party";
-                obj.AI4 = "Fourth party";
             });
             query.on('end', () => {
                 var sendback = JSON.stringify(obj);
@@ -344,22 +339,6 @@ module.exports = {
         });
         query.on('end', () => {
             obj.success = 1;
-            var sendback = JSON.stringify(obj);
-            client.end();
-            callback(err=null,result=sendback);
-            return sendback;
-        });
-    },endResult: function (accesstoken, callback) {
-        const client = new pg.Client(connectionString);
-        client.connect();
-        var obj = new Object();
-        var querytext = "select * from userProfile where userId ='"+accesstoken+"'";
-        query = client.query(querytext);
-        query.on('row', (row) => {
-            obj.success = 1;
-            obj.score = row['score'];
-        });
-        query.on('end', () => {
             var sendback = JSON.stringify(obj);
             client.end();
             callback(err=null,result=sendback);
