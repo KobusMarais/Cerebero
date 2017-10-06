@@ -12,6 +12,9 @@ public class GamePlayButtons : MonoBehaviour {
 	public Button pollProvinceButton;
 	public Button campaignButton;
 
+    public string campaignType;
+    public string campaignIssue;
+
     public Button afterGameLdbBut;
     public GameObject afterGameLdbButObject;
 
@@ -196,6 +199,8 @@ public class GamePlayButtons : MonoBehaviour {
     string fundsVal;
     string manPowerVal;
 
+    int userSupportCurrent;
+
     // Use this for initialization
     void Start () {
 
@@ -210,11 +215,16 @@ public class GamePlayButtons : MonoBehaviour {
         endTurnText.text = jsonObj["Weeks"].Value.ToString();
         weeks = int.Parse(jsonObj["Weeks"].Value);
 
+        userSupportCurrent = int.Parse(jsonObj["TotalSupport"].Value);
+
+
         AI1Name.text = jsonObj["AI1"].Value.ToString();
         AI2Name.text = jsonObj["AI2"].Value.ToString();
         AI3Name.text = jsonObj["AI3"].Value.ToString();
         AI4Name.text = jsonObj["AI4"].Value.ToString();
 
+        campaignType = "";
+        campaignIssue = "";
 
         campaignType1T.text = "Telemarketing";
         campaignType2T.text = "Rally";
@@ -610,7 +620,7 @@ public class GamePlayButtons : MonoBehaviour {
 			provincePolled();
 			string url = "http://ecivix.org.za/api/pollProvince";
 
-			var requestString = "{\"access_token\":\"2\",\"province\": \"Gauteng\"}";
+			var requestString = "{\"access_token\":\"2\",\"province\": \"" + ProvincesButtons.provinceName.ToString() + "\"}";
 
 			byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
 
@@ -716,9 +726,15 @@ public class GamePlayButtons : MonoBehaviour {
 			AI4Action.text = jsonObj["AI4Move"].Value.ToString();
 
 			var supportAmount = jsonObj["support"].Value.ToString();
+            int supportAmountNum = int.Parse(jsonObj["support"].Value);
 
-			infoPanelText.text = "You gained " + supportAmount +  " in support!";
-		}
+
+            infoPanelText.text = "You gained " + supportAmount +  " in support!";
+
+            userSupportCurrent += supportAmountNum;
+            userSupport.text = userSupportCurrent.ToString();
+
+        }
 	}
 
    
@@ -765,51 +781,61 @@ public class GamePlayButtons : MonoBehaviour {
 
     void issue1Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[0].ToString();
         CampaignChoice();
     }
 
     void issue2Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[1].ToString();
         CampaignChoice();
     }
 
     void issue3Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[2].ToString();
         CampaignChoice();
     }
 
     void issue4Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[3].ToString();
         CampaignChoice();
     }
 
     void issue5Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[4].ToString();
         CampaignChoice();
     }
 
     void issue6Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[5].ToString();
         CampaignChoice();
     }
 
     void issue7Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[6].ToString();
         CampaignChoice();
     }
 
     void issue8Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[7].ToString();
         CampaignChoice();
     }
 
     void issue9Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[8].ToString();
         CampaignChoice();
     }
 
     void issue10Campaign()
     {
+        campaignIssue = IssuesSelection.selectedIssues[9].ToString();
         CampaignChoice();
     }
 
@@ -822,7 +848,7 @@ public class GamePlayButtons : MonoBehaviour {
     void CampaignType1()
     {
         //Campaign type is Telemarketing
-
+        campaignType = "telemarketing";
         issueCampaign();
     }
 
@@ -830,7 +856,7 @@ public class GamePlayButtons : MonoBehaviour {
     void CampaignType2()
     {
         //Campaign type is Rally
-
+        campaignType = "rally";
         issueCampaign();
         
     }
@@ -838,7 +864,7 @@ public class GamePlayButtons : MonoBehaviour {
     void CampaignType3()
     {
         //Campaign type is Social Media
-
+        campaignType = "social media";
         issueCampaign();
     }
 
@@ -870,7 +896,7 @@ public class GamePlayButtons : MonoBehaviour {
         provinceCampaign ();
 		string url2 = "http://ecivix.org.za/api/campaignProvince";
 
-		var requestString2 = "{\"access_token\":\"2\",\"province\":\"Gauteng\", \"topic\":\"Crime\"}";
+		var requestString2 = "{\"access_token\":\"2\",\"province\":\"" + ProvincesButtons.provinceName.ToString() + "\", \"topic\":\"" + campaignIssue + "\",\"campaigntype\":\"" + campaignType + "\"}";
 
 		byte[] pData2 = Encoding.ASCII.GetBytes (requestString2.ToCharArray ());
 
