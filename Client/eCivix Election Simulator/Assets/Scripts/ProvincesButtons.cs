@@ -97,51 +97,48 @@ public class ProvincesButtons : MonoBehaviour
                     if (currentButton.name == "NCButton")
                     {
                         print("You have clicked on the Northen Cape province");
-                        provinceName = "NC";
+						provinceName = "northcape";
                     }
                     else if (currentButton.name == "WCButton")
                     {
                         print("You have clicked on the Western Cape province");
-                        provinceName = "WC";
+						provinceName = "westcape";
                     }
                     else if (currentButton.name == "ECButton")
                     {
                         print("You have clicked on the Eastern Cape province");
-                        provinceName = "EC";
+						provinceName = "eastcape";
                     }
                     else if (currentButton.name == "KZNButton")
                     {
                         print("You have clicked on the KwaZulu Natal province");
-                        provinceName = "KZN";
+						provinceName = "kwazulunatal";
                     }
                     else if (currentButton.name == "FSButton")
                     {
                         print("You have clicked on the Free State province");
-                        provinceName = "FS";
+						provinceName = "freestate";
                     }
                     else if (currentButton.name == "GPButton")
                     {
                         print("You have clicked on the Gauteng province");
-                        provinceName = "GP";
+						provinceName = "gauteng";
                     }
                     else if (currentButton.name == "NWButton")
                     {
                         print("You have clicked on the North West province");
-                        provinceName = "NW";
+						provinceName = "northwest";
                     }
                     else if (currentButton.name == "MPButton")
                     {
                         print("You have clicked on the Mpumalanga province");
-                        provinceName = "MP";
+						provinceName = "mpumalanga";
                     }
                     else if (currentButton.name == "LPButton")
                     {
                         print("You have clicked on the Limpopo province");
-                        provinceName = "LP";
+						provinceName = "limpopo";
                     }
-
-
-
                 }
 
                 if (Input.GetMouseButton(0))

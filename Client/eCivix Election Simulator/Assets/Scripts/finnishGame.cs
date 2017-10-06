@@ -40,6 +40,9 @@ public class finnishGame : MonoBehaviour {
     public Text errorMessage;
     public Button closeError;
 
+    public GameObject loadScreen;
+    public GameObject loadText;
+
     void Start () {
 
 		getHighscores();
@@ -47,6 +50,9 @@ public class finnishGame : MonoBehaviour {
         btn.onClick.AddListener(endGame);
 
         errorBox.SetActive(false);
+
+        loadScreen.SetActive(false);
+        loadText.SetActive(false);
 
         Button closeErrorbtn = closeError.GetComponent<Button>();
         closeErrorbtn.onClick.AddListener(closeErrorFun);
@@ -66,14 +72,21 @@ public class finnishGame : MonoBehaviour {
 	{
 
 		loadHighscores();
-			string url = "http://ecivix.org.za/api/endHighScore";
 
-			var requestString = "{'access_token':'2','userScore':'20'}";
+        string url = "http://ecivix.org.za/api/getHighscoreBoard";
 
-			byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
+        www = new WWW (url);
 
-			www = new WWW (url, pData);
-			StartCoroutine (loadHighscores());
+        while(!www.isDone)
+        {
+            loadScreen.SetActive(true);
+            loadText.SetActive(true);
+        }
+
+        loadScreen.SetActive(false);
+        loadText.SetActive(false);
+
+        StartCoroutine (loadHighscores());
 	}
 
 	IEnumerator loadHighscores()
@@ -88,55 +101,55 @@ public class finnishGame : MonoBehaviour {
 		{
 			//print(www.text);
 			var jsonObj = JSON.Parse(www.text);
-			int arrayLength = jsonObj ["scoreboard"].Count;
+			int arrayLength = 11;
 			for (int i = 0; i < arrayLength; i++) {
 
 				switch (i)
 				{
 				case 0:
-					position1Name.text = removeApos(jsonObj ["scoreboard"][0][0]["name"].ToString ());
-					position1Score.text = removeApos(jsonObj ["scoreboard"][0][0]["score"].ToString ());
+					position1Name.text = removeApos(jsonObj [0]["name"].ToString ());
+					position1Score.text = removeApos(jsonObj [0]["score"].ToString ());
 					break;
 				case 1:
-					position2Name.text = removeApos(jsonObj ["scoreboard"][1][0]["name"].ToString ());
-					position2Score.text = removeApos(jsonObj ["scoreboard"][1][0]["score"].ToString ());
+					position2Name.text = removeApos(jsonObj [1]["name"].ToString ());
+					position2Score.text = removeApos(jsonObj [1]["score"].ToString ());
 					break;
 				case 2:
-					position3Name.text = removeApos(jsonObj ["scoreboard"][2][0]["name"].ToString ());
-					position3Score.text = removeApos(jsonObj ["scoreboard"][2][0]["score"].ToString ());
+					position3Name.text = removeApos(jsonObj [2]["name"].ToString ());
+					position3Score.text = removeApos(jsonObj [2]["score"].ToString ());
 					break;
 				case 3:
-					position4Name.text = removeApos(jsonObj ["scoreboard"][3][0]["name"].ToString ());
-					position4Score.text = removeApos(jsonObj ["scoreboard"][3][0]["score"].ToString ());
+					position4Name.text = removeApos(jsonObj [3]["name"].ToString ());
+					position4Score.text = removeApos(jsonObj [3]["score"].ToString ());
 					break;
 				case 4:
-					position5Name.text = removeApos(jsonObj ["scoreboard"][4][0]["name"].ToString ());
-					position5Score.text = removeApos(jsonObj ["scoreboard"][4][0]["score"].ToString ());
+					position5Name.text = removeApos(jsonObj [4]["name"].ToString ());
+					position5Score.text = removeApos(jsonObj [4]["score"].ToString ());
 					break;
 				case 5:
-					position6Name.text = removeApos(jsonObj ["scoreboard"][5][0]["name"].ToString ());
-					position6Score.text = removeApos(jsonObj ["scoreboard"][5][0]["score"].ToString ());
+					position6Name.text = removeApos(jsonObj [5]["name"].ToString ());
+					position6Score.text = removeApos(jsonObj [5]["score"].ToString ());
 					break;
 				case 6:
-					position7Name.text = removeApos(jsonObj ["scoreboard"][6][0]["name"].ToString ());
-					position7Score.text = removeApos(jsonObj ["scoreboard"][6][0]["score"].ToString ());
+					position7Name.text = removeApos(jsonObj [6]["name"].ToString ());
+					position7Score.text = removeApos(jsonObj [6]["score"].ToString ());
 					break;
 				case 7:
-					position8Name.text = removeApos(jsonObj ["scoreboard"][7][0]["name"].ToString ());
-					position8Score.text = removeApos(jsonObj ["scoreboard"][7][0]["score"].ToString ());
+					position8Name.text = removeApos(jsonObj [7]["name"].ToString ());
+					position8Score.text = removeApos(jsonObj [7]["score"].ToString ());
 					break;
 				case 8:
-					position9Name.text = removeApos(jsonObj ["scoreboard"][8][0]["name"].ToString ());
-					position9Score.text = removeApos(jsonObj ["scoreboard"][8][0]["score"].ToString ());
+					position9Name.text = removeApos(jsonObj [8]["name"].ToString ());
+					position9Score.text = removeApos(jsonObj [8]["score"].ToString ());
 					break;
 				case 9:
-					position10Name.text = removeApos(jsonObj ["scoreboard"][9][0]["name"].ToString ());
-					position10Score.text = removeApos(jsonObj ["scoreboard"][9][0]["score"].ToString ());
+					position10Name.text = removeApos(jsonObj [9]["name"].ToString ());
+					position10Score.text = removeApos(jsonObj [9]["score"].ToString ());
 					break;
 				case 10:
-					position11Name.text = removeApos(jsonObj ["scoreboard"][10][0]["name"].ToString ());
-					position11Score.text = removeApos(jsonObj ["scoreboard"][10][0]["score"].ToString ());
-					userPosition.text = removeApos(jsonObj ["scoreboard"][10][0]["position"].ToString ());
+					position11Name.text = removeApos(jsonObj [10]["name"].ToString ());
+					position11Score.text = removeApos(jsonObj [10]["score"].ToString ());
+					userPosition.text = removeApos(jsonObj [10]["position"].ToString ());
 					//print (jsonObj ["scoreboard"].ToString());
 					break;
 			}
