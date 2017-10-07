@@ -491,7 +491,11 @@ router.get('/', function(req, res, next) {
     query = client.query('INSERT INTO allissues(topicName, topicDescription, topicStance) values($1,$2,$3)', ['Housing', 'Housing Interest Rate Control', 'Right']);
     query = client.query('INSERT INTO allissues(topicName, topicDescription, topicStance) values($1,$2,$3)', ['Housing', 'No Housing Rate Control', 'Far Right']);
 
-    query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['Right', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['far right', 3, 4, 5, 3, 6, 3, 2, 4, 4, 4]);
+    query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['right', 24, 20, 14, 4, 14, 21, 18, 16, 8, 13]);
+    query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['centre', 23, 11, 21, 11, 26, 28, 50, 13, 14, 22]);
+    query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['left', 34, 47, 47, 60, 30, 33, 20, 53, 60, 45]);
+    query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['far left', 16, 22, 13, 22, 24, 15, 10, 14, 14, 16]);
 
     query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [1, 9001]);
 
