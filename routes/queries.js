@@ -136,34 +136,52 @@ module.exports = {
         obj.success = 1;
         var funds = 0;
         var querytext = "";
-        var totalavailablefunds = 0;
+        var totalavailablefunds = 0, collectcostmp =0, availablemp =0;
         var newfunds = 0;
-
-        querytext = "select (t.usersupport*100/t.totalsupport)*t.totalfundsavailable/100 as collectedfunds, t.totalfundsavailable, u.funds from tbl"+province+" t, userprofile u where t.userid = '"+accesstoken+"' AND u.userid = '"+accesstoken+"';";
+        var querytext = "select p.totalmanpower, p.usermanpoweravailable from tbl"+province+" p where p.userid ='"+accesstoken+"'"
         query = client.query(querytext);
         query.on('row', (row) => {
-            totalavailablefunds = row['totalfundsavailable'];
-            obj.funds = row['collectedfunds']
-            newfunds = totalavailablefunds-obj.funds;
-            funds = row['funds'] + obj.funds;
+            collectcostmp = Math.round(row['totalmanpower'] *0.06);
+            availablemp = (row['usermanpoweravailable']);
         });
         query.on('end', () => {
-            querytext = "UPDATE tbl"+province+" SET totalfundsavailable = '"+newfunds+"' WHERE userid = '"+accesstoken+"';";
+            querytext = "select (t.usersupport*100/t.totalsupport)*t.totalfundsavailable/100 as collectedfunds, t.totalfundsavailable, u.funds from tbl" + province + " t, userprofile u where t.userid = '" + accesstoken + "' AND u.userid = '" + accesstoken + "';";
             query = client.query(querytext);
+            query.on('row', (row) => {
+                totalavailablefunds = row['totalfundsavailable'];
+                obj.funds = row['collectedfunds']
+                newfunds = totalavailablefunds - obj.funds;
+                funds = row['funds'] + obj.funds;
+            });
             query.on('end', () => {
-                querytext = "UPDATE userprofile SET funds  = '"+ funds +"' WHERE userId = '"+accesstoken+"';";
-                query = client.query(querytext);
-                query.on('end', () => {
-
-                    obj.AI1Move = "Camapign Gauteng";//makeAIMove(1, client, accesstoken);
-                    obj.AI2Move = "Campaign Limpopo";
-                    obj.AI3Move = "Campaign Western Cape";
-                    obj.AI4Move = "Collect Funds Freestate";
+                if(collectcostmp > availablemp)
+                {
+                    obj = new Object();
+                    obj.success =2;
                     var sendback = JSON.stringify(obj);
                     client.end();
                     callback(err = null, result = sendback);
                     return sendback;
-                });
+                }
+                else
+                {
+                    querytext = "UPDATE tbl" + province + " SET totalfundsavailable = '" + newfunds + "' WHERE userid = '" + accesstoken + "';";
+                    query = client.query(querytext);
+                    query.on('end', () => {
+                        querytext = "UPDATE userprofile SET funds  = '" + funds + "' WHERE userId = '" + accesstoken + "'; UPDATE tbl"+province+" SET usermanpoweravailable = '"+(availablemp-collectcostmp)+"'";
+                        query = client.query(querytext);
+                        query.on('end', () => {
+                            obj.AI1Move = "Camapign Gauteng";//makeAIMove(1, client, accesstoken);
+                            obj.AI2Move = "Campaign Limpopo";
+                            obj.AI3Move = "Campaign Western Cape";
+                            obj.AI4Move = "Collect Funds Freestate";
+                            var sendback = JSON.stringify(obj);
+                            client.end();
+                            callback(err = null, result = sendback);
+                            return sendback;
+                        });
+                    });
+                }
             });
         });
     },
@@ -613,17 +631,26 @@ module.exports = {
         client.connect();
         var obj = new Object();
         var timex;
-        var querytext = "SELECT time FROM userprofile where userid ='"+accesstoken+"'";
+        var querytext = "SELECT u.time FROM userprofile u where u.userid ='"+accesstoken+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
-            timex = row['time']-1;
+           timex = row['time']-1;
             if(timex < 0)
             {
                 timex = 0;
             }
         });
         query.on('end', () => {
-            querytext = "UPDATE userprofile SET time = '"+ timex+"' where userid ='"+accesstoken+"'";
+            querytext = "UPDATE userprofile SET time = '"+ timex+"' where userid ='"+accesstoken+"';"+
+                "UPDATE tblfreestate set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
+                "UPDATE tblgauteng set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
+                "UPDATE tblnorthwest set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
+                "UPDATE tblnorthcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
+                "UPDATE tblwestcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
+                "UPDATE tbleastcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
+                "UPDATE tblmpumalanga set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
+                "UPDATE tblkwazulunatal set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
+                "UPDATE tbllimpopo set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';";
             query = client.query(querytext);
             query.on('end', () => {
                 obj.Weeks = timex;
