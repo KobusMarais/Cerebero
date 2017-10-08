@@ -178,11 +178,16 @@ router.post('/pollProvince', function(req,res){
         //find access token in DB
         //retrieve opponent's in that province from db
         //return support to user
-
-
+        let i = req.body;
+        queries.pollProvince(i.access_token, i.province, function(err, result) {
+            if (err) return console.log("error: ", err);
+            var obj = JSON.parse(result);
+            res.send(obj);
+        });
+/*
         var text = '{"User": "40", "AI1" : "10", "AI2" : "10", "AI3": "20", "AI4" : "20", "AI1Move" : "Poll Gauteng", "AI2Move" : "Poll Limpopo" , "AI3Move" : "Collect Funds Freestate", "AI4Move" : "Campaign Western Cape"}';
         var obj = JSON.parse(text);
-        res.send(obj);
+        res.send(obj);*/
     }
 });
 
@@ -303,41 +308,12 @@ router.post('/getScore', function(req, res, next) {
     }
 });
 
-router.post('/endResult', function(req, res, next) {
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    //find access token in DB
-    //retrieve user score from DB
-    if(!req.body.access_token)
-    {
-        console.log("endResult API call access_token not set");
-        var obj = new Object();
-        obj.success = 0;
-        var result = JSON.stringify(obj);
-        var obj = JSON.parse(result);
-        res.send(obj);
-    } else {
-        //return score
-        queries.endResult(req.body.access_token, function(err, result) {
-            if (err) return console.log("error: ", err)
-            var obj = JSON.parse(result);
-            res.send(obj);
-        });
-    }
-});
-
-
 router.post('/getManpower', function(req, res, next) { //this is an overall national total
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.body.access_token);
     //find access token in DB
     //retrieve user score from DB
     //get current manpower support user has from db
@@ -352,25 +328,11 @@ router.post('/getManpower', function(req, res, next) { //this is an overall nati
         res.send(obj);
     }  else {
         //return manpower user has currently
-        /*queries.getManpower(req.body.access_token, function (err, result) {
+        queries.getManpower(req.body.access_token, function (err, result) {
             if (err) return console.log("error: ", err)
             var obj = JSON.parse(result);
             res.send(obj);
-        });*/
-        var obj = new Object();
-        obj.gauteng = 500;
-        obj.limpopo = 400;
-        obj.northwest = 200;
-        obj.westcaoe = 900;
-        obj.eastcape = 700;
-        obj.northcape = 50;
-        obj.freestate = 150;
-        obj.mpumalanga = 390;
-        obj.kwazulunatal = 900;
-
-        var sendback = JSON.stringify(obj);
-        var tempor = JSON.parse(sendback);
-        res.send(tempor);
+        });
     }
 
 });
@@ -568,6 +530,31 @@ router.post('/getStances', function(req, res, next) { // receives user score and
         console.log(req.body.issues.length);
         let i = req.body.issues; // for brevity
         queries.getStances(i, function (err, result) {
+            if (err) return console.log("error: ", err)
+            var obj = JSON.parse(result);
+            res.send(obj);
+        });
+    }
+});
+router.post('/endResult', function(req, res, next) { // receives user score and inserts into leaderboard
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    //console.log(req.body.access_token);
+
+    if(!req.body.access_token)
+    {
+        console.log("endResult API call access_token or issues not set");
+        var obj = new Object();
+        obj.success = 0;
+        var result = JSON.stringify(obj);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    }  else {
+        let i = req.body; // for brevity
+        queries.endResult(i.access_token,function (err, result) {
             if (err) return console.log("error: ", err)
             var obj = JSON.parse(result);
             res.send(obj);
