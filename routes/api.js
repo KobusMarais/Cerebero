@@ -178,11 +178,16 @@ router.post('/pollProvince', function(req,res){
         //find access token in DB
         //retrieve opponent's in that province from db
         //return support to user
-
-
+        let i = req.body;
+        queries.pollProvince(i.access_token, i.province, function(err, result) {
+            if (err) return console.log("error: ", err);
+            var obj = JSON.parse(result);
+            res.send(obj);
+        });
+/*
         var text = '{"User": "40", "AI1" : "10", "AI2" : "10", "AI3": "20", "AI4" : "20", "AI1Move" : "Poll Gauteng", "AI2Move" : "Poll Limpopo" , "AI3Move" : "Collect Funds Freestate", "AI4Move" : "Campaign Western Cape"}';
         var obj = JSON.parse(text);
-        res.send(obj);
+        res.send(obj);*/
     }
 });
 

@@ -155,7 +155,7 @@ module.exports = {
                 query = client.query(querytext);
                 query.on('end', () => {
 
-                    obj.AI1Move = "Poll Gauteng";//makeAIMove(1, client, accesstoken);
+                    obj.AI1Move = "Camapign Gauteng";//makeAIMove(1, client, accesstoken);
                     obj.AI2Move = "Campaign Limpopo";
                     obj.AI3Move = "Campaign Western Cape";
                     obj.AI4Move = "Collect Funds Freestate";
@@ -200,6 +200,55 @@ module.exports = {
             client.end();
             callback(err=null,result=sendback);
             return sendback;
+        });
+    },
+    pollProvince: function(accesstoken,province, callback)
+    {
+        const client = new pg.Client(connectionString);
+        client.connect();
+        var obj = new Object();
+        var pollcostmp = 0;
+        var pollcostfunds = 0;
+        var availablefunds = 0;
+        var availablemp = 0;
+        var querytext = "select u.funds, p.totalfunds, p.totalmanpower, p.usermanpoweravailable from userprofile u, tbl"+province+" p where u.userid='"+accesstoken+"' AND p.userid ='"+accesstoken+"'"
+        query = client.query(querytext);
+        query.on('row', (row) => {
+            pollcostfunds = Math.round(row['totalfunds'] *0.03);
+            pollcostmp = Math.round(row['totalmanpower'] *0.03);
+            availablefunds = (row['funds']);
+            availablemp = (row['usermanpoweravailable']);
+        });
+        query.on('end', () => {
+            querytext = "select usersupport, ai1support, ai2support, ai3support, ai4support from tbl"+province+" where userid='"+accesstoken+"'";
+            query = client.query(querytext);
+            query.on('row', (row) => {
+                obj.User = row['usersupport'];
+                obj.AI1 = row['ai1support'];
+                obj.AI2 = row['ai2support'];
+                obj.AI3 = row['ai3support'];
+                obj.AI4 = row['ai4support'];
+            });
+            query.on('end', () => {
+                if (availablefunds < pollcostfunds || availablemp < pollcostmp) {
+                    obj = new Object();
+                    obj.success = 2;
+                    var sendback = JSON.stringify(obj);
+                    client.end();
+                    callback(err = null, result = sendback);
+                    return sendback;
+                }
+                else {
+                    querytext = "update userprofile set funds= '"+(availablefunds-pollcostfunds) +"' where userid ='"+accesstoken+"'; update tbl"+province+" set usermanpoweravailable = '"+(availablemp- pollcostmp)+"' where userid = '"+accesstoken+"';";
+                    query = client.query(querytext);
+                    query.on('end', () => {
+                        obj.AI1Move = "Poll Gauteng";
+                        obj.AI2Move = "Poll Limpopo";
+                        obj.AI3Move = "Collect Funds Freestate";
+                        obj.AI4Move = "Campaign Western Cape";
+                    });
+                }
+            });
         });
     },
     getManpower: function (accesstoken, callback) {
