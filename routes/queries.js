@@ -749,7 +749,7 @@ module.exports = {
 };
 function calculateresult(ai1, ai2, ai3, ai4, user)
 {
-    if(user > ai1 && user > ai2 && user > ai3 && user >ai4)
+    if((user > ai1) && (user > ai2) && (user > ai3) && (user >ai4))
     {
         return 1;
     }else{
