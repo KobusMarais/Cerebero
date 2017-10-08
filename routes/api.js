@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var queries = require('./queries.js');
+const express = require('express');
+const router = express.Router();
+const queries = require('./queries.js');
 
 
 router.post('/register', function(req,res){

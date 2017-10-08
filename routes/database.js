@@ -3,7 +3,8 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     const pg = require('pg');
-    const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+    //const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+    const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
     var query;
     const client = new pg.Client(connectionString);
     client.connect();
