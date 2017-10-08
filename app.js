@@ -1,19 +1,17 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-var AI = require('./routes/AI');
-var api = require('./routes/api'); 
-var mainGame = require('./routes/mainGame');
-var databasers = require('./routes/database.js');
+const index = require('./routes/index');
+const users = require('./routes/users');
+const AI = require('./routes/AI');
+const api = require('./routes/api');
+const mainGame = require('./routes/mainGame');
+const databasers = require('./routes/database.js');
 
-
-var path = require('path');
 var app = express();
 
 // view engine setup

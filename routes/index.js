@@ -10,10 +10,10 @@ const connectionString = process.env.DATABASE_URL || 'postgres://qteorhenhhafxk:
 //   res.sendFile(path.join(
 //     __dirname, '..', '..', 'client', 'views', 'index.html'));
 // });
-router.get('/loginpage', (req, res, next) => {
+router.get('/login', (req, res, next) => {
 
   res.sendFile(path.join(
-    __dirname, '..', 'public', 'index.html'));
+    __dirname, '..', 'public', 'login.html'));
 });
 
 router.get('/profile', (req, res, next) => {
