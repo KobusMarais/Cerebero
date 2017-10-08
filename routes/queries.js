@@ -232,7 +232,7 @@ module.exports = {
             callback(err=null,result=sendback);
             return sendback;
         });
-    }, getSupport: function (accesstoken, callback) {
+    },getSupport: function (accesstoken, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
