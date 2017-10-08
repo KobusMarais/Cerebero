@@ -1,10 +1,12 @@
 // Get users
-angular.module('nodeUser', [])
-.controller('mainController', ($scope, $location, $http) => {
+const router = require("routes/api.js");
+
+angular.module('nodelogin', [])
+.controller('loginController', ($scope, $location, $http) => {
     $scope.formData = {};
     $scope.userData = {};
     // Get all users
-    $http.get('/api/v1/users')
+    $http.get('/login')
     .success((data) => {
         $scope.userData = data;
         console.log(data);
@@ -15,7 +17,7 @@ angular.module('nodeUser', [])
 
     // Create a new user
     $scope.createUser = () => {
-        $http.post('/api/v1/users', $scope.formData)
+        $http.post('/register', $scope.formData)
         .success((data) => {
             $scope.formData = {};
             $scope.userData = data;

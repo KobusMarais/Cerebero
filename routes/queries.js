@@ -7,15 +7,15 @@ module.exports = {
     register: function (name, surname, email, username, password, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
-        var obj = new Object();
+        let obj = new Object();
 
-        var querytext = "INSERT INTO userAccounts(username, user_password, firstName, lastName, email) values('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+email+"') RETURNING pkid";
+        const querytext = "INSERT INTO userAccounts(username, user_password, firstName, lastName, email) values('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+email+"') RETURNING pkid";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj.access_token = row['pkid'];
         });
         query.on('end', () => {
-            var sendback = JSON.stringify(obj);
+            const sendback = JSON.stringify(obj);
             client.end();
             callback(err=null,result=sendback);
             return sendback;
@@ -24,18 +24,18 @@ module.exports = {
     login: function (username, password, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
-        var obj = new Object();
+        let obj = new Object();
         obj.access_token = -1;
 
-        var querytext = "select * from userAccounts WHERE username ='"+username+"' AND user_password = '"+password+"'\n";
+        const querytext = "select * from userAccounts WHERE username ='"+username+"' AND user_password = '"+password+"'\n";
         query = client.query(querytext);
         query.on('row', (row) => {
-            if(username == row['username'] && password == row['user_password']) {
+            if(username === row['username'] && password === row['user_password']) {
                 obj.access_token = row['pkid'];
             }
         });
         query.on('end', () => {
-            var sendback = JSON.stringify(obj);
+            const sendback = JSON.stringify(obj);
             client.end();
             callback(err=null,result=sendback);
             return sendback;
