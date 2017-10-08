@@ -136,7 +136,7 @@ module.exports = {
         obj.success = 1;
         var funds = 0;
         var querytext = "";
-        var totalavailablefunds = 0, collectcostmp =0, availablemp =0;
+        var totalavailablefunds = 0, collectcostmp =1, availablemp =0;
         var newfunds = 0;
         var querytext = "select p.totalmanpower, p.usermanpoweravailable from tbl"+province+" p where p.userid ='"+accesstoken+"'"
         query = client.query(querytext);
@@ -149,7 +149,7 @@ module.exports = {
             query = client.query(querytext);
             query.on('row', (row) => {
                 totalavailablefunds = row['totalfundsavailable'];
-                obj.funds = row['collectedfunds']
+                obj.funds = row['collectedfunds'];
                 newfunds = totalavailablefunds - obj.funds;
                 funds = row['funds'] + obj.funds;
             });
@@ -642,15 +642,15 @@ module.exports = {
         });
         query.on('end', () => {
             querytext = "UPDATE userprofile SET time = '"+ timex+"' where userid ='"+accesstoken+"';"+
-                "UPDATE tblfreestate set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
-                "UPDATE tblgauteng set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
-                "UPDATE tblnorthwest set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
-                "UPDATE tblnorthcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
-                "UPDATE tblwestcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
-                "UPDATE tbleastcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
-                "UPDATE tblmpumalanga set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
-                "UPDATE tblkwazulunatal set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';" +
-                "UPDATE tbllimpopo set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower where userid ='"+accesstoken+"';";
+                "UPDATE tblfreestate set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';" +
+                "UPDATE tblgauteng set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';" +
+                "UPDATE tblnorthwest set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';" +
+                "UPDATE tblnorthcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';" +
+                "UPDATE tblwestcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';" +
+                "UPDATE tbleastcape set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';" +
+                "UPDATE tblmpumalanga set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';" +
+                "UPDATE tblkwazulunatal set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';" +
+                "UPDATE tbllimpopo set usermanpoweravailable = usermanpower, ai1manpoweravailable = ai1manpower, ai2manpoweravailable = ai2manpower, ai3manpoweravailable = ai3manpower, ai4manpoweravailable = ai4manpower, totalfundsavailable = totalfunds where userid ='"+accesstoken+"';";
             query = client.query(querytext);
             query.on('end', () => {
                 obj.Weeks = timex;
