@@ -13,17 +13,17 @@ router.post('/register', function(req,res){
     if(!req.body.name || !req.body.email || !req.body.username || !req.body.password)
     {
         console.log("register API call name or email or username or password not set");
-        var obj = new Object();
+        const obj = new Object();
         obj.success = 0;
-        var result = JSON.stringify(obj);
-        var obj = JSON.parse(result);
-        res.send(obj);
+        const result = JSON.stringify(obj);
+        const parsedObject = JSON.parse(result);
+        res.send(parsedObject);
     }
     let i = req.body;
     //generate new token for each user and create entry in db for that user.
     queries.register(i.name, i.surname, i.email, i.username, i.password, function(err, result) {
-        if (err) return console.log("error: ", err)
-        var obj = JSON.parse(result);
+        if (err) return console.log("error: ", err);
+        const obj = JSON.parse(result);
         res.send(obj);
     });
     //Insert code here to check if email or username has been used before
@@ -41,16 +41,16 @@ router.post('/login', function(req,res){
     if(!req.body.username || !req.body.password)
     {
         console.log("login API call username or password not set");
-        var obj = new Object();
+        let obj = new Object();
         obj.success = 0;
-        var result = JSON.stringify(obj);
-        var obj = JSON.parse(result);
-        res.send(obj);
+        const result = JSON.stringify(obj);
+        const parsedObject = JSON.parse(result);
+        res.send(parsedObject);
     }
     let i = req.body;
     queries.login(i.username, i.password, function(err, result) {
         if (err) return console.log("error: ", err);
-        var obj = JSON.parse(result);
+        const obj = JSON.parse(result);
         res.send(obj);
     });
 });
