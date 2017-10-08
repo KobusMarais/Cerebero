@@ -531,6 +531,31 @@ router.post('/getStances', function(req, res, next) { // receives user score and
         });
     }
 });
+router.post('/endResult', function(req, res, next) { // receives user score and inserts into leaderboard
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    //console.log(req.body.access_token);
+
+    if(!req.body.access_token)
+    {
+        console.log("endResult API call access_token or issues not set");
+        var obj = new Object();
+        obj.success = 0;
+        var result = JSON.stringify(obj);
+        var obj = JSON.parse(result);
+        res.send(obj);
+    }  else {
+        let i = req.body; // for brevity
+        queries.endResult(i.access_token,function (err, result) {
+            if (err) return console.log("error: ", err)
+            var obj = JSON.parse(result);
+            res.send(obj);
+        });
+    }
+});
 
 router.post('/setIssues', function(req, res, next) { // receives user score and inserts into leaderboard
     res.setHeader('Content-Type', 'application/json');
