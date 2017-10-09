@@ -662,19 +662,19 @@ module.exports = {
             console.log('Query error: ' + err);
         });
         query.on('row', (row) => {
-           querytext = "DELETE FROM userprofile WHERE userid =3;\n" +
-               "DELETE FROM ai1 WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM ai2 WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM ai3 WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM ai4 WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tbllimpopo WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblgauteng WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblnorthwest WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblnorthcape WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblwestcape WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tbleastcape WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblmpumalanga WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblfreestate WHERE userid ='"+accesstoken+"';\n" +
+           querytext = "DELETE FROM userprofile WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM ai1 WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM ai2 WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM ai3 WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM ai4 WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tbllimpopo WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblgauteng WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblnorthwest WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblnorthcape WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblwestcape WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tbleastcape WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblmpumalanga WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblfreestate WHERE userid ='"+accesstoken+"';" +
                "DELETE FROM tblkwazulunatal WHERE userid ='"+accesstoken+"';";
             query = client.query(querytext);
 
