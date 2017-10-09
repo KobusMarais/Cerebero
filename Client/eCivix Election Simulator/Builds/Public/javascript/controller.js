@@ -1,15 +1,24 @@
 angular.module('nodeLogin', [])
-.controller('mainController', ($scope, $location, $http, $window) => {
+.controller('mainController', ($scope, $http, $window) => {
     $scope.loginUser = () => {
-        $http.post('/login', $scope.formData)
+        $http.post('/api/login', $scope.formData)
             .success((data) => {
                 $scope.formData = {};
                 $scope.userData = data;
             })
             .error((error) => {
                 console.log('Error: ' + error);
-            });
+            })
+            .then(function (data) {
+            //want redirection
+            $window.location.href = '/loadGame';
+        }, function (error) {
+        });
     };
+
+    $scope.redirect = function(){
+        window.location = "/register";
+    }
 
     // Create a new user
     // $scope.createUser = () => {
@@ -36,21 +45,15 @@ angular.module('nodeLogin', [])
     // };
 });
 
- // User profiles 
- angular.module('nodeProfile', [])
- .controller('mainController', ($scope, $http) => {
+ // User Registration
+ angular.module('nodeRegistration', [])
+ .controller('mainController', ($scope, $http, $window) => {
      $scope.formData = {};
      $scope.userData = {};
-    
-    $scope.slider = {
-        value: 100,
-        options: {
-            showSelectionBar: true
-        }
-    };
+
      // Create a new user
      $scope.createUser = () => {
-         $http.post('/register', $scope.formData)
+         $http.post('/api/register', $scope.formData)
              .success((data) => {
                  $scope.formData = {};
                  $scope.userData = data;
@@ -58,9 +61,18 @@ angular.module('nodeLogin', [])
              })
              .error((error) => {
                  console.log('Error: ' + error);
+             })
+             .then(function (data) {
+                 //want redirection
+                 $window.location.href = '/login';
+             }, function (error) {
              });
      };
 
+     $scope.redirect = function(){
+         window.location = "/login";
+     }
+ });
     // // Insert user profile into the DB
     // $scope.setUserProfile = () => {
     //     $http.post('/api/v1/createProfile', $scope.formData)
@@ -73,7 +85,7 @@ angular.module('nodeLogin', [])
     //         console.log('Error: ' + error);
     //     });
     // };
-});
+
 /*
 
  // User profiles
@@ -99,7 +111,7 @@ angular.module('nodeLogin', [])
             $window.$location.$http  = '/profile.html'
             // router.get('/', (req, res, next) => {
             //     res.sendFile(path.join(
-            //       __dirname, '..', 'public', 'index.html'));
+            //       __dirname, '..', 'Public', 'register.html'));
             //   });
         })
         .error((error) => {
