@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-    const path = require('path');
-    console.log("THIS IS WHERE THE DOG SLEEPS 1");
-    res.sendFile(path.resolve('./Client/eCivix Election Simulator/public/login.html'));
-    //res.sendFile(path.resolve('./Client/eCivix Election Simulator/UnderConstructionPage/index.html'));
-
+router.get('/LoadGame', function(req, res, next) {
+    res.sendFile(path.resolve('./Client/eCivix Election Simulator/UnderConstructionPage/index.html'));
 });
 
 module.exports = router;

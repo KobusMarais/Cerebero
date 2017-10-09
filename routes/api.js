@@ -1,7 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const queries = require('./queries.js');
 
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+    res.sendFile(path.join(
+        __dirname, '..', 'Client', 'eCivix Election Simulator',
+        'public', 'views', 'login.html'));
+});
 
 router.post('/register', function(req,res){
     res.setHeader('Content-Type', 'application/json');
@@ -36,8 +43,8 @@ router.post('/login', function(req,res){
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-
-    //insert code here to check if email and password are correct and return accesskey.
+    console.log('Login API');
+    //insert code here to check if email and password are correct and return access key.
     if(!req.body.username || !req.body.password)
     {
         console.log("login API call username or password not set");
