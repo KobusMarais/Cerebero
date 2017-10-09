@@ -1309,7 +1309,7 @@ function getSideStances(mystance)
     return altstances;
 }
 
-export function setUserAccessToken(newAccessToken) {
+function setUserAccessToken(newAccessToken) {
     if(typeof(Storage) !== "undefined") {
         localStorage.setItem('accessToken', newAccessToken);
     } else {
@@ -1317,7 +1317,7 @@ export function setUserAccessToken(newAccessToken) {
     }
 }
 
-export function getUserAccessToken() {
+function getUserAccessToken() {
 
     if(typeof(Storage) !== "undefined") {
         return localStorage.getItem('accessToken');
