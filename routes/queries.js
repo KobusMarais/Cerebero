@@ -66,70 +66,321 @@ module.exports = {
             return sendback;
         });
     },
-    campaignProvince: function (accesstoken, province, topic, callback) {
+    campaignProvince: function (accesstoken, province,action, topic, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
+        //'{"success" : "1", "support" : "3000", "AI1Move" : "Campaign Western Cape", "AI2Move" : "Collect Funds Freestate" , "AI3Move" : "Poll Limpopo", "AI4Move" : "Poll Gauteng"}'
+        obj.success = 1;
+        var actioneffect = 0;
+
         var patt = new RegExp(topic);
         var mystance = "";
-        var suppercentage = 0;
+        var altstances = [];
+        var mainpercentage = 0;
+        var sidepercentages = [];
+        var usermp=0, usersup=0, ai1mp=0, ai1sup=0, ai2mp=0, ai2sup=0, ai3mp=0, ai3sup=0, ai4mp=0, ai4sup=0;
+        var totalmp =0, totalsup=0;
+        var supportgained = 0, manpowergained =0;
+        var aisuplost = 0, aimplost = 0;
+        var querytext = "select u.funds, p.totalfunds, p.totalmanpower, p.usermanpoweravailable from userprofile u, tbl"+province+" p where u.userid='"+accesstoken+"' AND p.userid ='"+accesstoken+"'";
+        var campaigncostfunds = 1, campaigncostmp = 1;
+        var totalmoney = 0, totalmanmoney = 0;
 
-        var querytext = "select * from userprofile WHERE ((topic1 LIKE '%"+topic+"%') OR (topic2 LIKE '%"+topic+"%') OR (topic3 LIKE '%"+topic+"%') OR (topic4 LIKE '%"+topic+"%') OR (topic5 LIKE '%\"+topic+\"%') OR (topic6 LIKE '%\"+topic+\"%') OR (topic7 LIKE '%\"+topic+\"%') OR (topic8 LIKE '%\"+topic+\"%') OR (topic9 LIKE '%\"+topic+\"%') OR (topic10 LIKE '%\"+topic+\"%')) AND userid = '"+accesstoken+"'";
+        if(action == "rally"){actioneffect = 1;}
+        if(action == "telemarketing"){actioneffect = 0.5;}
+        if(action == "socialmedia"){actioneffect = 0.25;}
+
         query = client.query(querytext);
         query.on('row', (row) => {
-            if(patt.test(row['topic1'])){mystance = extractStance(row['topic1'])}
-            if(patt.test(row['topic2'])){mystance = extractStance(row['topic2'])}
-            if(patt.test(row['topic3'])){mystance = extractStance(row['topic3'])}
-            if(patt.test(row['topic4'])){mystance = extractStance(row['topic4'])}
-            if(patt.test(row['topic5'])){mystance = extractStance(row['topic5'])}
-            if(patt.test(row['topic6'])){mystance = extractStance(row['topic6'])}
-            if(patt.test(row['topic7'])){mystance = extractStance(row['topic7'])}
-            if(patt.test(row['topic8'])){mystance = extractStance(row['topic8'])}
-            if(patt.test(row['topic9'])){mystance = extractStance(row['topic9'])}
-            if(patt.test(row['topic10'])){mystance = extractStance(row['topic10'])}
+            campaigncostfunds = Math.round(row['totalfunds'] *0.12 *actioneffect);
+            campaigncostmp = Math.round(row['totalmanpower'] *0.12 *actioneffect);
+            totalmoney = row['funds'];
+            totalmanmoney = row['usermanpoweravailable'];
         });
         query.on('end', () => {
-            querytext = "SELECT * FROM stances WHERE stance = '"+mystance+"'";
-            query = client.query(querytext);
-            query.on('row', (row) => {
-                switch (province) {
-                    case "gauteng":
-                        suppercentage = row['gauteng'];
-                        break;
-                    case "freestate":
-                        suppercentage = row['freestate'];
-                        break;
-                    case "limpopo":
-                        suppercentage = row['limpopo'];
-                        break;
-                    case "northwest":
-                        suppercentage = row['northwest'];
-                        break;
-                    case "northcape":
-                        suppercentage = row['northcape'];
-                        break;
-                    case "westcape":
-                        suppercentage = row['westcape'];
-                        break;
-                    case "eastcape":
-                        suppercentage = row['eastcape'];
-                        break;
-                    case "kwazulu-natal":
-                        suppercentage = row['kwazulunatal'];
-                        break;
-                    case "mpumalanga":
-                        suppercentage = row['mpumalanga'];
-                }
-            });
-            query.on('end', () => {
+            if(campaigncostmp > totalmanmoney || campaigncostfunds > totalmoney)
+            {
+
+                obj = new Object();
+                obj.success = 2;
+
                 var sendback = JSON.stringify(obj);
                 client.end();
                 callback(err = null, result = sendback);
                 return sendback;
-            });
+            }
+            else {
+                querytext = "select * from userprofile WHERE ((topic1 LIKE '%" + topic + "%') OR (topic2 LIKE '%" + topic + "%') OR (topic3 LIKE '%" + topic + "%') OR (topic4 LIKE '%" + topic + "%') OR (topic5 LIKE '%"+topic+"%') OR (topic6 LIKE '%"+topic+"%') OR (topic7 LIKE '%"+topic+"%') OR (topic8 LIKE '%"+topic+"%') OR (topic9 LIKE '%"+topic+"%') OR (topic10 LIKE '%"+topic+"%')) AND userid = '" + accesstoken + "'";
+                query = client.query(querytext);
+                query.on('row', (row) => {
+                    if (patt.test(row['topic1'])) {
+                        mystance = extractStance(row['topic1']);
+                    }
+                    if (patt.test(row['topic2'])) {
+                        mystance = extractStance(row['topic2']);
+                    }
+                    if (patt.test(row['topic3'])) {
+                        mystance = extractStance(row['topic3']);
+                    }
+                    if (patt.test(row['topic4'])) {
+                        mystance = extractStance(row['topic4']);
+                    }
+                    if (patt.test(row['topic5'])) {
+                        mystance = extractStance(row['topic5']);
+                    }
+                    if (patt.test(row['topic6'])) {
+                        mystance = extractStance(row['topic6']);
+                    }
+                    if (patt.test(row['topic7'])) {
+                        mystance = extractStance(row['topic7']);
+                    }
+                    if (patt.test(row['topic8'])) {
+                        mystance = extractStance(row['topic8']);
+                    }
+                    if (patt.test(row['topic9'])) {
+                        mystance = extractStance(row['topic9']);
+                    }
+                    if (patt.test(row['topic10'])) {
+                        mystance = extractStance(row['topic10']);
+                    }
+                    altstances = getSideStances(mystance);
+                });
+                query.on('end', () => {
+                    querytext = "SELECT * FROM stances WHERE stance = '" + mystance + "'";
+                    query = client.query(querytext);
+                    query.on('row', (row) => {
+                        switch (province) {
+                            case "gauteng":
+                                mainpercentage = row['gauteng'] / 100;
+                                break;
+                            case "freestate":
+                                mainpercentage = row['freestate'] / 100;
+                                break;
+                            case "limpopo":
+                                mainpercentage = row['limpopo'] / 100;
+                                break;
+                            case "northwest":
+                                mainpercentage = row['northwest'] / 100;
+                                break;
+                            case "northcape":
+                                mainpercentage = row['northcape'] / 100;
+                                break;
+                            case "westcape":
+                                mainpercentage = row['westcape'] / 100;
+                                break;
+                            case "eastcape":
+                                mainpercentage = row['eastcape'] / 100;
+                                break;
+                            case "kwazulunatal":
+                                mainpercentage = row['kwazulunatal'] / 100;
+                                break;
+                            case "mpumalanga":
+                                mainpercentage = row['mpumalanga'] / 100;
+                        }
+                    });
+                    query.on('end', () => {
+                        if (!altstances[1]) {
+                            console.log("THIS DOENST BREAK 3");
+                            querytext = "SELECT * FROM stances WHERE stance = '" + altstances[0] + "'";
+                        }
+                        else {
+                            querytext = "SELECT * FROM stances WHERE stance = '" + altstances[0] + "' OR stance = '" + altstances[1] + "'";
+                        }
+                        query = client.query(querytext);
+                        query.on('row', (row) => {
+                            switch (province) {
+                                case "gauteng":
+                                    sidepercentages.push(row['gauteng'] / 100);
+                                    break;
+                                case "freestate":
+                                    sidepercentages.push(row['freestate'] / 100);
+                                    break;
+                                case "limpopo":
+                                    sidepercentages.push(row['limpopo'] / 100);
+                                    break;
+                                case "northwest":
+                                    sidepercentages.push(row['northwest'] / 100);
+                                    break;
+                                case "northcape":
+                                    sidepercentages.push(row['northcape'] / 100);
+                                    break;
+                                case "westcape":
+                                    sidepercentages.push(row['westcape'] / 100);
+                                    break;
+                                case "eastcape":
+                                    sidepercentages.push(row['eastcape'] / 100);
+                                    break;
+                                case "kwazulunatal":
+                                    sidepercentages.push(row['kwazulunatal'] / 100);
+                                    break;
+                                case "mpumalanga":
+                                    sidepercentages.push(row['mpumalanga'] / 100);
+                            }
+                        });
+                        query.on('end', () => {
+                            querytext = "select * from tbl" + province + " where userid='" + accesstoken + "'";
+                            query = client.query(querytext);
+                            query.on('row', (row) => {
+                                usermp = row['usermanpower'], usersup = row['usersupport'];
+                                ai1mp = row['ai1manpower'], ai1sup = row['ai1support'];
+                                ai2mp = row['ai2manpower'], ai2sup = row['ai2support'];
+                                ai3mp = row['ai3manpower'], ai3sup = row['ai3support'];
+                                ai4mp = row['ai4manpower'], ai4sup = row['ai4support'];
+                                totalmp = row['totalmanpower'], totalsup = row['totalsupport'];
+                            });
+
+                            query.on('end', () => {
+                                if (!sidepercentages[1]) {
+                                    if (usersup > (((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect)) {
+                                        var sendback = JSON.stringify(obj);
+                                        client.end();
+                                        callback(err = null, result = sendback);
+                                        return sendback;
+                                    }
+                                    else {
+                                        obj.support = Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect);
+                                        if ((ai1mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect / 4)) > 0) {
+                                            ai1mp -= Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect / 4);
+                                        } else {
+                                            ai1mp = 0
+                                        }
+                                        if ((ai2mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect / 4)) > 0) {
+                                            ai2mp -= Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect / 4);
+                                        } else {
+                                            ai2mp = 0
+                                        }
+                                        if ((ai3mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect / 4)) > 0) {
+                                            ai3mp -= Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect / 4);
+                                        } else {
+                                            ai3mp = 0
+                                        }
+                                        if ((ai4mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect / 4)) > 0) {
+                                            ai4mp -= Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect / 4);
+                                        } else {
+                                            ai4mp = 0
+                                        }
+
+                                        if ((ai1sup - (((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect / 4)) > 0) {
+                                            ai1sup -= Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect / 4);
+                                        } else {
+                                            ai1sup = 0
+                                        }
+                                        if ((ai2sup - (((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect / 4)) > 0) {
+                                            ai2sup -= Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect / 4);
+                                        } else {
+                                            ai2sup = 0
+                                        }
+                                        if ((ai3sup - (((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect / 4)) > 0) {
+                                            ai3sup -= Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect / 4);
+                                        } else {
+                                            ai3sup = 0
+                                        }
+                                        if ((ai4sup - (((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect / 4)) > 0) {
+                                            ai4sup -= Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect / 4);
+                                        } else {
+                                            ai4sup = 0
+                                        }
+                                        usersup += Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect);
+                                        usermp += Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect);
+
+                                        querytext = "UPDATE tbl" + province + " SET usermanpoweravailable = '"+(totalmanmoney - campaigncostmp)+"', usermanpower = '" + usermp + "', usersupport = '" + usersup + "', ai1manpower = '" + ai1mp + "', ai1support = '" + ai1sup + "', ai2manpower = '" + ai2mp + "', ai2support = '" + ai2sup + "', ai3manpower = '" + ai3mp + "', ai3support = '" + ai3sup + "', ai4manpower = '" + ai4mp + "', ai4support = '" + ai4sup + "' where userid = '" + accesstoken + "';"+
+                                        "UPDATE userprofile set funds = '"+(totalmoney - campaigncostfunds)+"' WHERE userid = '"+accesstoken+"'";
+                                        query = client.query(querytext);
+                                        query.on('end', () => {
+                                            obj.AI1Move = "Campaign Limpopo";
+                                            obj.AI2Move = "Campaign Gauteng";
+                                            obj.AI3Move = "Poll Western Cape";
+                                            obj.AI4Move = "Collect Funds Eastern Cape";
+                                            var sendback = JSON.stringify(obj);
+                                            client.end();
+                                            callback(err = null, result = sendback);
+                                            return sendback;
+                                        });
+                                    }
+                                }
+                                else {
+                                    if (usersup > ((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1]))) {
+                                        obj.support = 0;
+                                        obj.AI1Move = "Campaign Limpopo";
+                                        obj.AI2Move = "Campaign Gauteng";
+                                        obj.AI3Move = "Poll Western Cape";
+                                        obj.AI4Move = "Collect Funds Eastern Cape";
+
+                                        var sendback = JSON.stringify(obj);
+                                        client.end();
+                                        callback(err = null, result = sendback);
+                                        return sendback;
+                                    } else {
+                                        obj.support = Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect);
+                                        if ((ai1mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
+                                            ai1mp -= Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4);
+                                        } else {
+                                            ai1mp = 0
+                                        }
+                                        if ((ai2mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
+                                            ai2mp -= Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4);
+                                        } else {
+                                            ai2mp = 0
+                                        }
+                                        if ((ai3mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
+                                            ai3mp -= Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4);
+                                        } else {
+                                            ai3mp = 0
+                                        }
+                                        if ((ai4mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
+                                            ai4mp -= Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4);
+                                        } else {
+                                            ai4mp = 0
+                                        }
+
+                                        if ((ai1sup - (((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
+                                            ai1sup -= Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4);
+                                        } else {
+                                            ai1sup = 0
+                                        }
+                                        if ((ai2sup - (((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
+                                            ai2sup -= Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4);
+                                        } else {
+                                            ai2sup = 0
+                                        }
+                                        if ((ai3sup - (((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
+                                            ai3sup -= Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4);
+                                        } else {
+                                            ai3sup = 0
+                                        }
+                                        if ((ai4sup - (((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
+                                            ai4sup -= Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4);
+                                        } else {
+                                            ai4sup = 0
+                                        }
+
+                                        usersup += Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect);
+                                        usermp += Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect);
+                                        console.log("THIS DOENST BREAK 7");
+                                        querytext = "UPDATE tbl" + province + " SET usermanpoweravailable = '"+(totalmanmoney - campaigncostmp)+"', usermanpower = '" + usermp + "', usersupport = '" + usersup + "', ai1manpower = '" + ai1mp + "', ai1support = '" + ai1sup + "', ai2manpower = '" + ai2mp + "', ai2support = '" + ai2sup + "', ai3manpower = '" + ai3mp + "', ai3support = '" + ai3sup + "', ai4manpower = '" + ai4mp + "', ai4support = '" + ai4sup + "' where userid = '" + accesstoken + "';"+
+                                        "UPDATE userprofile set funds = '"+(totalmoney - campaigncostfunds)+"' WHERE userid = '"+accesstoken+"'";
+                                        query = client.query(querytext);
+                                        query.on('end', () => {
+                                            obj.AI1Move = "Campaign Limpopo";
+                                            obj.AI2Move = "Campaign Gauteng";
+                                            obj.AI3Move = "Poll Western Cape";
+                                            obj.AI4Move = "Collect Funds Eastern Cape";
+                                            var sendback = JSON.stringify(obj);
+                                            client.end();
+                                            callback(err = null, result = sendback);
+                                            return sendback;
+                                        });
+                                    }
+                                }
+                            });
+                        });
+                    });
+                });
+            }
         });
     },
-    collectFunds : function (accesstoken, province, callback) { //REDO THIS ONE
+    collectFunds : function (accesstoken, province, callback) {
         const client = new pg.Client(connectionString);
         client.connect();
         var obj = new Object();
@@ -171,14 +422,19 @@ module.exports = {
                         querytext = "UPDATE userprofile SET funds  = '" + funds + "' WHERE userId = '" + accesstoken + "'; UPDATE tbl"+province+" SET usermanpoweravailable = '"+(availablemp-collectcostmp)+"'";
                         query = client.query(querytext);
                         query.on('end', () => {
-                            obj.AI1Move = "Camapign Gauteng";//makeAIMove(1, client, accesstoken);
-                            obj.AI2Move = "Campaign Limpopo";
-                            obj.AI3Move = "Campaign Western Cape";
-                            obj.AI4Move = "Collect Funds Freestate";
-                            var sendback = JSON.stringify(obj);
-                            client.end();
-                            callback(err = null, result = sendback);
-                            return sendback;
+                            console.log("TESTER");
+                            makeAIsMove(client, accesstoken, function (err, result) {
+                                console.log("TESTER1");
+                                if (err) return console.log("error: ", err);
+                                obj.AI1Move = result[0];
+                                obj.AI2Move = result[1];
+                                obj.AI3Move = result[2];
+                                obj.AI4Move = result[3];
+                                var sendback = JSON.stringify(obj);
+                                client.end();
+                                callback(err = null, result = sendback);
+                                return sendback;
+                            });
                         });
                     });
                 }
@@ -264,6 +520,10 @@ module.exports = {
                         obj.AI2Move = "Poll Limpopo";
                         obj.AI3Move = "Collect Funds Freestate";
                         obj.AI4Move = "Campaign Western Cape";
+                        var sendback = JSON.stringify(obj);
+                        client.end();
+                        callback(err = null, result = sendback);
+                        return sendback;
                     });
                 }
             });
@@ -402,19 +662,19 @@ module.exports = {
             console.log('Query error: ' + err);
         });
         query.on('row', (row) => {
-           querytext = "DELETE FROM userprofile WHERE userid =3;\n" +
-               "DELETE FROM ai1 WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM ai2 WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM ai3 WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM ai4 WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tbllimpopo WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblgauteng WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblnorthwest WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblnorthcape WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblwestcape WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tbleastcape WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblmpumalanga WHERE userid ='"+accesstoken+"';\n" +
-               "DELETE FROM tblfreestate WHERE userid ='"+accesstoken+"';\n" +
+           querytext = "DELETE FROM userprofile WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM ai1 WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM ai2 WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM ai3 WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM ai4 WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tbllimpopo WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblgauteng WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblnorthwest WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblnorthcape WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblwestcape WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tbleastcape WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblmpumalanga WHERE userid ='"+accesstoken+"';" +
+               "DELETE FROM tblfreestate WHERE userid ='"+accesstoken+"';" +
                "DELETE FROM tblkwazulunatal WHERE userid ='"+accesstoken+"';";
             query = client.query(querytext);
 
@@ -766,7 +1026,6 @@ module.exports = {
         query.on('end', () => {
             var sendback = JSON.stringify(overall);
             client.end();
-
             callback(err=null,result=sendback);
             return sendback;
         });
@@ -984,13 +1243,51 @@ function calculateOverallStance(i)
     if(ave==4){return "right";}
     if(ave==5){return "far right";}
 }
-function makeAIMove(ainum, client, accesstoken) {
+function makeAIsMove(client, accesstoken, callback) {
     var querytext = "";
+    console.log("testing123");
+    var ainum =1;
+    var moves = [];
     if (ainum == 1) {
-        querytext = "UPDATE tblgauteng SET ai" + ainum + "support = 88888 WHERE userid ='" + accesstoken + "' ";
+        querytext = "UPDATE tblgauteng SET ai" + ainum + "support = 99 WHERE userid ='" + accesstoken + "' ";
     }
     query = client.query(querytext);
     query.on('end', () => {
+        moves.push("Campaign Gauteng");
+        moves.push("Campaign Limpopo");
+        moves.push("Campaign Western Cape");
+        moves.push("Collect Funds Freestate");
+
+        callback(err = null, result =moves);
         return "Campaign Gauteng";
     });
+}
+
+function getSideStances(mystance)
+{
+    var altstances = [];
+    if(mystance == "right")
+    {
+        altstances.push("far right");
+        altstances.push("centre");
+    }else
+    if(mystance == "far right")
+    {
+        altstances.push("right");
+    }else
+    if(mystance == "centre")
+    {
+        altstances.push("right");
+        altstances.push("left");
+    }else
+    if(mystance == "left")
+    {
+        altstances.push("far left");
+        altstances.push("centre");
+    }else
+    if(mystance == "far left")
+    {
+        altstances.push("left");
+    }
+    return altstances;
 }
