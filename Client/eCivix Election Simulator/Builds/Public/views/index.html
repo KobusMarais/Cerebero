@@ -8,9 +8,15 @@
     <link rel="stylesheet" href="../../TemplateData/style.css">
 
     <script>
+      function passAccessTokenToUnity(accessToken) {
+          gameInstance.SendMessage("NewGame", "MyFunction", accessToken)
+      }
+
       const gameInstance = UnityLoader.instantiate("gameContainer", "Build/Builds.json", {onProgress: UnityProgress});
       const accessToken = getUserAccessToken();
+
       passAccessTokenToUnity(accessToken);
+
     </script>
   </head>
   <body>

@@ -1084,6 +1084,20 @@ module.exports = {
                 }
             });
         });
+    },
+    setUserAccessToken: function (newAccessToken) {
+        if (typeof(Storage) !== "undefined") {
+            localStorage.setItem('accessToken', newAccessToken);
+        } else {
+            localStorage.setItem('accessToken', -1);
+        }
+    },
+    getUserAccessToken : function() {
+        if(typeof(Storage) !== "undefined") {
+            return localStorage.getItem('accessToken');
+        } else {
+            //document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
     }
 };
 function calculateresult(ai1, ai2, ai3, ai4, user)
@@ -1287,7 +1301,7 @@ function getSideStances(mystance)
     return altstances;
 }
 
-function setUserAccessToken(newAccessToken) {
+export function setUserAccessToken(newAccessToken) {
     if(typeof(Storage) !== "undefined") {
         localStorage.setItem('accessToken', newAccessToken);
     } else {
@@ -1295,7 +1309,7 @@ function setUserAccessToken(newAccessToken) {
     }
 }
 
-function getUserAccessToken() {
+export function getUserAccessToken() {
 
     if(typeof(Storage) !== "undefined") {
         return localStorage.getItem('accessToken');

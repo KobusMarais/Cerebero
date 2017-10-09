@@ -92,10 +92,6 @@ function getUserAccessToken() {
     }
 }
 
-function passAccessTokenToUnity(accessToken) {
-    gameInstance.SendMessage("NewGame", "MyFunction", accessToken)
-}
-
     // // Insert user profile into the DB
     // $scope.setUserProfile = () => {
     //     $http.post('/api/v1/createProfile', $scope.formData)
