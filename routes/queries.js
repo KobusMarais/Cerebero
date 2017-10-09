@@ -79,8 +79,8 @@ module.exports = {
         var altstances = [];
         var mainpercentage = 0;
         var sidepercentages = [];
-        var usermp, usersup, ai1mp, ai1sup, ai2mp, ai2sup, ai3mp, ai3sup, ai4mp, ai4sup;
-        var totalmp, totalsup;
+        var usermp=0, usersup=0, ai1mp=0, ai1sup=0, ai2mp=0, ai2sup=0, ai3mp=0, ai3sup=0, ai4mp=0, ai4sup=0;
+        var totalmp =0, totalsup=0;
         var supportgained = 0, manpowergained =0;
         var aisuplost = 0, aimplost = 0;
         var querytext = "select u.funds, p.totalfunds, p.totalmanpower, p.usermanpoweravailable from userprofile u, tbl"+province+" p where u.userid='"+accesstoken+"' AND p.userid ='"+accesstoken+"'";
@@ -101,10 +101,6 @@ module.exports = {
         query.on('end', () => {
             if(campaigncostmp > totalmanmoney || campaigncostfunds > totalmoney)
             {
-                console.log(campaigncostmp);
-                console.log(totalmanmoney);
-                console.log(campaigncostfunds);
-                console.log(totalmoney);
 
                 obj = new Object();
                 obj.success = 2;
@@ -115,7 +111,7 @@ module.exports = {
                 return sendback;
             }
             else {
-                querytext = "select * from userprofile WHERE ((topic1 LIKE '%" + topic + "%') OR (topic2 LIKE '%" + topic + "%') OR (topic3 LIKE '%" + topic + "%') OR (topic4 LIKE '%" + topic + "%') OR (topic5 LIKE '%\"+topic+\"%') OR (topic6 LIKE '%\"+topic+\"%') OR (topic7 LIKE '%\"+topic+\"%') OR (topic8 LIKE '%\"+topic+\"%') OR (topic9 LIKE '%\"+topic+\"%') OR (topic10 LIKE '%\"+topic+\"%')) AND userid = '" + accesstoken + "'";
+                querytext = "select * from userprofile WHERE ((topic1 LIKE '%" + topic + "%') OR (topic2 LIKE '%" + topic + "%') OR (topic3 LIKE '%" + topic + "%') OR (topic4 LIKE '%" + topic + "%') OR (topic5 LIKE '%"+topic+"%') OR (topic6 LIKE '%"+topic+"%') OR (topic7 LIKE '%"+topic+"%') OR (topic8 LIKE '%"+topic+"%') OR (topic9 LIKE '%"+topic+"%') OR (topic10 LIKE '%"+topic+"%')) AND userid = '" + accesstoken + "'";
                 query = client.query(querytext);
                 query.on('row', (row) => {
                     if (patt.test(row['topic1'])) {
@@ -185,6 +181,7 @@ module.exports = {
                     });
                     query.on('end', () => {
                         if (!altstances[1]) {
+                            console.log("THIS DOENST BREAK 3");
                             querytext = "SELECT * FROM stances WHERE stance = '" + altstances[0] + "'";
                         }
                         else {
@@ -236,11 +233,6 @@ module.exports = {
                             query.on('end', () => {
                                 if (!sidepercentages[1]) {
                                     if (usersup > (((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect)) {
-                                        obj.support = 0;
-                                        obj.AI1Move = "Campaign Limpopo";
-                                        obj.AI2Move = "Campaign Gauteng";
-                                        obj.AI3Move = "Poll Western Cape";
-                                        obj.AI4Move = "Collect Funds Eastern Cape";
                                         var sendback = JSON.stringify(obj);
                                         client.end();
                                         callback(err = null, result = sendback);
@@ -289,7 +281,6 @@ module.exports = {
                                         } else {
                                             ai4sup = 0
                                         }
-
                                         usersup += Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect);
                                         usermp += Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0])) * actioneffect);
 
@@ -366,7 +357,7 @@ module.exports = {
 
                                         usersup += Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect);
                                         usermp += Math.round(((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect);
-
+                                        console.log("THIS DOENST BREAK 7");
                                         querytext = "UPDATE tbl" + province + " SET usermanpoweravailable = '"+(totalmanmoney - campaigncostmp)+"', usermanpower = '" + usermp + "', usersupport = '" + usersup + "', ai1manpower = '" + ai1mp + "', ai1support = '" + ai1sup + "', ai2manpower = '" + ai2mp + "', ai2support = '" + ai2sup + "', ai3manpower = '" + ai3mp + "', ai3support = '" + ai3sup + "', ai4manpower = '" + ai4mp + "', ai4support = '" + ai4sup + "' where userid = '" + accesstoken + "';"+
                                         "UPDATE userprofile set funds = '"+(totalmoney - campaigncostfunds)+"' WHERE userid = '"+accesstoken+"'";
                                         query = client.query(querytext);
