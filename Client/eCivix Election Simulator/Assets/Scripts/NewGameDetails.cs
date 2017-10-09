@@ -104,12 +104,16 @@ public class NewGameDetails : MonoBehaviour
 
     void StartGame()
     {
-        if (partyNameInput.text == "" || difData == "" || !flag)
-        {
-            errorMessage.text = "One or more empty fields";
-            errorBox.SetActive(true);
+		if (partyNameInput.text == "" || difData == "" || !flag) {
+			errorMessage.text = "One or more empty fields";
+			errorBox.SetActive (true);
             
-        }
+		} 
+		else if (partyNameInput.text.Length > 10) 
+		{
+			errorMessage.text = "Party name too long";
+			errorBox.SetActive (true);
+		}
         else
         {
             loadScreen.SetActive(true);

@@ -539,7 +539,7 @@ public class IssuesStancesSelection : MonoBehaviour {
 		setIssuesReturn();
 		string url = "http://ecivix.org.za/api/setIssues";
 
-		var requestString = "{\"access_token\":\"2\",\"issues\":[" + createIssueStanceArray() + "]}";
+		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\",\"issues\":[" + createIssueStanceArray() + "]}";
         print("setIssuesString: " + requestString);
        // print(requestString);
 		byte[] pData = Encoding.ASCII.GetBytes (requestString.ToCharArray ());
@@ -596,7 +596,7 @@ public class IssuesStancesSelection : MonoBehaviour {
         string url = "http://ecivix.org.za/api/startGame";
         
 
-		var requestString = "{\"access_token\":\"2\", \"difficulty\":\"" + PlayerPrefs.GetString("Player Difficulty") + "\"}";
+		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\", \"difficulty\":\"" + PlayerPrefs.GetString("Player Difficulty") + "\"}";
 
        	//print("StartGame" + requestString);
         byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
@@ -617,7 +617,7 @@ public class IssuesStancesSelection : MonoBehaviour {
 
 		//var requestString = "{\"access_token\": \"2\",\"issues\":[\"" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "\"]}";
 		//var requestString = "{\"access_token\": \"2\",\"issues\":[\"Same-Sex Marriage\", \"Racism\", \"Abortion\", \"Prostitution\", \"Mining\", \"Crime\", \"Unemployment\", \"Housing\", \"Tax Of High Income Earners\", \"Social Grants\"]}";
-		var requestString = "{\"access_token\": \"2\",\"issues\":[\"" + IssuesSelection.selectedIssues[0].ToString() + "\",\"" + IssuesSelection.selectedIssues[1].ToString() + "\",\"" + IssuesSelection.selectedIssues[2].ToString() + "\",\"" + IssuesSelection.selectedIssues[3].ToString() + "\",\"" + IssuesSelection.selectedIssues[4].ToString() + "\",\"" + IssuesSelection.selectedIssues[5].ToString() + "\",\"" + IssuesSelection.selectedIssues[6].ToString() + "\",\"" + IssuesSelection.selectedIssues[7].ToString() + "\",\"" + IssuesSelection.selectedIssues[8].ToString() + "\",\"" + IssuesSelection.selectedIssues[9].ToString() + "\"]}";
+		var requestString = "{\"access_token\": \"" + NewGame.access_token + "\",\"issues\":[\"" + IssuesSelection.selectedIssues[0].ToString() + "\",\"" + IssuesSelection.selectedIssues[1].ToString() + "\",\"" + IssuesSelection.selectedIssues[2].ToString() + "\",\"" + IssuesSelection.selectedIssues[3].ToString() + "\",\"" + IssuesSelection.selectedIssues[4].ToString() + "\",\"" + IssuesSelection.selectedIssues[5].ToString() + "\",\"" + IssuesSelection.selectedIssues[6].ToString() + "\",\"" + IssuesSelection.selectedIssues[7].ToString() + "\",\"" + IssuesSelection.selectedIssues[8].ToString() + "\",\"" + IssuesSelection.selectedIssues[9].ToString() + "\"]}";
 
         WWWForm form = new WWWForm();
 
