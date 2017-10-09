@@ -1,30 +1,57 @@
-var express = require('express');
-var router = express.Router();
-var queries = require('./queries.js');
+const express = require('express');
+const router = express.Router();
+const path = require('path');
+const queries = require('./queries.js');
+let app = express();
 
+/* Routes to load pages and the game */
+router.get('/', function(req, res, next) {
+    res.sendFile(path.join(
+        __dirname, '..', 'Client', 'eCivix Election Simulator',
+        'Builds', 'Public', 'views', 'login.html'));
+});
 
-router.post('/register', function(req,res){
+router.get('/register', function (req, res, next) {
+    res.sendFile(path.join(
+        __dirname, '..', 'Client', 'eCivix Election Simulator',
+        'Builds', 'Public', 'views', 'register.html'));
+});
+
+router.get('/login', function (req, res, next) {
+    res.sendFile(path.join(
+        __dirname, '..', 'Client', 'eCivix Election Simulator',
+        'Builds', 'Public', 'views', 'login.html'));
+});
+
+router.get('/loadGame', function(req, res, next) {
+    res.sendFile(path.join(
+        __dirname, '..', 'Client', 'eCivix Election Simulator',
+        'Builds', 'Public', 'views', 'index.html'));
+});
+
+/* API Calls */
+router.post('/api/register', function(req,res){
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-
+    console.log('Registration API');
     if(!req.body.name || !req.body.email || !req.body.username || !req.body.password)
     {
         console.log("register API call name or email or username or password not set");
-        var obj = new Object();
+        const obj = new Object();
         obj.success = 0;
-        var result = JSON.stringify(obj);
-        var obj = JSON.parse(result);
-        res.send(obj);
+        const result = JSON.stringify(obj);
+        const parsedObject = JSON.parse(result);
+        res.send(parsedObject);
     }
     else {
         let i = req.body;
         //generate new token for each user and create entry in db for that user.
         queries.register(i.name, i.surname, i.email, i.username, i.password, function (err, result) {
-            if (err) return console.log("error: ", err)
-            var obj = JSON.parse(result);
+        if (err) return console.log("error: ", err);
+        const obj = JSON.parse(result);
             res.send(obj);
         });
     }
@@ -32,28 +59,28 @@ router.post('/register', function(req,res){
 
 });
 
-router.post('/login', function(req,res){
+router.post('/api/login', function(req,res){
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-
-    //insert code here to check if email and password are correct and return accesskey.
+    console.log('Login API');
+    //insert code here to check if email and password are correct and return access key.
     if(!req.body.username || !req.body.password)
     {
         console.log("login API call username or password not set");
-        var obj = new Object();
+        let obj = new Object();
         obj.success = 0;
-        var result = JSON.stringify(obj);
-        var obj = JSON.parse(result);
-        res.send(obj);
+        const result = JSON.stringify(obj);
+        const parsedObject = JSON.parse(result);
+        res.send(parsedObject);
     }
     else {
         let i = req.body;
         queries.login(i.username, i.password, function (err, result) {
             if (err) return console.log("error: ", err);
-            var obj = JSON.parse(result);
+        const obj = JSON.parse(result);
             res.send(obj);
         });
     }
