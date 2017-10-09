@@ -37,7 +37,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Johnie\",\r\n  \"surname\": \"Does\",\r\n  \"email\": \"Jd@gmail.com\",\r\n  \"password\":\"pass132\",\r\n  \"username\": \"johnnydoe\"\r\n}"
+					"raw": "{\r\n  \"name\": \"Johansie\",\r\n  \"surname\": \"Daoses\",\r\n  \"email\": \"Jd@agsmail.com\",\r\n  \"password\":\"paasss132\",\r\n  \"username\": \"joahnnydoes\"\r\n}"
 				},
 				"description": ""
 			},
@@ -57,7 +57,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"3\"\r\n}"
 				},
 				"description": ""
 			},
@@ -97,7 +97,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"3\"\r\n}"
 				},
 				"description": ""
 			},
@@ -117,7 +117,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"3\"\r\n}"
 				},
 				"description": ""
 			},
@@ -137,7 +137,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\",\r\n  \"province\":\"mpumalanga\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"1\"\r\n}"
 				},
 				"description": ""
 			},
@@ -209,9 +209,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\",\r\n  \"province\": \"Freestate\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"3\",\r\n  \"province\": \"freestate\"\r\n}"
 				},
-				"description": ""
+				"description": "Valid values to set as province: \"freestate\", \"gauteng\", \"northwest\", \"northcape\", \"westcape\", \"eastcape\", \"limpopo\", \"mpumalanga\", \"kwazulunatal\""
 			},
 			"response": []
 		},
@@ -229,9 +229,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"1\",\r\n  \"province\": \"Gauteng\",\r\n  \"topic\": \"Crime\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"2\",\r\n  \"province\": \"gauteng\",\r\n  \"topic\": \"crime\",\r\n  \"campaigntype\" : \"rally\"\r\n}\r\n"
 				},
-				"description": ""
+				"description": "campaign type can be either \"rally\" or \"telemarketing\" or \"socialmedia\"\nValid values to set as province: \"freestate\", \"gauteng\", \"northwest\", \"northcape\", \"westcape\", \"eastcape\", \"limpopo\", \"mpumalanga\", \"kwazulunatal\""
 			},
 			"response": []
 		},
@@ -251,7 +251,7 @@
 					"mode": "raw",
 					"raw": "{\r\n  \"access_token\": \"2\",\r\n  \"province\": \"Gauteng\"\r\n}"
 				},
-				"description": ""
+				"description": "Valid values to set as province: \"freestate\", \"gauteng\", \"northwest\", \"northcape\", \"westcape\", \"eastcape\", \"limpopo\", \"mpumalanga\", \"kwazulunatal\""
 			},
 			"response": []
 		},
@@ -269,7 +269,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\",\r\n  \"difficulty\" : \"easy\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"3\",\r\n  \"difficulty\" : \"easy\"\r\n}"
 				},
 				"description": ""
 			},
@@ -289,7 +289,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"3\"\r\n}"
 				},
 				"description": ""
 			},
@@ -309,7 +309,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"1\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"3\"\r\n}"
 				},
 				"description": ""
 			},
@@ -366,7 +366,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"access_token\": \"2\",\r\n\t\"issues\":[{\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\":\"racism\", \"stance\":\"far right\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}]\r\n}"
+					"raw": "{\r\n\t\"access_token\": \"3\",\r\n\t\"issues\":[{\"issue\" :\"crime\", \"stance\" :\"far left\"}, {\"issue\":\"racism\", \"stance\":\"far left\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}, {\"issue\":\"abortion\", \"stance\":\"centre\"}, {\"issue\" :\"crime\", \"stance\" :\"far left\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far left\"}, {\"issue\" :\"crime\", \"stance\" :\"far right\"}, {\"issue\" :\"crime\", \"stance\" :\"far left\"}, {\"issue\" :\"crime\", \"stance\" :\"far left\"}]\r\n}"
 				},
 				"description": ""
 			},
@@ -386,7 +386,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"access_token\": \"2\",\r\n\t\"issues\":[\"Same-Sex Marriage\", \"Racism\", \"Abortion\", \"Prostitution\", \"Mining\", \"Crime\", \"Unemployment\", \"Housing\", \"Tax Of High Income Earners\", \"Social Grants\"]\r\n}"
+					"raw": "{\n\t\"access_token\": \"2\",\n\t\"issues\":[\"Same-Sex Marriage\", \"Racism\", \"Abortion\", \"Prostitution\", \"Mining\", \"Crime\", \"Unemployment\", \"Housing\", \"Tax Of High Income Earners\", \"Social Grants\"]\n}"
 				},
 				"description": ""
 			},
@@ -406,7 +406,28 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"access_token\": \"2\"\r\n}"
+					"raw": "{\r\n  \"access_token\": \"3\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+
+		},
+		{
+			"name": "endResult",
+			"request": {
+				"url": "http://localhost:3000/api/endResult",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"access_token\": \"3\"\r\n}"
 				},
 				"description": ""
 			},
