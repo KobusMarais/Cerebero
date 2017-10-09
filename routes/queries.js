@@ -431,14 +431,19 @@ module.exports = {
                         querytext = "UPDATE userprofile SET funds  = '" + funds + "' WHERE userId = '" + accesstoken + "'; UPDATE tbl"+province+" SET usermanpoweravailable = '"+(availablemp-collectcostmp)+"'";
                         query = client.query(querytext);
                         query.on('end', () => {
-                            obj.AI1Move = "Camapign Gauteng";//makeAIMove(1, client, accesstoken);
-                            obj.AI2Move = "Campaign Limpopo";
-                            obj.AI3Move = "Campaign Western Cape";
-                            obj.AI4Move = "Collect Funds Freestate";
-                            var sendback = JSON.stringify(obj);
-                            client.end();
-                            callback(err = null, result = sendback);
-                            return sendback;
+                            console.log("TESTER");
+                            makeAIsMove(client, accesstoken, function (err, result) {
+                                console.log("TESTER1");
+                                if (err) return console.log("error: ", err);
+                                obj.AI1Move = result[0];
+                                obj.AI2Move = result[1];
+                                obj.AI3Move = result[2];
+                                obj.AI4Move = result[3];
+                                var sendback = JSON.stringify(obj);
+                                client.end();
+                                callback(err = null, result = sendback);
+                                return sendback;
+                            });
                         });
                     });
                 }
@@ -524,6 +529,10 @@ module.exports = {
                         obj.AI2Move = "Poll Limpopo";
                         obj.AI3Move = "Collect Funds Freestate";
                         obj.AI4Move = "Campaign Western Cape";
+                        var sendback = JSON.stringify(obj);
+                        client.end();
+                        callback(err = null, result = sendback);
+                        return sendback;
                     });
                 }
             });
@@ -1026,7 +1035,6 @@ module.exports = {
         query.on('end', () => {
             var sendback = JSON.stringify(overall);
             client.end();
-
             callback(err=null,result=sendback);
             return sendback;
         });
@@ -1244,13 +1252,22 @@ function calculateOverallStance(i)
     if(ave==4){return "right";}
     if(ave==5){return "far right";}
 }
-function makeAIMove(ainum, client, accesstoken) {
+function makeAIsMove(client, accesstoken, callback) {
     var querytext = "";
+    console.log("testing123");
+    var ainum =1;
+    var moves = [];
     if (ainum == 1) {
-        querytext = "UPDATE tblgauteng SET ai" + ainum + "support = 88888 WHERE userid ='" + accesstoken + "' ";
+        querytext = "UPDATE tblgauteng SET ai" + ainum + "support = 99 WHERE userid ='" + accesstoken + "' ";
     }
     query = client.query(querytext);
     query.on('end', () => {
+        moves.push("Campaign Gauteng");
+        moves.push("Campaign Limpopo");
+        moves.push("Campaign Western Cape");
+        moves.push("Collect Funds Freestate");
+
+        callback(err = null, result =moves);
         return "Campaign Gauteng";
     });
 }
