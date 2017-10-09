@@ -1,6 +1,6 @@
 const pg = require('pg');
-const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
-//const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
+// const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
 let query;
 
 module.exports = {
@@ -34,7 +34,9 @@ module.exports = {
             if(username === row['username'] && password === row['user_password']) {
                 obj.access_token = row['pkid'];
             }
+            setUserAccessToken(obj.access_token);
         });
+
         query.on('end', () => {
             const sendback = JSON.stringify(obj);
             client.end();
@@ -1283,4 +1285,21 @@ function getSideStances(mystance)
         altstances.push("left");
     }
     return altstances;
+}
+
+function setUserAccessToken(newAccessToken) {
+    if(typeof(Storage) !== "undefined") {
+        localStorage.setItem('accessToken', newAccessToken);
+    } else {
+        localStorage.setItem('accessToken', -1);
+    }
+}
+
+function getUserAccessToken() {
+
+    if(typeof(Storage) !== "undefined") {
+        return localStorage.getItem('accessToken');
+    } else {
+        //document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+    }
 }

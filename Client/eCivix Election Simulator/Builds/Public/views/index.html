@@ -6,10 +6,11 @@
     <title>Unity WebGL Player | eCivix Election Simulator</title>
     <link rel="shortcut icon" href="../../TemplateData/favicon.ico">
     <link rel="stylesheet" href="../../TemplateData/style.css">
-    <script src="../../TemplateData/UnityProgress.js"></script>
-    <script src="../../Build/UnityLoader.js"></script>
+
     <script>
       const gameInstance = UnityLoader.instantiate("gameContainer", "Build/Builds.json", {onProgress: UnityProgress});
+      const accessToken = getUserAccessToken();
+      passAccessTokenToUnity(accessToken);
     </script>
   </head>
   <body>
@@ -21,5 +22,9 @@
         <div class="title">eCivix Election Simulator</div>
       </div>
     </div>
+    <script src="../../TemplateData/UnityProgress.js"></script>
+    <script src="../../Build/UnityLoader.js"></script>
+    <script src="../../Build/UnityLoader.js"></script>
+    <script src="/Public/javascript/controller.js"></script>
   </body>
 </html>

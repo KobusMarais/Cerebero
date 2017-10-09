@@ -5,11 +5,12 @@ angular.module('nodeLogin', [])
             .success((data) => {
                 $scope.formData = {};
                 $scope.userData = data;
+                setUserAccessToken(data.access_token);
             })
             .error((error) => {
                 console.log('Error: ' + error);
             })
-            .then(function (data) {
+            .then(function () {
             //want redirection
             $window.location.href = '/loadGame';
         }, function (error) {
@@ -73,6 +74,28 @@ angular.module('nodeLogin', [])
          window.location = "/login";
      }
  });
+
+function setUserAccessToken(newAccessToken) {
+    if(typeof(Storage) !== "undefined") {
+        localStorage.setItem('accessToken', newAccessToken);
+    } else {
+        localStorage.setItem('accessToken', -1);
+    }
+}
+
+function getUserAccessToken() {
+
+    if(typeof(Storage) !== "undefined") {
+        return localStorage.getItem('accessToken');
+    } else {
+        //document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+    }
+}
+
+function passAccessTokenToUnity(accessToken) {
+    gameInstance.SendMessage("NewGame", "MyFunction", accessToken)
+}
+
     // // Insert user profile into the DB
     // $scope.setUserProfile = () => {
     //     $http.post('/api/v1/createProfile', $scope.formData)
