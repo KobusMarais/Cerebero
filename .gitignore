@@ -128,3 +128,4 @@ GeneratedArtifacts/
 ModelManifest.xml
 !bin/www
 .idea/watcherTasks.xml
+*.orig
