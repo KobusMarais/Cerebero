@@ -33,8 +33,6 @@ router.post('/register', function(req,res){
 });
 
 router.post('/login', function(req,res){
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Credentials', true);
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

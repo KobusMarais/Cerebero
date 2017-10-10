@@ -1,6 +1,6 @@
 const pg = require('pg');
-// const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
-const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
+ const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+
 let query;
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
         client.connect();
         let obj = new Object();
 
-        const querytext = "INSERT INTO userAccounts(username, user_password, firstName, lastName, email) values('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+email+"') RETURNING pkid";
+        const querytext = "INSERT INTO userAccounts(username, password, firstName, lastName, email) values('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+email+"') RETURNING pkid";
         query = client.query(querytext);
         query.on('row', (row) => {
             obj.access_token = row['pkid'];
@@ -26,12 +26,15 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         let obj = new Object();
+        console.log(username);
+        console.log(password);
         obj.access_token = -1;
 
-        const querytext = "select * from userAccounts WHERE username ='"+username+"' AND user_password = '"+password+"'\n";
+        const querytext = "select * from useraccounts where username = 'kobus' AND password = 'password'";
         query = client.query(querytext);
         query.on('row', (row) => {
-            if(username === row['username'] && password === row['user_password']) {
+            if(username === row['username'] && password === row['password']) {
+
                 obj.access_token = row['pkid'];
             }
             // setUserAccessToken(obj.access_token);
