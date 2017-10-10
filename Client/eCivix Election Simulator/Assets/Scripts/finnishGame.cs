@@ -11,7 +11,7 @@ public class finnishGame : MonoBehaviour {
     // Use this for initialization
 
     public Button done;
-	private WWW www;
+	private WWW www11;
 	public Text position1Name;
 	public Text position1Score;
 	public Text position2Name;
@@ -84,13 +84,16 @@ public class finnishGame : MonoBehaviour {
 		var headers = form.headers;
 		headers["Content-Type"] = "application/json";
 
-		www = new WWW (url, pData, headers);
+		www11 = new WWW (url, pData, headers);
 
-        while(!www.isDone)
+		/*
+		while(!www11.isDone)
         {
             loadScreen.SetActive(true);
             loadText.SetActive(true);
         }
+
+		*/
 
         loadScreen.SetActive(false);
         loadText.SetActive(false);
@@ -100,16 +103,16 @@ public class finnishGame : MonoBehaviour {
 
 	IEnumerator loadHighscores()
 	{
-		yield return www;
-		if (!string.IsNullOrEmpty(www.error))
+		yield return www11;
+		if (!string.IsNullOrEmpty(www11.error))
 		{
-            errorMessage.text = www.error;
+			errorMessage.text = www11.error;
             errorBox.SetActive(true);
         }
 		else
 		{
-			print(www.text);
-			var jsonObj = JSON.Parse(www.text);
+			print(www11.text);
+			var jsonObj = JSON.Parse(www11.text);
 			int arrayLength = 11;
 			//int 
 			for (int i = 0; i < arrayLength; i++) {
