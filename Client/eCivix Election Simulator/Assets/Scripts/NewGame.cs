@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 public class NewGame : MonoBehaviour {
 
-	//[DllImport("__Internal")]
-	//private static extern string getAccessToken();
+	[DllImport("__Internal")]
+	private static extern string getAccessToken();
 
 	public static string access_token;
 
