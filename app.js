@@ -4,6 +4,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+var cors = require('cors');
 
 //const index = require('./routes/index');
 const users = require('./routes/users');
@@ -14,6 +15,7 @@ const mainGame = require('./routes/mainGame');
 const databasers = require('./routes/database.js');
 let app = express();
 
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
