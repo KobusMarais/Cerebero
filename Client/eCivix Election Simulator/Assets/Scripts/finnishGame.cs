@@ -73,9 +73,18 @@ public class finnishGame : MonoBehaviour {
 
 		loadHighscores();
 
-        string url = "http://ecivix.org.za/api/getHighscoreBoard";
+        string url = "http://ecivix.org.za/api/endHighscore";
 
-        www = new WWW (url);
+		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\", \"userScore\":\"" + GamePlayButtons.finalScore + "\"}";
+		print ("gethighscore: " + requestString);
+		byte[] pData = Encoding.ASCII.GetBytes(requestString.ToCharArray());
+
+		WWWForm form = new WWWForm();
+
+		var headers = form.headers;
+		headers["Content-Type"] = "application/json";
+
+		www = new WWW (url, pData, headers);
 
         while(!www.isDone)
         {
@@ -99,9 +108,10 @@ public class finnishGame : MonoBehaviour {
         }
 		else
 		{
-			//print(www.text);
+			print(www.text);
 			var jsonObj = JSON.Parse(www.text);
 			int arrayLength = 11;
+			//int 
 			for (int i = 0; i < arrayLength; i++) {
 
 				switch (i)
