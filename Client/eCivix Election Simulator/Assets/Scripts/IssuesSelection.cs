@@ -150,51 +150,57 @@ public class IssuesSelection : MonoBehaviour {
        
     }
 
+	IEnumerator loadIssues()
+	{
+		yield return www;
+		if (!string.IsNullOrEmpty (www.error)) {
+			errorMessage.text = www.error;
+			errorBox.SetActive(true);
+		} else {
+			print("loadIssuesReturn" + www.text);
+			var jsonObj = JSON.Parse (www.text);
+			//int arrayLength = jsonObj ["scoreboard"].Count;
+			//print(jsonObj ["issues"][0]);
+			// Loop through provinces and change image color
+			int i = 0;
+			foreach (var issue in issueToggleArray)
+			{
+				issue.GetComponentInChildren<Text>().text = removeApos(jsonObj [i]["topic"].ToString ());
+				//print(issue.GetComponentInChildren<Text>().text);
+
+				i++;
+			}
+
+
+		}
+	}
+
 	void getIssues()
 	{
 		print("Getting issues");
+
+		loadScreen.SetActive(false);
+		loadText.SetActive(false);
 
 		loadIssues();
 		string url = "http://ecivix.org.za/api/getIssues";
         
 
 		www = new WWW (url);
-        while(!www.isDone)
+        
+		/*
+         while(!www.isDone)
         {
             loadScreen.SetActive(true);
             loadText.SetActive(true);
         }
 
-        loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        */
 
         StartCoroutine (loadIssues());
 	}
 
-	IEnumerator loadIssues()
-	{
-		yield return www;
-		if (!string.IsNullOrEmpty (www.error)) {
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        } else {
-			print("loadIssuesReturn" + www.text);
-			var jsonObj = JSON.Parse (www.text);
-            //int arrayLength = jsonObj ["scoreboard"].Count;
-            //print(jsonObj ["issues"][0]);
-            // Loop through provinces and change image color
-            int i = 0;
-			foreach (var issue in issueToggleArray)
-			{
-				issue.GetComponentInChildren<Text>().text = removeApos(jsonObj [i]["topic"].ToString ());
-				//print(issue.GetComponentInChildren<Text>().text);
 
-                i++;
-			}
-
-
-		}
-	}
 
 	string removeApos(string a) {
 		return a.Replace('"', ' ').Trim();
