@@ -4,8 +4,9 @@ mergeInto(LibraryManager.library, {
     
     var token = localStorage.getItem('accessToken');
 
-    if (token == null)
+    if (token === undefined || token === null) {
     	token = "2";
+    }
 
     return token;
   }

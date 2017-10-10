@@ -93,6 +93,9 @@ public class GamePlayButtons : MonoBehaviour {
 	private WWW www;
 	private WWW www2;
 	private WWW www3;
+	private WWW www4;
+	private WWW www5;
+	private WWW www6;
 	public Text userFunds;
 	public Text userSupport;
 
@@ -398,9 +401,9 @@ public class GamePlayButtons : MonoBehaviour {
 
 
 
-        getScore();
+        //getScore();
 		fetchManpower ();
-
+		updateFunds();
        
     }
     void closeErrorFun()
@@ -441,22 +444,22 @@ public class GamePlayButtons : MonoBehaviour {
 		var headers = form.headers;
 		headers["Content-Type"] = "application/json";
 
-		www = new WWW(url, pData, headers);
+		www4 = new WWW(url, pData, headers);
         StartCoroutine(getScoreHelp());
     }
 
     IEnumerator getScoreHelp()
 	{
-		yield return www;
-		if (!string.IsNullOrEmpty(www.error))
+		yield return www4;
+		if (!string.IsNullOrEmpty(www4.error))
 		{
-			print ("getScoreError: "+ www.error);
-            errorMessage.text = www.error;
+			print ("getScoreError: "+ www4.error);
+            errorMessage.text = www4.error;
             errorBox.SetActive(true);
         }
 		else
 		{
-			var jsonObj = JSON.Parse(www.text);
+			var jsonObj = JSON.Parse(www4.text);
            Score.text = jsonObj["score"].Value.ToString(); 
         }
 	}
@@ -573,7 +576,7 @@ public class GamePlayButtons : MonoBehaviour {
 
 			actionCount++;
 			checkActionCount ();
-			if (jsonObj ["success"]) {
+			if (jsonObj ["success"] == 2) {
 				infoPanelText.text = "Insufficient manpower";
 			} else {
 				
@@ -599,6 +602,8 @@ public class GamePlayButtons : MonoBehaviour {
 			www2 = new WWW(url2, pData2, headers);
 			StartCoroutine(updateFunds());
 
+
+			
             //int fundsVal = int.Parse(jsonObj["funds"].Value);
 
             //userFundsCurrent += fundsVal;
@@ -615,7 +620,7 @@ public class GamePlayButtons : MonoBehaviour {
             errorMessage.text = www2.error;
             errorBox.SetActive(true);
 
-			print("updateFundsError: " + www.error);
+			print("updateFundsError: " + www2.error);
             //print(www.error);
         }
 		else
@@ -626,6 +631,7 @@ public class GamePlayButtons : MonoBehaviour {
            fundsVal = jsonObj["funds"].Value.ToString();
            userFunds.text = fundsVal;
 
+			getScore();
             
         }
 	}
@@ -654,7 +660,7 @@ public class GamePlayButtons : MonoBehaviour {
 			var headersPoll = formPoll.headers;
 			headersPoll["Content-Type"] = "application/json";
 
-			www = new WWW (url, pData, headersPoll);
+			www5 = new WWW (url, pData, headersPoll);
 			StartCoroutine (provincePolled());
 
             infoPanel.SetActive(true);
@@ -666,20 +672,20 @@ public class GamePlayButtons : MonoBehaviour {
 	IEnumerator provincePolled()
 	{
 		print("provincePolled");
-		yield return www;
-		if (!string.IsNullOrEmpty(www.error))
+		yield return www5;
+		if (!string.IsNullOrEmpty(www5.error))
 		{
-			print ("polledError: " + www.error);
-            errorMessage.text = www.error;
+			print ("polledError: " + www5.error);
+            errorMessage.text = www5.error;
             errorBox.SetActive(true);
         }
 		else
 		{
 			actionCount++;
 			checkActionCount ();
-			print ("polled: " + www.text);
-			var jsonObj = JSON.Parse(www.text);
-			if (jsonObj ["success"]) {
+			print ("polled: " + www5.text);
+			var jsonObj = JSON.Parse(www5.text);
+			if (jsonObj ["success"] == 2) {
 				infoPanelText.text = "Insufficient funds or manpower";
 			} else {
 				AI1Action.text = jsonObj ["AI1Move"].Value.ToString ();
@@ -690,7 +696,9 @@ public class GamePlayButtons : MonoBehaviour {
 
 				infoPanelText.text = "Poll Votes\n\n" + PlayerPrefs.GetString("Player Party") + ": " + jsonObj ["User"].Value.ToString () + "\n" + AI1Name.text + ": " + jsonObj ["AI1"].Value.ToString () + "\n" + AI2Name.text +  ": " + jsonObj ["AI2"].Value.ToString () + "\n" + AI3Name.text + ": " +
 					jsonObj ["AI3"].Value.ToString () + "\n" + AI4Name.text + ": " + jsonObj ["AI4"].Value.ToString ();
+				getScore();
 			}
+
         }
 	}
 
@@ -748,7 +756,7 @@ public class GamePlayButtons : MonoBehaviour {
 		{
             errorMessage.text = www2.error;
             errorBox.SetActive(true);
-			print("provinceCampaignError: " + www.error);
+			print("provinceCampaignError: " + www2.error);
         }
 		else
 		{
@@ -757,23 +765,23 @@ public class GamePlayButtons : MonoBehaviour {
 			checkActionCount ();
 			var jsonObj = JSON.Parse(www2.text);
 
-			if (jsonObj ["success"]) {
+			if (jsonObj ["success"] == 2) {
 				infoPanelText.text = "Insufficient funds or manpower";
 			} else {
-
+			getScore();
 			AI1Action.text = jsonObj["AI1Move"].Value.ToString();
 			AI2Action.text = jsonObj["AI2Move"].Value.ToString();
 			AI3Action.text = jsonObj["AI3Move"].Value.ToString();
 			AI4Action.text = jsonObj["AI4Move"].Value.ToString();
-
+			
 			var supportAmount = jsonObj["support"].Value.ToString();
             //int supportAmountNum = int.Parse(jsonObj["support"].Value);
 
 
             infoPanelText.text = "You gained " + supportAmount +  " in support!";
 
+			getSupport ();
 			
-
 
             //userSupportCurrent += supportAmountNum;
             //userSupport.text = userSupportCurrent.ToString();
@@ -795,25 +803,25 @@ public class GamePlayButtons : MonoBehaviour {
 		var headers = form.headers;
 		headers["Content-Type"] = "application/json";
 
-		www = new WWW(url, pData, headers);
+		www6 = new WWW(url, pData, headers);
 		StartCoroutine(getSupportHelp());
 	}
     
 
 	IEnumerator getSupportHelp()
 	{
-		yield return www2;
+		yield return www6;
 
-		if (!string.IsNullOrEmpty(www2.error))
+		if (!string.IsNullOrEmpty(www6.error))
 		{
-			errorMessage.text = www2.error;
+			errorMessage.text = www6.error;
 			errorBox.SetActive(true);
-			print("getSupportHelpError: " + www.error);
+			print("getSupportHelpError: " + www6.error);
 		}
 		else
 		{
-			print ("getSupportHelp: " + www2.text);
-			var jsonObj = JSON.Parse(www2.text);
+			print ("getSupportHelp: " + www6.text);
+			var jsonObj = JSON.Parse(www6.text);
 			userSupport.text = jsonObj["support"].Value.ToString();
 		}
 	}
@@ -1070,10 +1078,9 @@ public class GamePlayButtons : MonoBehaviour {
 			print ("weeksRemaining: " + weeksRemaining);
 
 			// Make this != "0" to test and go to leaderboard
-			if(weeksRemaining == "0")
-            {
+			if (weeksRemaining == "0") {
 				print ("Done!!");
-
+				getScore ();
 				finalResult ();
 				string url2 = "http://ecivix.org.za/api/endResult";
 
@@ -1083,12 +1090,14 @@ public class GamePlayButtons : MonoBehaviour {
 
 				WWWForm form2 = new WWWForm ();
 				var headers2 = form2.headers;
-				headers2["Content-Type"] = "application/json";
+				headers2 ["Content-Type"] = "application/json";
 
 				www2 = new WWW (url2, pData2, headers2);
 				StartCoroutine (finalResult ());
 
-            }
+			} else {
+				getScore ();
+			}
 		}
 	}
 
@@ -1099,6 +1108,7 @@ public class GamePlayButtons : MonoBehaviour {
 			errorBox.SetActive (true);
 		} else {
 			print ("finalResult: " + www2.text);
+			getScore();
 			var jsonObj = JSON.Parse(www2.text);
 			finalScore = jsonObj["score"].Value.ToString();
 			string hasWon = jsonObj ["success"].Value.ToString ();
