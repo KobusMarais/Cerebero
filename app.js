@@ -5,16 +5,18 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+//const index = require('./routes/index');
 const users = require('./routes/users');
 const AI = require('./routes/AI');
 const api = require('./routes/api');
+const routes = require('./routes/routes');
 const mainGame = require('./routes/mainGame');
 const databasers = require('./routes/database.js');
 let app = express();
 
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /Public
 //app.use(favicon(path.join(__dirname, 'Public', 'favicon.ico')));
@@ -24,10 +26,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/AI', AI);
-
-app.use('/', api);
+//app.use('/index', index);
+app.use('/', routes);
+app.use('/api', api);
+app.use('/users', users);
+app.use('/mainGame', mainGame);
 app.use('/dbtest', databasers);
-app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds'));
+app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds/'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

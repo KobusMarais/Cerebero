@@ -2,35 +2,9 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const queries = require('./queries.js');
-let app = express();
-
-/* Routes to load pages and the game */
-router.get('/', function(req, res, next) {
-    res.sendFile(path.join(
-        __dirname, '..', 'Client', 'eCivix Election Simulator',
-        'Builds', 'Public', 'views', 'login.html'));
-});
-
-router.get('/register', function (req, res, next) {
-    res.sendFile(path.join(
-        __dirname, '..', 'Client', 'eCivix Election Simulator',
-        'Builds', 'Public', 'views', 'register.html'));
-});
-
-router.get('/login', function (req, res, next) {
-    res.sendFile(path.join(
-        __dirname, '..', 'Client', 'eCivix Election Simulator',
-        'Builds', 'Public', 'views', 'login.html'));
-});
-
-router.get('/loadGame', function(req, res, next) {
-    res.sendFile(path.join(
-        __dirname, '..', 'Client', 'eCivix Election Simulator',
-        'Builds', 'Public', 'views', 'index.html'));
-});
 
 /* API Calls */
-router.post('/api/register', function(req,res){
+router.post('/register', function(req,res){
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -59,7 +33,7 @@ router.post('/api/register', function(req,res){
 
 });
 
-router.post('/api/login', function(req,res){
+router.post('/login', function(req,res){
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
