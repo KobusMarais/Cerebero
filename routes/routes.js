@@ -24,7 +24,7 @@ router.get('/login', function (req, res, next) {
 router.get('/loadGame', function(req, res, next) {
     res.sendFile(path.join(
         __dirname, '..', 'Client', 'eCivix Election Simulator',
-        'Builds', 'Public', 'views', 'index.html'));
+        'Builds', 'index.html'));
 });
 
 module.exports = router;
