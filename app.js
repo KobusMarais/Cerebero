@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 app.use('/AI', AI);
 
-app.use('/', api);
+app.use('/api', api);
 app.use('/dbtest', databasers);
 app.use(express.static(__dirname + '/Client/eCivix Election Simulator/Builds'));
 
