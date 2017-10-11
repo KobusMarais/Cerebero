@@ -1,5 +1,6 @@
 const pg = require('pg');
  const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+// const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
 
 let query;
 
