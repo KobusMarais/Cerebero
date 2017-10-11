@@ -21,9 +21,6 @@ public class NewGame : MonoBehaviour {
 		try   
 		{  
 			access_token = getAccessToken();
-
-			if (access_token == "sc")
-				access_token = "2";
 		}  
 		catch  
 		{
