@@ -631,14 +631,14 @@ public class IssuesStancesSelection : MonoBehaviour {
 
 		www2 = new WWW(url, pData, headers);
 
-        while (!www2.isDone)
+        /*while (!www2.isDone)
         {
             loadScreen.SetActive(true);
             loadText.SetActive(true);
         }
 
         loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        loadText.SetActive(false);*/
 
         StartCoroutine(getStancesHelp());
     }

@@ -159,14 +159,14 @@ public class IssuesSelection : MonoBehaviour {
         
 
 		www = new WWW (url);
-        while(!www.isDone)
+       /* while(!www.isDone)
         {
             loadScreen.SetActive(true);
             loadText.SetActive(true);
         }
 
         loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        loadText.SetActive(false);*/
 
         StartCoroutine (loadIssues());
 	}

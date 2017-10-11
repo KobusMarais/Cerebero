@@ -17,16 +17,15 @@ public class NewGame : MonoBehaviour {
 		Button btn = GetComponent<Button>();
 		btn.onClick.AddListener(TaskOnClick);
 
-		/*
-		try   
+        /*try   
 		{  
 			access_token = getAccessToken(); 
 		}  
 		catch  
 		{
 			access_token = "2";
-		}
-		*/
+		}*/
+		
 
 		access_token = "2";
 		print ("accessToken: " + access_token);
