@@ -8,6 +8,7 @@ angular.module('nodeLogin', [])
                 $scope.userData = data;
                 $window.localStorage.setItem('accessToken',data.access_token);
                 $window.location.href = '/loadGame';
+                console.log("access_token before Unity: " + $window.localStorage.getItem('accessToken'));
             })
             .error((error) => {
                 console.log('Error: ' + error);
