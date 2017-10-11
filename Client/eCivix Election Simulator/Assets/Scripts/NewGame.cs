@@ -17,18 +17,21 @@ public class NewGame : MonoBehaviour {
 		Button btn = GetComponent<Button>();
 		btn.onClick.AddListener(TaskOnClick);
 
-		/*
+
 		try   
 		{  
-			access_token = getAccessToken(); 
+			access_token = getAccessToken();
+
+			if (access_token == "sc")
+				access_token = "2";
 		}  
 		catch  
 		{
 			access_token = "2";
 		}
-		*/
 
-		access_token = "2";
+
+		//access_token = "2";
 		print ("accessToken: " + access_token);
 
 		//access_token = "2";
