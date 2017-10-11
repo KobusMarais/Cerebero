@@ -7,8 +7,11 @@ angular.module('nodeLogin', [])
                 console.log("api login working");
                 $scope.formData = {};
                 $scope.userData = data;
-                $window.localStorage.setItem('accessToken',String(data.access_token));
-                $window.location.href = '/loadGame';
+                if(data.access_token != -1)
+                {
+                    $window.localStorage.setItem('accessToken',String(data.access_token));
+                    $window.location.href = '/loadGame';
+                }
                 console.log("access_token before Unity: " + $window.localStorage.getItem('accessToken'));
             })
             .error((error) => {
@@ -33,8 +36,12 @@ angular.module('nodeLogin', [])
          $http.post('/api/register', $scope.formData)
              .success((data) => {
                  $scope.formData = {};
-                 $scope.userData = data;
-                 $window.location.href = '/login';
+                 //$scope.userData = data;
+                 if(data.access_token != -1)
+                 {
+                     $window.localStorage.setItem('accessToken',String(data.access_token));
+                     $window.location.href = '/loadGame';
+                 }
              })
              .error((error) => {
                  console.log('Error: ' + error);
