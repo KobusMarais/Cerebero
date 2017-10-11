@@ -4,6 +4,7 @@ angular.module('nodeLogin', [])
     $scope.loginUser = () => {
         $http.post('/api/login', $scope.formData)
             .success((data) => {
+                console.log("api login working");
                 $scope.formData = {};
                 $scope.userData = data;
                 $window.localStorage.setItem('accessToken',data.access_token);
