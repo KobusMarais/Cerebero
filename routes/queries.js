@@ -30,11 +30,10 @@ module.exports = {
         console.log(password);
         obj.access_token = -1;
 
-        const querytext = "select * from useraccounts where username = 'kobus' AND password = 'password'";
+        const querytext = "select * from useraccounts where username = '"+username+"' AND password = '"+password+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             if(username === row['username'] && password === row['password']) {
-
                 obj.access_token = row['pkid'];
             }
             // setUserAccessToken(obj.access_token);
