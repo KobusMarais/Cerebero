@@ -20,6 +20,7 @@ public class IssuesSelection : MonoBehaviour {
     public Text errorMessage;
     public Button closeError;
 
+    public Text countText;
     
 
     //	public Text issue1;
@@ -61,6 +62,8 @@ public class IssuesSelection : MonoBehaviour {
 
         Button closeErrorbtn = closeError.GetComponent<Button>();
         closeErrorbtn.onClick.AddListener(closeErrorFun);
+
+        countText.text = "0";
     }
 
     void closeErrorFun()
@@ -75,10 +78,39 @@ public class IssuesSelection : MonoBehaviour {
         SceneManager.LoadScene("StanceSelection");
     }
 
+    void Update()
+    {
+        int count = 0;
+        
+        foreach (var issue in issueToggleArray)
+        {
+            if (issue.GetComponentInChildren<Toggle>().isOn)
+            {
+                count++;
+                countText.text = count.ToString();
+
+                if(count < 10)
+                {
+                    countText.color = Color.yellow;
+                }
+                else if(count == 10)
+                {
+                    countText.color = Color.green;
+                }
+                else
+                {
+                    countText.color = Color.yellow;
+                }
+
+            }
+        }
+    }
+
     void SelectIssues() {
 
         // temp
         int count = 0;
+        int negCount = 0;
 		foreach (var issue in issueToggleArray)
 		{
 			//issue.GetComponentInChildren<Text>().text = removeApos(jsonObj ["issues"] [i].ToString ());
@@ -87,7 +119,17 @@ public class IssuesSelection : MonoBehaviour {
 				//print(issue.GetComponentInChildren<Text>().text.ToLower());
 				selectedIssues.Add(issue.GetComponentInChildren<Text>().text.ToString());
                 count++;
-			}
+
+                countText.text = count.ToString();
+
+            }
+            else
+            {
+                negCount = count;
+                negCount--;
+
+                countText.text = negCount.ToString();
+            }
 		}
 
         if(count == 10)
@@ -108,42 +150,57 @@ public class IssuesSelection : MonoBehaviour {
        
     }
 
+	IEnumerator loadIssues()
+	{
+		yield return www;
+		if (!string.IsNullOrEmpty (www.error)) {
+			errorMessage.text = www.error;
+			errorBox.SetActive(true);
+		} else {
+			print("loadIssuesReturn" + www.text);
+			var jsonObj = JSON.Parse (www.text);
+			//int arrayLength = jsonObj ["scoreboard"].Count;
+			//print(jsonObj ["issues"][0]);
+			// Loop through provinces and change image color
+			int i = 0;
+			foreach (var issue in issueToggleArray)
+			{
+				issue.GetComponentInChildren<Text>().text = removeApos(jsonObj [i]["topic"].ToString ());
+				//print(issue.GetComponentInChildren<Text>().text);
+
+				i++;
+			}
+
+
+		}
+	}
+
 	void getIssues()
 	{
 		print("Getting issues");
+
+		loadScreen.SetActive(false);
+		loadText.SetActive(false);
 
 		loadIssues();
 		string url = "http://ecivix.org.za/api/getIssues";
         
 
 		www = new WWW (url);
-		StartCoroutine (loadIssues());
+        
+		/*
+         while(!www.isDone)
+        {
+            loadScreen.SetActive(true);
+            loadText.SetActive(true);
+        }
+
+        */
+
+        StartCoroutine (loadIssues());
 	}
 
-	IEnumerator loadIssues()
-	{
-		yield return www;
-		if (!string.IsNullOrEmpty (www.error)) {
-            errorMessage.text = www.error;
-            errorBox.SetActive(true);
-        } else {
-			print("loadIssuesReturn" + www.text);
-			var jsonObj = JSON.Parse (www.text);
-            //int arrayLength = jsonObj ["scoreboard"].Count;
-            //print(jsonObj ["issues"][0]);
-            // Loop through provinces and change image color
-            int i = 0;
-			foreach (var issue in issueToggleArray)
-			{
-				issue.GetComponentInChildren<Text>().text = removeApos(jsonObj [i]["topic"].ToString ());
-				//print(issue.GetComponentInChildren<Text>().text);
 
-                i++;
-			}
-
-
-		}
-	}
 
 	string removeApos(string a) {
 		return a.Replace('"', ' ').Trim();
