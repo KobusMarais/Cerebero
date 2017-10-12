@@ -1,6 +1,6 @@
 const pg = require('pg');
- const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
-// const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
+ // const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
 
 let query;
 
@@ -27,18 +27,17 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         let obj = new Object();
-        console.log(username);
-        console.log(password);
+        // console.log(username);
+        // console.log(password);
         obj.access_token = -1;
 
-        const querytext = "select * from useraccounts where username = 'kobus' AND password = 'password'";
+        const querytext = "select * from useraccounts where username = '"+username+"' AND password = '"+password+"'";
         query = client.query(querytext);
         query.on('row', (row) => {
             if(username === row['username'] && password === row['password']) {
 
                 obj.access_token = row['pkid'];
             }
-            // setUserAccessToken(obj.access_token);
         });
 
         query.on('end', () => {

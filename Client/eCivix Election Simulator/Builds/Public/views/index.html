@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="nodeWelcome">
+    <head>
+        <title>Welcome</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="shortcut icon" type="image/x-icon" href="/TemplateData/favicon.ico"/>
+        <link rel="stylesheet" href="/Public/stylesheets/style.css">
+    </head>
+
+    <body ng-controller="mainController">
+        <div class="container">
+            <div class="header">
+                <h1>Welcome to eCivix Election Simulator</h1>
+                <hr>
+            </div>
+            <div class="button-center">
+                <button type="button" class="btn btn-primary btn-lg btn-block landing-button" ng-click="redirectLogin()">Log me in!</button>
+                <button type="button" class="btn btn-primary btn-lg btn-block landing-button" ng-click="redirectRegistration()">I Need to Register first!</button>
+            </div>
+        </div>
+        <script src="//code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular.min.js"></script>
+        <script src="/Public/javascript/controller.js"></script>
+    </body>
+</html>

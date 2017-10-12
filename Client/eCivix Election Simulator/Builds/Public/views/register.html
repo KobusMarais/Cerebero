@@ -4,6 +4,7 @@
     <title>Users</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="shortcut icon" type="image/x-icon" href="/TemplateData/favicon.ico"/>
     <link rel="stylesheet" href="/Public/stylesheets/style.css">
   </head>
   <body ng-controller="mainController">
@@ -16,49 +17,49 @@
       </div>
       <div class="user-form">
         <form name="RegistrationForm" method="post">
-          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_username.$touched && RegistrationForm.reg_username.$invalid }">
+          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_username.$touched && RegistrationForm.reg_username.$invalid || RegistrationForm.reg_username.$untouched }">
             <label>Username:</label> 
             <input type="text" name="reg_username" class="form-control input-lg" placeholder="Enter username..." ng-model="formData.username"
               ng-maxlength="40" required> </br>
-            <div class="help-block" ng-messages="RegistrationForm.reg_username.$error" ng-if="RegistrationForm.reg_username.$touched">
+            <div class="help-block" ng-messages="RegistrationForm.reg_username.$error">
               <p ng-message="required">This field is required</p> 
               <p ng-message="maxlength">This field cannot be longer than 40 characters</p>
             </div>
           </div>
 
-          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_fname.$touched && RegistrationForm.reg_fname.$invalid }">
+          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_fname.$touched && RegistrationForm.reg_fname.$invalid || RegistrationForm.reg_fname.$untouched }">
             <label>First name:</label>
             <input type="text" name="reg_fname" class="form-control input-lg" placeholder="Enter your first name" ng-model="formData.name"
                    ng-maxlength="40" required> </br>
-            <div class="help-block" ng-messages="RegistrationForm.reg_fname.$error" ng-if="RegistrationForm.reg_fname.$touched">
+            <div class="help-block" ng-messages="RegistrationForm.reg_fname.$error">
               <p ng-message="required">This field is required</p>
               <p ng-message="maxlength">This field cannot be longer than 40 characters</p>
             </div>
           </div>
 
-          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_lname.$touched && RegistrationForm.reg_lname.$invalid }">
+          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_lname.$touched && RegistrationForm.reg_lname.$invalid || RegistrationForm.reg_lname.$untouched }">
             <label>Last name:</label>
             <input type="text" name="reg_lname" class="form-control input-lg" placeholder="Enter your first name" ng-model="formData.surname"
                    ng-maxlength="40" required> </br>
-            <div class="help-block" ng-messages="RegistrationForm.reg_lname.$error" ng-if="RegistrationForm.reg_lname.$touched">
+            <div class="help-block" ng-messages="RegistrationForm.reg_lname.$error">
               <p ng-message="required">This field is required</p>
               <p ng-message="maxlength">This field cannot be longer than 40 characters</p>
             </div>
           </div>
 
-          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_email.$touched && RegistrationForm.reg_email.$invalid }">
+          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_email.$touched && RegistrationForm.reg_email.$invalid || RegistrationForm.reg_email.$untouched }">
             <label>Email:</label>
             <input type="email" name="reg_email" class="form-control input-lg" placeholder="Enter your email address" ng-model="formData.email" required> </br>
-            <div class="help-block" ng-messages="RegistrationForm.reg_email.$error" ng-if="RegistrationForm.reg_email.$touched">
+            <div class="help-block" ng-messages="RegistrationForm.reg_email.$error">
               <p ng-message="required">This field is required</p>
             </div>
           </div>
 
-          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_user_password.$touched && RegistrationForm.reg_user_password.$invalid }">
+          <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : RegistrationForm.reg_user_password.$touched && RegistrationForm.reg_user_password.$invalid || RegistrationForm.reg_user_password.$untouched }">
             <label>Password:</label> 
             <input type="password" name="reg_user_password" class="form-control input-lg" placeholder="Enter password..." ng-model="formData.password"
               ng-minlength="4" ng-maxlength="12" required> </br>
-            <div class="help-block" ng-messages="RegistrationForm.reg_user_password.$error" ng-if="RegistrationForm.reg_user_password.$touched">
+            <div class="help-block" ng-messages="RegistrationForm.reg_user_password.$error" >
               <p ng-message="required">This field is required</p>
               <p ng-message="minlength">This field must contain at least 4 characters</p>
               <p ng-message="maxlength">This field must contain at most 12 characters</p> 

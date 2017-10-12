@@ -4,6 +4,7 @@
     <title>Welcome</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="shortcut icon" type="image/x-icon" href="/TemplateData/favicon.ico"/>
     <link rel="stylesheet" href="/Public/stylesheets/style.css">
   </head>
   <body ng-controller="mainController">
@@ -16,24 +17,28 @@
           </div>
           <div class="login-form">
             <form name="LoginForm" method="post">
-              <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : LoginForm.log_username.$dirty && LoginForm.log_username.$invalid }">
+              <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : LoginForm.log_username.$dirty && LoginForm.log_username.$invalid || LoginForm.log_username.$untouched }">
                 <label>Username:</label> 
                 <input type="text" name="log_username" class="form-control input-lg" placeholder="Enter username..." ng-model="formData.username"
                   ng-maxlength="40" required> </br>
-                <div class="help-block" ng-messages="LoginForm.log_username.$error" ng-if="LoginForm.log_username.$dirty">
-                  <p ng-message="required">This field is required</p> 
-                  <p ng-message="maxlength">This field cannot be longer than 40 characters</p>
+                <div>
+                  <div class="help-block" ng-messages="LoginForm.log_username.$error">
+                    <p ng-message="required">This field is required</p>
+                    <p ng-message="maxlength">This field cannot be longer than 40 characters</p>
+                  </div>
                 </div>
               </div>  
     
-              <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : LoginForm.log_user_password.$dirty && LoginForm.log_user_password.$invalid }">
+              <div style="padding-bottom:1em;" class="form-group" ng-class="{ 'has-error' : LoginForm.log_user_password.$dirty && LoginForm.log_user_password.$invalid || LoginForm.log_user_password.$untouched }">
                 <label>Password:</label> 
                 <input type="password" name="log_user_password" class="form-control input-lg" placeholder="Enter password..." ng-model="formData.password"
                   ng-minlength="4" ng-maxlength="12" required> </br>
-                <div class="help-block" ng-messages="LoginForm.log_user_password.$error" ng-if="LoginForm.log_user_password.$dirty">
-                  <p ng-message="required">This field is required</p>
-                  <p ng-message="minlength">This field must contain at least 4 characters</p>
-                  <p ng-message="maxlength">This field must contain at most 12 characters</p> 
+                <div>
+                  <div class="help-block" ng-messages="LoginForm.log_user_password.$error">
+                    <p ng-message="required">This field is required</p>
+                    <p ng-message="minlength">This field must contain at least 4 characters</p>
+                    <p ng-message="maxlength">This field must contain at most 12 characters</p>
+                  </div>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="loginUser()">Login!</button>

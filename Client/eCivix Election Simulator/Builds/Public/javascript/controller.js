@@ -1,3 +1,18 @@
+//
+angular.module('nodeWelcome', [])
+    .controller('mainController', ($scope, $http, $window) => {
+        $scope.formData = {};
+        $scope.userData = {};
+
+        $scope.redirectLogin = function(){
+            window.location = "/login";
+        }
+
+        $scope.redirectRegistration = function(){
+            window.location = "/register";
+        }
+    });
+
 // User Login
 angular.module('nodeLogin', [])
 .controller('mainController', ($scope, $http, $window) => {
@@ -6,8 +21,14 @@ angular.module('nodeLogin', [])
             .success((data) => {
                 $scope.formData = {};
                 $scope.userData = data;
-                $window.localStorage.setItem('accessToken',data.access_token);
-                $window.location.href = '/loadGame';
+                if(data.access_token === -1){
+                    $window.alert("Username or Password is incorrect");
+                    $window.alert(data.access_token);
+                }
+                else {
+                    $window.localStorage.setItem('accessToken', data.access_token);
+                    $window.location.href = '/loadGame';
+                }
             })
             .error((error) => {
                 console.log('Error: ' + error);
@@ -32,7 +53,13 @@ angular.module('nodeLogin', [])
              .success((data) => {
                  $scope.formData = {};
                  $scope.userData = data;
-                 $window.location.href = '/login';
+                 if(data.success === 0){
+                     $window.alert("Registration failed;");
+                 }
+                 else {
+                     $window.localStorage.setItem('accessToken', data.access_token);
+                     $window.location.href = '/login';
+                 }
              })
              .error((error) => {
                  console.log('Error: ' + error);

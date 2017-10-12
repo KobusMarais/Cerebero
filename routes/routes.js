@@ -6,7 +6,7 @@ const path = require('path');
 router.get('/', function(req, res, next) {
     res.sendFile(path.join(
         __dirname, '..', 'Client', 'eCivix Election Simulator',
-        'Builds', 'Public', 'views', 'login.html'));
+        'Builds', 'Public', 'views', 'index.html'));
 });
 
 router.get('/register', function (req, res, next) {
