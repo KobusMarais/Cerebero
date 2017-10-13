@@ -10,17 +10,18 @@ a {
 }
 
 .help-block,
-.ng.invalid {
-  color: red;
+.ng.invalid,
+.ng.valid  {
   font-size: 16px;
   font-weight: 500;
 }
 
-.help-block,
+.ng.invalid {
+  color: red;
+}
+
 .ng.valid {
   color: limegreen;
-  font-size: 16px;
-  font-weight: 500;
 }
 
 .button-center{

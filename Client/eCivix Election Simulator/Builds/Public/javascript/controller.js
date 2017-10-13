@@ -1,4 +1,4 @@
-//
+// Landing page
 angular.module('nodeWelcome', [])
     .controller('mainController', ($scope, $http, $window) => {
         $scope.formData = {};
