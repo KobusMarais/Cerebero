@@ -55,8 +55,8 @@ router.post('/login', function(req,res){
     else {
 
         let i = req.body;
-        i.username = JSON.stringify(reg.body.username).replace(/\W/g, '');
-        // i.password = validator.blacklist(reg.body.password,'\\[\\]');
+        /*i.username = JSON.stringify(reg.body.username).replace(/\W/g, '');
+        // i.password = validator.blacklist(reg.body.password,'\\[\\]');*/
         queries.login(i.username, i.password, function (err, result) {
             if (err) return console.log("error: ", err);
         const obj = JSON.parse(result);
