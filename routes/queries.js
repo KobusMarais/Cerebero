@@ -1,6 +1,6 @@
 const pg = require('pg');
- const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
-// const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+//const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
 
 let query;
 
@@ -27,8 +27,8 @@ module.exports = {
         const client = new pg.Client(connectionString);
         client.connect();
         let obj = new Object();
-        console.log(username);
-        console.log(password);
+        // console.log(username);
+        // console.log(password);
         obj.access_token = -1;
 
         const querytext = "select * from useraccounts where username = '"+username+"' AND password = '"+password+"'";
@@ -37,7 +37,6 @@ module.exports = {
             if(username === row['username'] && password === row['password']) {
                 obj.access_token = row['pkid'];
             }
-            // setUserAccessToken(obj.access_token);
         });
 
         query.on('end', () => {
@@ -108,13 +107,21 @@ module.exports = {
             if(campaigncostmp > totalmanmoney || campaigncostfunds > totalmoney)
             {
 
-                obj = new Object();
-                obj.success = 2;
+                makeAIsMove(client, accesstoken, function (err, result) {
+                    console.log("TESTER1");
+                    if (err) return console.log("error: ", err);
+                    obj = new Object();
+                    obj.success = 2;
 
-                var sendback = JSON.stringify(obj);
-                client.end();
-                callback(err = null, result = sendback);
-                return sendback;
+                    obj.AI1Move = result[0];
+                    obj.AI2Move = result[1];
+                    obj.AI3Move = result[2];
+                    obj.AI4Move = result[3];
+                    var sendback = JSON.stringify(obj);
+                    client.end();
+                    callback(err = null, result = sendback);
+                    return sendback;
+                });
             }
             else {
                 querytext = "select * from userprofile WHERE ((topic1 LIKE '%" + topic + "%') OR (topic2 LIKE '%" + topic + "%') OR (topic3 LIKE '%" + topic + "%') OR (topic4 LIKE '%" + topic + "%') OR (topic5 LIKE '%"+topic+"%') OR (topic6 LIKE '%"+topic+"%') OR (topic7 LIKE '%"+topic+"%') OR (topic8 LIKE '%"+topic+"%') OR (topic9 LIKE '%"+topic+"%') OR (topic10 LIKE '%"+topic+"%')) AND userid = '" + accesstoken + "'";
@@ -239,10 +246,20 @@ module.exports = {
                             query.on('end', () => {
                                 if (!sidepercentages[1]) {
                                     if (usersup > (((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect)) {
-                                        var sendback = JSON.stringify(obj);
-                                        client.end();
-                                        callback(err = null, result = sendback);
-                                        return sendback;
+                                        makeAIsMove(client, accesstoken, function (err, result) {
+                                            console.log("TESTER1");
+                                            if (err) return console.log("error: ", err);
+                                            obj.support = 0;
+                                            obj.AI1Move = result[0];
+                                            obj.AI2Move = result[1];
+                                            obj.AI3Move = result[2];
+                                            obj.AI4Move = result[3];
+
+                                            var sendback = JSON.stringify(obj);
+                                            client.end();
+                                            callback(err = null, result = sendback);
+                                            return sendback;
+                                        });
                                     }
                                     else {
                                         obj.support = Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0])) * actioneffect);
@@ -294,29 +311,36 @@ module.exports = {
                                         "UPDATE userprofile set funds = '"+(totalmoney - campaigncostfunds)+"' WHERE userid = '"+accesstoken+"'";
                                         query = client.query(querytext);
                                         query.on('end', () => {
-                                            obj.AI1Move = "Campaign Limpopo";
-                                            obj.AI2Move = "Campaign Gauteng";
-                                            obj.AI3Move = "Poll Western Cape";
-                                            obj.AI4Move = "Collect Funds Eastern Cape";
-                                            var sendback = JSON.stringify(obj);
-                                            client.end();
-                                            callback(err = null, result = sendback);
-                                            return sendback;
+                                            makeAIsMove(client, accesstoken, function (err, result) {
+                                                console.log("TESTER1");
+                                                if (err) return console.log("error: ", err);
+                                                obj.AI1Move = result[0];
+                                                obj.AI2Move = result[1];
+                                                obj.AI3Move = result[2];
+                                                obj.AI4Move = result[3];
+                                                var sendback = JSON.stringify(obj);
+                                                client.end();
+                                                callback(err = null, result = sendback);
+                                                return sendback;
+                                            });
                                         });
                                     }
                                 }
                                 else {
                                     if (usersup > ((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1]))) {
-                                        obj.support = 0;
-                                        obj.AI1Move = "Campaign Limpopo";
-                                        obj.AI2Move = "Campaign Gauteng";
-                                        obj.AI3Move = "Poll Western Cape";
-                                        obj.AI4Move = "Collect Funds Eastern Cape";
-
-                                        var sendback = JSON.stringify(obj);
-                                        client.end();
-                                        callback(err = null, result = sendback);
-                                        return sendback;
+                                        makeAIsMove(client, accesstoken, function (err, result) {
+                                            console.log("TESTER1");
+                                            if (err) return console.log("error: ", err);
+                                            obj.support = 0;
+                                            obj.AI1Move = result[0];
+                                            obj.AI2Move = result[1];
+                                            obj.AI3Move = result[2];
+                                            obj.AI4Move = result[3];
+                                            var sendback = JSON.stringify(obj);
+                                            client.end();
+                                            callback(err = null, result = sendback);
+                                            return sendback;
+                                        });
                                     } else {
                                         obj.support = Math.round(((totalsup * mainpercentage) + (totalsup * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect);
                                         if ((ai1mp - (((totalmp * mainpercentage) + (totalmp * sidepercentages[0]) + (totalsup * sidepercentages[1])) * actioneffect / 4)) > 0) {
@@ -368,14 +392,18 @@ module.exports = {
                                         "UPDATE userprofile set funds = '"+(totalmoney - campaigncostfunds)+"' WHERE userid = '"+accesstoken+"'";
                                         query = client.query(querytext);
                                         query.on('end', () => {
-                                            obj.AI1Move = "Campaign Limpopo";
-                                            obj.AI2Move = "Campaign Gauteng";
-                                            obj.AI3Move = "Poll Western Cape";
-                                            obj.AI4Move = "Collect Funds Eastern Cape";
-                                            var sendback = JSON.stringify(obj);
-                                            client.end();
-                                            callback(err = null, result = sendback);
-                                            return sendback;
+                                            makeAIsMove(client, accesstoken, function (err, result) {
+                                                console.log("TESTER1");
+                                                if (err) return console.log("error: ", err);
+                                                obj.AI1Move = result[0];
+                                                obj.AI2Move = result[1];
+                                                obj.AI3Move = result[2];
+                                                obj.AI4Move = result[3];
+                                                var sendback = JSON.stringify(obj);
+                                                client.end();
+                                                callback(err = null, result = sendback);
+                                                return sendback;
+                                            });
                                         });
                                     }
                                 }
@@ -522,14 +550,18 @@ module.exports = {
                     querytext = "update userprofile set funds= '"+(availablefunds-pollcostfunds) +"' where userid ='"+accesstoken+"'; update tbl"+province+" set usermanpoweravailable = '"+(availablemp- pollcostmp)+"' where userid = '"+accesstoken+"';";
                     query = client.query(querytext);
                     query.on('end', () => {
-                        obj.AI1Move = "Poll Gauteng";
-                        obj.AI2Move = "Poll Limpopo";
-                        obj.AI3Move = "Collect Funds Freestate";
-                        obj.AI4Move = "Campaign Western Cape";
-                        var sendback = JSON.stringify(obj);
-                        client.end();
-                        callback(err = null, result = sendback);
-                        return sendback;
+                        makeAIsMove(client, accesstoken, function (err, result) {
+                            console.log("TESTER1");
+                            if (err) return console.log("error: ", err);
+                            obj.AI1Move = result[0];
+                            obj.AI2Move = result[1];
+                            obj.AI3Move = result[2];
+                            obj.AI4Move = result[3];
+                            var sendback = JSON.stringify(obj);
+                            client.end();
+                            callback(err = null, result = sendback);
+                            return sendback;
+                        });
                     });
                 }
             });
@@ -1264,23 +1296,82 @@ function calculateOverallStance(i)
     if(ave==5){return "far right";}
 }
 function makeAIsMove(client, accesstoken, callback) {
-    var querytext = "";
-    console.log("testing123");
+    var querytext = "select * from ai1 where userid ='" + accesstoken + "'";
+    var provinces = ["gauteng", "limpopo", "northwest", "northcape", "eastcape", "westcape", "kwazulunatal", "freestate", "mpumalanga"];
     var ainum =1;
     var moves = [];
-    if (ainum == 1) {
-        querytext = "UPDATE tblgauteng SET ai" + ainum + "support = 99 WHERE userid ='" + accesstoken + "' ";
-    }
-    query = client.query(querytext);
-    query.on('end', () => {
-        moves.push("Campaign Gauteng");
-        moves.push("Campaign Limpopo");
-        moves.push("Campaign Western Cape");
-        moves.push("Collect Funds Freestate");
-
-        callback(err = null, result =moves);
-        return "Campaign Gauteng";
-    });
+    var actionchosen = "";
+    var action = ["Campaign", "Collect Funds", "Poll"];
+        var randomnum = Math.floor(Math.random() * 9);
+        var chosen = provinces[randomnum];
+        actionchosen =action[Math.floor(Math.random() * 3)];
+        var mp = Math.floor(Math.random() * 1000);
+        var sup = Math.floor(Math.random() * 1400000);
+        var fuds = Math.floor(Math.random() * 1700000);
+        moves.push("" + actionchosen + " " + chosen);
+        if (actionchosen == "Campaign") {
+            querytext = "UPDATE tbl"+chosen+" SET ai1support = '"+sup+"', ai1manpower = '" + mp + "'  WHERE userid ='" + accesstoken + "' ";
+        }
+        else if(actionchosen == "Collect Funds")
+        {
+            querytext = "update ai1 SET funds = '"+ fuds+"' where userid ='" + accesstoken + "'"; //"UPDATE ai"+ainum+" SET ai" + ainum + "support = 99 WHERE userid ='" + accesstoken + "' ";
+        }
+        query = client.query(querytext);
+        query.on('end', () => {
+            randomnum = Math.floor(Math.random() * 9);
+            chosen = provinces[randomnum];
+            actionchosen = action[Math.floor(Math.random() * 3)];
+            mp = Math.floor(Math.random() * 1000);
+            sup = Math.floor(Math.random() * 1400000);
+            fuds = Math.floor(Math.random() * 1700000);
+            moves.push("" + actionchosen + " " + chosen);
+            if (actionchosen == "Campaign") {
+                querytext = "UPDATE tbl"+chosen+" SET ai1support = '"+sup+"', ai1manpower = '" + mp + "'  WHERE userid ='" + accesstoken + "' ";
+            }
+            else if(actionchosen == "Collect Funds")
+            {
+                querytext = "update ai1 SET funds = '"+ fuds+"' where userid ='" + accesstoken + "'"; //"UPDATE ai"+ainum+" SET ai" + ainum + "support = 99 WHERE userid ='" + accesstoken + "' ";
+            }
+                query = client.query(querytext);
+                query.on('end', () => {
+                    randomnum = Math.floor(Math.random() * 9);
+                    chosen = provinces[randomnum];
+                    actionchosen = action[Math.floor(Math.random() * 3)];
+                    mp = Math.floor(Math.random() * 1000);
+                    sup = Math.floor(Math.random() * 1400000);
+                    fuds = Math.floor(Math.random() * 1700000);
+                    moves.push("" + actionchosen + " " + chosen);
+                    if (actionchosen == "Campaign") {
+                        querytext = "UPDATE tbl"+chosen+" SET ai1support = '"+sup+"', ai1manpower = '" + mp + "'  WHERE userid ='" + accesstoken + "' ";
+                    }
+                    else if(actionchosen == "Collect Funds")
+                    {
+                        querytext = "update ai1 SET funds = '"+ fuds+"' where userid ='" + accesstoken + "'"; //"UPDATE ai"+ainum+" SET ai" + ainum + "support = 99 WHERE userid ='" + accesstoken + "' ";
+                    }
+                    query = client.query(querytext);
+                    query.on('end', () => {
+                        randomnum = Math.floor(Math.random() * 9);
+                        chosen = provinces[randomnum];
+                        actionchosen = action[Math.floor(Math.random() * 3)];
+                        mp = Math.floor(Math.random() * 1000);
+                        sup = Math.floor(Math.random() * 1400000);
+                        fuds = Math.floor(Math.random() * 1700000);
+                        moves.push("" + actionchosen + " " + chosen);
+                        if (actionchosen == "Campaign") {
+                            querytext = "UPDATE tbl"+chosen+" SET ai1support = '"+sup+"', ai1manpower = '" + mp + "'  WHERE userid ='" + accesstoken + "' ";
+                        }
+                        else if(actionchosen == "Collect Funds")
+                        {
+                            querytext = "update ai1 SET funds = '"+ fuds+"' where userid ='" + accesstoken + "'"; //"UPDATE ai"+ainum+" SET ai" + ainum + "support = 99 WHERE userid ='" + accesstoken + "' ";
+                        }
+                        query = client.query(querytext);
+                        query.on('end', () => {
+                            callback(err = null, result = moves);
+                            return moves;
+                        });
+                    });
+                });
+        });
 }
 
 function getSideStances(mystance)
