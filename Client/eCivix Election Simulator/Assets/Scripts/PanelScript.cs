@@ -38,8 +38,10 @@ public class PanelScript : MonoBehaviour
 
 
     public Button leaderBoardButton;
-    public Button soundButton;
-    public Button exitButton;
+
+    //public Button soundButton;
+    //public Button exitButton;
+
     public Button restartButton;
 
     public Button helpButton;
@@ -70,11 +72,11 @@ public class PanelScript : MonoBehaviour
         Button btn3 = leaderBoardButton.GetComponent<Button>();
         btn3.onClick.AddListener(inGameleaderBoard);
 
-        Button btn4 = soundButton.GetComponent<Button>();
+        /*Button btn4 = soundButton.GetComponent<Button>();
         btn4.onClick.AddListener(sound);
 
         Button btn5 = exitButton.GetComponent<Button>();
-        btn5.onClick.AddListener(exitGame);
+        btn5.onClick.AddListener(exitGame);*/
 
         Button btn6 = restartButton.GetComponent<Button>();
         btn6.onClick.AddListener(restartGame);
@@ -129,7 +131,7 @@ public class PanelScript : MonoBehaviour
         SceneManager.LoadScene("NewGameScreen");
     }
 
-    void sound()
+   /* void sound()
     {
         //SOUND ON/OFF
 
@@ -137,7 +139,7 @@ public class PanelScript : MonoBehaviour
 
         //menu.SetActive(false);
         //map.SetActive(true);
-    }
+    }*/
 
     void help()
     {
@@ -147,9 +149,11 @@ public class PanelScript : MonoBehaviour
 
         //menu.SetActive(false);
         //map.SetActive(true);
+
+		Application.OpenURL("https://github.com/KobusMarais/Cerebero/raw/master/LaTeX/User%20Manual/User_Manual.pdf");
     }
 
-    void exitGame()
+    /*void exitGame()
     {
         //EXIT APPLICATION
 
@@ -157,7 +161,7 @@ public class PanelScript : MonoBehaviour
         //map.SetActive(true);
 
         Application.Quit();
-    }
+    }*/
 
     void getHighscores()
     {

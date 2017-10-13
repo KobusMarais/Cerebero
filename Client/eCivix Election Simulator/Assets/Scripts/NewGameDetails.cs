@@ -35,6 +35,10 @@ public class NewGameDetails : MonoBehaviour
     public Button avatar9;
     public Button avatar10;
 
+    public Button closeExtraInfPanel;
+    public Text extraInfoPanelText;
+    public GameObject containerPanel;
+
     String difData;
     WWW www;
     bool flag;
@@ -42,7 +46,7 @@ public class NewGameDetails : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        containerPanel.SetActive(true);
         flag = false;
         difData = "";
 
@@ -51,7 +55,9 @@ public class NewGameDetails : MonoBehaviour
 
         errorBox.SetActive(false);
 
-        
+        Button closeExtraInfPanelbtn = closeExtraInfPanel.GetComponent<Button>();
+        closeExtraInfPanelbtn.onClick.AddListener(closeExtraInfPanelFun);
+
 
         Button closeErrorbtn = closeError.GetComponent<Button>();
         closeErrorbtn.onClick.AddListener(closeErrorFun);
@@ -100,6 +106,11 @@ public class NewGameDetails : MonoBehaviour
         Button avt10 = avatar10.GetComponent<Button>();
         avt10.onClick.AddListener(Avatar10);
 
+    }
+
+    void closeExtraInfPanelFun()
+    {
+        containerPanel.SetActive(false);
     }
 
     void StartGame()

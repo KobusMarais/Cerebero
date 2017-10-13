@@ -51,8 +51,7 @@ public class finnishGame : MonoBehaviour {
 
         errorBox.SetActive(false);
 
-        loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        
 
         Button closeErrorbtn = closeError.GetComponent<Button>();
         closeErrorbtn.onClick.AddListener(closeErrorFun);
@@ -95,8 +94,8 @@ public class finnishGame : MonoBehaviour {
 
 		*/
 
-        loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        //loadScreen.SetActive(false);
+        //loadText.SetActive(false);
 
         StartCoroutine (loadHighscores());
 	}
@@ -106,7 +105,10 @@ public class finnishGame : MonoBehaviour {
 		yield return www11;
 		if (!string.IsNullOrEmpty(www11.error))
 		{
-			errorMessage.text = www11.error;
+            loadScreen.SetActive(false);
+            loadText.SetActive(false);
+
+            errorMessage.text = www11.error;
             errorBox.SetActive(true);
         }
 		else
@@ -166,8 +168,13 @@ public class finnishGame : MonoBehaviour {
 					//print (jsonObj ["scoreboard"].ToString());
 					break;
 			}
-		}
-	}
+
+                
+            }
+            loadScreen.SetActive(false);
+            loadText.SetActive(false);
+
+        }
 }
 	string removeApos(string a) {
 		return a.Replace('"', ' ');
