@@ -19,14 +19,16 @@ angular.module('nodeLogin', [])
     $scope.loginUser = () => {
         $http.post('/api/login', $scope.formData)
             .success((data) => {
+                console.log("api login working");
                 $scope.formData = {};
                 $scope.userData = data;
+
                 if(data.access_token === -1){
                     $window.alert("Username or Password is incorrect");
-                    $window.alert(data.access_token);
                 }
                 else {
                     $window.localStorage.setItem('accessToken', data.access_token);
+                    console.log("access_token before Unity: " + $window.localStorage.getItem('accessToken'));
                     $window.location.href = '/loadGame';
                 }
             })

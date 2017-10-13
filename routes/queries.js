@@ -35,7 +35,6 @@ module.exports = {
         query = client.query(querytext);
         query.on('row', (row) => {
             if(username === row['username'] && password === row['password']) {
-
                 obj.access_token = row['pkid'];
             }
         });

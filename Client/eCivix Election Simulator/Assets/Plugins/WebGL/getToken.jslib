@@ -1,14 +1,11 @@
 mergeInto(LibraryManager.library, {
 
   getAccessToken: function () {
-    
+
     var token = localStorage.getItem('accessToken');
+    var buffer = _malloc(lengthBytesUTF8(token) + 1);
 
-    if (token === undefined || token === null) {
-    	token = "2";
-    }
-
-    return token;
+    writeStringToMemory(token, buffer);
+    return buffer;
   }
-
 });
