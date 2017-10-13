@@ -14,7 +14,7 @@ public class PanelScript : MonoBehaviour
     public Button menuButton;
     public Button closeMenu;
 
-    private WWW www;
+    private WWW www10;
     public Text position1Name;
     public Text position1Score;
     public Text position2Name;
@@ -38,8 +38,10 @@ public class PanelScript : MonoBehaviour
 
 
     public Button leaderBoardButton;
-    public Button soundButton;
-    public Button exitButton;
+
+    //public Button soundButton;
+    //public Button exitButton;
+
     public Button restartButton;
 
     public Button helpButton;
@@ -70,11 +72,11 @@ public class PanelScript : MonoBehaviour
         Button btn3 = leaderBoardButton.GetComponent<Button>();
         btn3.onClick.AddListener(inGameleaderBoard);
 
-        Button btn4 = soundButton.GetComponent<Button>();
+        /*Button btn4 = soundButton.GetComponent<Button>();
         btn4.onClick.AddListener(sound);
 
         Button btn5 = exitButton.GetComponent<Button>();
-        btn5.onClick.AddListener(exitGame);
+        btn5.onClick.AddListener(exitGame);*/
 
         Button btn6 = restartButton.GetComponent<Button>();
         btn6.onClick.AddListener(restartGame);
@@ -129,7 +131,7 @@ public class PanelScript : MonoBehaviour
         SceneManager.LoadScene("NewGameScreen");
     }
 
-    void sound()
+   /* void sound()
     {
         //SOUND ON/OFF
 
@@ -137,7 +139,7 @@ public class PanelScript : MonoBehaviour
 
         //menu.SetActive(false);
         //map.SetActive(true);
-    }
+    }*/
 
     void help()
     {
@@ -147,9 +149,11 @@ public class PanelScript : MonoBehaviour
 
         //menu.SetActive(false);
         //map.SetActive(true);
+
+        Application.OpenURL("https://github.com/KobusMarais/Cerebero");
     }
 
-    void exitGame()
+    /*void exitGame()
     {
         //EXIT APPLICATION
 
@@ -157,7 +161,7 @@ public class PanelScript : MonoBehaviour
         //map.SetActive(true);
 
         Application.Quit();
-    }
+    }*/
 
     void getHighscores()
     {
@@ -166,7 +170,7 @@ public class PanelScript : MonoBehaviour
 
         string url = "http://ecivix.org.za/api/getHighscoreBoard";
 
-        www = new WWW(url);
+		www10 = new WWW(url);
 
 
         StartCoroutine(loadHighscores());
@@ -174,16 +178,16 @@ public class PanelScript : MonoBehaviour
 
     IEnumerator loadHighscores()
     {
-        yield return www;
-        if (!string.IsNullOrEmpty(www.error))
+		yield return www10;
+		if (!string.IsNullOrEmpty(www10.error))
         {
-            errorMessage.text = www.error;
+			errorMessage.text = www10.error;
             errorBox.SetActive(true);
         }
         else
         {
-            //print(www.text);
-            var jsonObj = JSON.Parse(www.text);
+			//print(www10.text);
+			var jsonObj = JSON.Parse(www10.text);
             int arrayLength = 11;
             for (int i = 0; i < arrayLength; i++)
             {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 public class NewGame : MonoBehaviour {
 
-	//[DllImport("__Internal")]
-	//private static extern string getAccessToken();
+	[DllImport("__Internal")]
+	private static extern string getAccessToken();
 
 	public static string access_token;
 
@@ -17,17 +17,18 @@ public class NewGame : MonoBehaviour {
 		Button btn = GetComponent<Button>();
 		btn.onClick.AddListener(TaskOnClick);
 
-        /*try   
+
+		try   
 		{  
-			access_token = getAccessToken(); 
+			access_token = getAccessToken();
 		}  
 		catch  
 		{
 			access_token = "2";
-		}*/
-		
+		}
 
-		access_token = "2";
+
+		//access_token = "2";
 		print ("accessToken: " + access_token);
 
 		//access_token = "2";
