@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const validator = require('validator');
 const queries = require('./queries.js');
 
 /* API Calls */
@@ -10,9 +11,9 @@ router.post('/register', function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    if(!req.body.name || !req.body.email || !req.body.username || !req.body.password)
+    if(!req.body.name || !req.body.email || !req.body.username || !req.body.password || !req.body.surname || !validator.isEmail(req.body.email))
     {
-        console.log("register API call name or email or username or password not set");
+        console.log("Register API call username, first name, surname, email or password not set");
         const obj = new Object();
         obj.success = 0;
         const result = JSON.stringify(obj);
@@ -21,6 +22,11 @@ router.post('/register', function(req,res){
     }
     else {
         let i = req.body;
+        // i.username = JSON.stringify(reg.body.username).replace(/[^0-9a-z]/gi, '');
+        // i.email = reg.body.email;
+        // i.name = JSON.stringify(reg.body.name).replace(/\W/g, '');
+        // i.surname = JSON.stringify(reg.body.surname).replace(/\W/g, '');
+        // console.log(i.username);
         //generate new token for each user and create entry in db for that user.
         queries.register(i.name, i.surname, i.email, i.username, i.password, function (err, result) {
         if (err) return console.log("error: ", err);
@@ -39,7 +45,7 @@ router.post('/login', function(req,res){
     //insert code here to check if email and password are correct and return access key.
     if(!req.body.username || !req.body.password)
     {
-        console.log("login API call username or password not set");
+        console.log("Login API call username or password not set");
         let obj = new Object();
         obj.success = 0;
         const result = JSON.stringify(obj);
@@ -47,7 +53,10 @@ router.post('/login', function(req,res){
         res.send(parsedObject);
     }
     else {
+
         let i = req.body;
+        i.username = JSON.stringify(reg.body.username).replace(/\W/g, '');
+        // i.password = validator.blacklist(reg.body.password,'\\[\\]');
         queries.login(i.username, i.password, function (err, result) {
             if (err) return console.log("error: ", err);
         const obj = JSON.parse(result);
@@ -583,3 +592,7 @@ router.post('/setIssues', function(req, res, next) { // receives user score and 
 });
 //query.on('end', () => { client.end(); });
 module.exports = router;
+
+function sanitiseData(formData){
+
+}

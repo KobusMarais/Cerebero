@@ -26,9 +26,11 @@ describe('register', function() {
         request(app)
             .post('/api/register')
             .send({
+                "username": "JohnTheBomb",
                 "name": "John",
-                "surname" : "Doe",
-                "email":"John.Doe@gmail.com"
+                "surname": "Wick",
+                "email": "john@wick.com",
+                "password" : "john2",
             })
             .expect(200)
             .expect('Content-Type', 'application/json')
@@ -44,8 +46,8 @@ describe('login', function() {
         request(app)
             .post('/api/login')
             .send({
-                "username": "Johndoe",
-                "password" : "1234abcd"
+                "username": "Victor",
+                "password" : "password111"
             })
             .expect(200)
             .expect('Content-Type', 'application/json')
