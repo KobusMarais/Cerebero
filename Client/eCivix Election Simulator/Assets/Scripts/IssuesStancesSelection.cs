@@ -58,8 +58,8 @@ public class IssuesStancesSelection : MonoBehaviour {
     public static String newGameJson;
     // Use this for initialization
     void Start () {
-        loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        //loadScreen.SetActive(false);
+        //loadText.SetActive(false);
 
         
 		//loadIssues();
@@ -639,8 +639,8 @@ public class IssuesStancesSelection : MonoBehaviour {
         }
 		*/
 
-        loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        //loadScreen.SetActive(false);
+        //loadText.SetActive(false);
 
         StartCoroutine(getStancesHelp());
     }
@@ -661,6 +661,9 @@ public class IssuesStancesSelection : MonoBehaviour {
             loadStances();
             
         }
+
+		loadScreen.SetActive(false);
+		loadText.SetActive(false);
 
     }
 

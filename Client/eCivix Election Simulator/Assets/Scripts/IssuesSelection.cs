@@ -55,8 +55,8 @@ public class IssuesSelection : MonoBehaviour {
         Button btn = start.GetComponent<Button>();
         btn.onClick.AddListener(SelectIssues);
 
-        loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        //loadScreen.SetActive(false);
+        //loadText.SetActive(false);
 
         errorBox.SetActive(false);
 
@@ -154,9 +154,13 @@ public class IssuesSelection : MonoBehaviour {
 	{
 		yield return www;
 		if (!string.IsNullOrEmpty (www.error)) {
+			//loadScreen.SetActive(false);
+			//loadText.SetActive(false);
 			errorMessage.text = www.error;
 			errorBox.SetActive(true);
 		} else {
+			//loadScreen.SetActive(false);
+			//loadText.SetActive(false);
 			print("loadIssuesReturn" + www.text);
 			var jsonObj = JSON.Parse (www.text);
 			//int arrayLength = jsonObj ["scoreboard"].Count;
@@ -170,17 +174,17 @@ public class IssuesSelection : MonoBehaviour {
 
 				i++;
 			}
-
-
 		}
+		loadScreen.SetActive(false);
+		loadText.SetActive(false);
 	}
 
 	void getIssues()
 	{
 		print("Getting issues");
 
-		loadScreen.SetActive(false);
-		loadText.SetActive(false);
+		//loadScreen.SetActive(false);
+		//loadText.SetActive(false);
 
 		loadIssues();
 		string url = "http://ecivix.org.za/api/getIssues";
