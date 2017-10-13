@@ -1,3 +1,18 @@
+// Landing page
+angular.module('nodeWelcome', [])
+    .controller('mainController', ($scope, $http, $window) => {
+        $scope.formData = {};
+        $scope.userData = {};
+
+        $scope.redirectLogin = function(){
+            window.location = "/login";
+        }
+
+        $scope.redirectRegistration = function(){
+            window.location = "/register";
+        }
+    });
+
 // User Login
 angular.module('nodeLogin', [])
 .controller('mainController', ($scope, $http, $window) => {
@@ -7,12 +22,15 @@ angular.module('nodeLogin', [])
                 console.log("api login working");
                 $scope.formData = {};
                 $scope.userData = data;
-                if(data.access_token != -1)
-                {
-                    $window.localStorage.setItem('accessToken',String(data.access_token));
+
+                if(data.access_token === -1){
+                    $window.alert("Username or Password is incorrect");
+                }
+                else {
+                    $window.localStorage.setItem('accessToken', data.access_token);
+                    console.log("access_token before Unity: " + $window.localStorage.getItem('accessToken'));
                     $window.location.href = '/loadGame';
                 }
-                console.log("access_token before Unity: " + $window.localStorage.getItem('accessToken'));
             })
             .error((error) => {
                 console.log('Error: ' + error);
@@ -36,11 +54,13 @@ angular.module('nodeLogin', [])
          $http.post('/api/register', $scope.formData)
              .success((data) => {
                  $scope.formData = {};
-                 //$scope.userData = data;
-                 if(data.access_token != -1)
-                 {
-                     $window.localStorage.setItem('accessToken',String(data.access_token));
-                     $window.location.href = '/loadGame';
+                 $scope.userData = data;
+                 if(data.success === 0){
+                     $window.alert("Registration failed;");
+                 }
+                 else {
+                     $window.localStorage.setItem('accessToken', data.access_token);
+                     $window.location.href = '/login';
                  }
              })
              .error((error) => {
