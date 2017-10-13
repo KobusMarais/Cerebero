@@ -3,7 +3,7 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     const pg = require('pg');
-    // const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
+    const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/user';
     // const connectionString = process.env.DATABASE_URL || 'postgres://testUser:testTodo@localhost:5432/user';
     var query;
     const client = new pg.Client(connectionString);
@@ -347,16 +347,7 @@ router.get('/', function(req, res, next) {
 
 
     query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Victor', 'password111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Kobus', 'password123', 'Kobus', 'Marais', 'kmarais42@gmail.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Rikard', 'password122', 'Rikard', 'Schouwstra', 'rjschouwstra@gmail.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Fred', 'password321', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['John', 'passwor11', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Jack', 'passwod111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Zappy', 'passord111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Iceman321', 'assword111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Typhon96', 'asword111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Frikkecool', 'paword111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-
+    
     query = client.query('INSERT INTO userprofile(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10,score, funds, time) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13, $14)', [1, 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 1000 ,1000, 10]);
 
     query = client.query('INSERT INTO ai1(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11, $12)', [1, 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 1000]);
@@ -509,15 +500,7 @@ router.get('/', function(req, res, next) {
     query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['far left', 16, 22, 13, 22, 24, 15, 10, 14, 14, 16]);
 
     query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [1, 9000001]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [2, 8700215]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [3, 6878001]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [4, 4123579]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [5, 1277645]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [6, 3245687]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [7, 1200057]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [8, 3155795]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [9, 7987314]);
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [10, 7898723]);
+
 
 
     query = client.query('INSERT INTO tblgauteng(userid, totalfunds, totalmanpower, totalsupport, usermanpower, usersupport, ai1manpower, ai1support, ai2manpower, ai2support, ai3manpower, ai3support, ai4manpower, ai4support, usermanpoweravailable, ai1manpoweravailable, ai2manpoweravailable, ai3manpoweravailable, ai4manpoweravailable, totalfundsavailable) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19, $20)', [1, 9001, 1000, 1000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9001]);
