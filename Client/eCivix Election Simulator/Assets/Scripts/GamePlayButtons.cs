@@ -12,7 +12,19 @@ public class GamePlayButtons : MonoBehaviour {
 	public Button pollProvinceButton;
 	public Button campaignButton;
 
-	public static string finalScore;
+    public GameObject loadScreen;
+    public GameObject loadText;
+
+    public GameObject weeksPanel;
+    public Text weeksLeftPanelText;
+    public Text actionsLeftText;
+    public Button closeweeksPanel;
+
+    public Button closeExtraInfPanel;
+    public Text extraInfoPanelText;
+    public GameObject containerPanel;
+
+    public static string finalScore;
 	public int actionCount; 
 
     public string campaignType;
@@ -211,6 +223,16 @@ public class GamePlayButtons : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+       loadScreen.SetActive(false);
+       loadText.SetActive(false);
+
+        weeksPanel.SetActive(false);
+
+        containerPanel.SetActive(true);
+
+        Button closeExtraInfPanelbtn = closeExtraInfPanel.GetComponent<Button>();
+        closeExtraInfPanelbtn.onClick.AddListener(closeExtraInfPanelFun);
+
         print ("newGameJson: " + IssuesStancesSelection.newGameJson);
 
 		// Set new game variables
@@ -230,7 +252,14 @@ public class GamePlayButtons : MonoBehaviour {
         AI3Name.text = jsonObj["AI3"].Value.ToString();
         AI4Name.text = jsonObj["AI4"].Value.ToString();
 
-		actionCount = 0;
+
+        AI1Name.text += ":";
+        AI2Name.text += ":";
+        AI3Name.text += ":";
+        AI4Name.text += ":";
+
+        actionCount = 0;
+		actionsLeftText.text = " 3";
 
         campaignType = "";
         campaignIssue = "";
@@ -319,6 +348,10 @@ public class GamePlayButtons : MonoBehaviour {
 
         Button closeErrorbtn = closeError.GetComponent<Button>();
         closeErrorbtn.onClick.AddListener(closeErrorFun);
+        
+
+        Button closeweeksPanelbtn = closeweeksPanel.GetComponent<Button>();
+        closeweeksPanelbtn.onClick.AddListener(closeweeksPanelFun);
 
         credits.SetActive(false);
 
@@ -471,8 +504,16 @@ public class GamePlayButtons : MonoBehaviour {
            	Score.text = jsonObj["score"].Value.ToString(); 
         }
 	}
-    
-  
+
+    void closeExtraInfPanelFun()
+    {
+        containerPanel.SetActive(false);
+    }
+
+    void closeweeksPanelFun()
+    {
+         weeksPanel.SetActive(false);
+    }
 
     void collectFunds()
 	{
@@ -582,7 +623,7 @@ public class GamePlayButtons : MonoBehaviour {
 			print ("collect: " + www2.text);
 			var jsonObj = JSON.Parse(www2.text);
 
-			actionCount++;
+			
 			checkActionCount ();
 			if (jsonObj ["success"] == 2) {
 				infoPanelText.text = "Insufficient manpower";
@@ -693,7 +734,6 @@ public class GamePlayButtons : MonoBehaviour {
         }
 		else
 		{
-			actionCount++;
 			checkActionCount ();
 			print ("polled: " + www4.text);
 			var jsonObj = JSON.Parse(www4.text);
@@ -1000,7 +1040,6 @@ public class GamePlayButtons : MonoBehaviour {
 		else
 		{
 			print ("provinceCampaign: " + www8.text);
-			actionCount++;
 			checkActionCount ();
 			var jsonObj = JSON.Parse(www8.text);
 
@@ -1090,7 +1129,13 @@ public class GamePlayButtons : MonoBehaviour {
 			string weeksRemaining = jsonObj["Weeks"].Value.ToString();
 			endTurnText.text = weeksRemaining;
 
-			print ("weeksRemaining: " + weeksRemaining);
+            weeksPanel.SetActive(true);
+
+            weeksLeftPanelText.text = weeksRemaining;
+            actionsLeftText.text = " 3";
+            actionCount = 0;
+
+            print ("weeksRemaining: " + weeksRemaining);
 
 			// Make this != "0" to test and go to leaderboard
 			if (weeksRemaining == "0") {
@@ -1148,6 +1193,9 @@ public class GamePlayButtons : MonoBehaviour {
 
     void LeaderBoard()
     {
+        loadScreen.SetActive(true);
+        loadText.SetActive(true);
+
         SceneManager.LoadScene("LeaderBoard");
     }
 
@@ -1156,9 +1204,16 @@ public class GamePlayButtons : MonoBehaviour {
 		fetchManpower ();
 		fundsUpdate ();
 
-		if (actionCount == 3) {
+        actionCount++;
+
+        actionsLeftText.text = " " + (3 - actionCount).ToString();
+
+
+        if (actionCount == 3) {
 			endTurn ();
-			actionCount = 0;
+           
+
+            
 		} 
 	}
 }

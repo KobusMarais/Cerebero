@@ -55,14 +55,22 @@ public class IssuesStancesSelection : MonoBehaviour {
     public Text Issue9Stance;
     public Text Issue10Stance;
 
+    public Button closeExtraInfPanel;
+    public Text extraInfoPanelText;
+    public GameObject containerPanel;
+
     public static String newGameJson;
     // Use this for initialization
     void Start () {
-        //loadScreen.SetActive(false);
-        //loadText.SetActive(false);
-
         
-		//loadIssues();
+
+        containerPanel.SetActive(true);
+
+        Button closeExtraInfPanelbtn = closeExtraInfPanel.GetComponent<Button>();
+        closeExtraInfPanelbtn.onClick.AddListener(closeExtraInfPanelFun);
+
+
+        //loadIssues();
 
         Issue1Stance.text = "Stance: Center";
 		Issue2Stance.text = "Stance: Center";
@@ -109,6 +117,11 @@ public class IssuesStancesSelection : MonoBehaviour {
     void closeErrorFun()
     {
         errorBox.SetActive(false);
+    }
+
+    void closeExtraInfPanelFun()
+    {
+        containerPanel.SetActive(false);
     }
 
     void issue1Slider(float value)
@@ -650,20 +663,24 @@ public class IssuesStancesSelection : MonoBehaviour {
         yield return www2;
         if (!string.IsNullOrEmpty(www2.error))
         {
-			print("Error: " + www2.error);
+            loadScreen.SetActive(false);
+            loadText.SetActive(false);
+
+            print("Error: " + www2.error);
             errorMessage.text = www2.error;
             errorBox.SetActive(true);
         }
         else
         {
+            loadScreen.SetActive(false);
+            loadText.SetActive(false);
+
             stancesArray = www2.text;
             //print("Biatch: " + stancesArray);
             loadStances();
             
         }
-
-		loadScreen.SetActive(false);
-		loadText.SetActive(false);
+        
 
     }
 
