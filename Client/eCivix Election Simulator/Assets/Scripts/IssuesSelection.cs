@@ -21,7 +21,12 @@ public class IssuesSelection : MonoBehaviour {
     public Button closeError;
 
     public Text countText;
-    
+
+    public Button closeExtraInfPanel;
+    public Text extraInfoPanelText;
+    public GameObject containerPanel;
+
+
 
     //	public Text issue1;
     //	public Text issue2;
@@ -49,14 +54,18 @@ public class IssuesSelection : MonoBehaviour {
 
     void Start () {
 
-		issueToggleArray = GameObject.FindGameObjectsWithTag("Issue");
+        containerPanel.SetActive(true);
+
+        Button closeExtraInfPanelbtn = closeExtraInfPanel.GetComponent<Button>();
+        closeExtraInfPanelbtn.onClick.AddListener(closeExtraInfPanelFun);
+
+        issueToggleArray = GameObject.FindGameObjectsWithTag("Issue");
 		getIssues ();
 
         Button btn = start.GetComponent<Button>();
         btn.onClick.AddListener(SelectIssues);
 
-        loadScreen.SetActive(false);
-        loadText.SetActive(false);
+        
 
         errorBox.SetActive(false);
 
@@ -69,6 +78,11 @@ public class IssuesSelection : MonoBehaviour {
     void closeErrorFun()
     {
         errorBox.SetActive(false);
+    }
+
+    void closeExtraInfPanelFun()
+    {
+        containerPanel.SetActive(false);
     }
 
     IEnumerator delayLoading()
@@ -154,9 +168,15 @@ public class IssuesSelection : MonoBehaviour {
 	{
 		yield return www;
 		if (!string.IsNullOrEmpty (www.error)) {
-			errorMessage.text = www.error;
+
+            loadScreen.SetActive(false);
+            loadText.SetActive(false);
+
+            errorMessage.text = www.error;
 			errorBox.SetActive(true);
-		} else {
+
+           
+        } else {
 			print("loadIssuesReturn" + www.text);
 			var jsonObj = JSON.Parse (www.text);
 			//int arrayLength = jsonObj ["scoreboard"].Count;
@@ -171,16 +191,20 @@ public class IssuesSelection : MonoBehaviour {
 				i++;
 			}
 
+            loadScreen.SetActive(false);
+            loadText.SetActive(false);
 
-		}
-	}
+        }
+
+        
+    }
 
 	void getIssues()
 	{
 		print("Getting issues");
 
-		loadScreen.SetActive(false);
-		loadText.SetActive(false);
+		//loadScreen.SetActive(false);
+		//loadText.SetActive(false);
 
 		loadIssues();
 		string url = "http://ecivix.org.za/api/getIssues";
