@@ -207,7 +207,7 @@ public class IssuesSelection : MonoBehaviour {
 		//loadText.SetActive(false);
 
 		loadIssues();
-		string url = "http://ecivix.org.za/api/getIssues";
+		string url = "http://localhost:3000/api/getIssues";
         
 
 		www = new WWW (url);

@@ -550,7 +550,7 @@ public class IssuesStancesSelection : MonoBehaviour {
 		print("Setting issues");
 
 		setIssuesReturn();
-		string url = "http://ecivix.org.za/api/setIssues";
+		string url = "http://localhost:3000/api/setIssues";
 
 		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\",\"issues\":[" + createIssueStanceArray() + "]}";
         print("setIssuesString: " + requestString);
@@ -606,7 +606,7 @@ public class IssuesStancesSelection : MonoBehaviour {
     void startGame()
     {
         Upload();
-        string url = "http://ecivix.org.za/api/startGame";
+        string url = "http://localhost:3000/api/startGame";
         
 
 		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\", \"difficulty\":\"" + PlayerPrefs.GetString("Player Difficulty") + "\"}";
@@ -625,7 +625,7 @@ public class IssuesStancesSelection : MonoBehaviour {
     void getStances()
     {
         getStancesHelp();
-        string url = "http://ecivix.org.za/api/getStances";
+        string url = "http://localhost:3000/api/getStances";
 
 
 		//var requestString = "{\"access_token\": \"2\",\"issues\":[\"" + IssuesSelection.selectedIssues[0].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[1].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[2].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[3].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[4].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[5].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[6].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[7].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[8].ToString().ToLower() + "\",\"" + IssuesSelection.selectedIssues[9].ToString().ToLower() + "\"]}";
