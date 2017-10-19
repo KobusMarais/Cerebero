@@ -168,7 +168,7 @@ public class PanelScript : MonoBehaviour
 
         loadHighscores();
 
-        string url = "http://ecivix.org.za/api/getHighscoreBoard";
+        string url = "http://localhost:3000/api/getHighscoreBoard";
 
 		www10 = new WWW(url);
 

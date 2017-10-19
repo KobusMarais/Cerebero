@@ -72,7 +72,7 @@ public class finnishGame : MonoBehaviour {
 
 		loadHighscores();
 
-        string url = "http://ecivix.org.za/api/endHighscore";
+        string url = "http://localhost:3000/api/endHighscore";
 
 		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\", \"userScore\":\"" + GamePlayButtons.finalScore + "\"}";
 		print ("gethighscore: " + requestString);

@@ -470,7 +470,7 @@ public class GamePlayButtons : MonoBehaviour {
     void getScore()
     {
         getScoreHelp();
-        string url = "http://ecivix.org.za/api/getScore";
+        string url = "http://localhost:3000/api/getScore";
 
 		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\"}";
 
@@ -528,7 +528,7 @@ public class GamePlayButtons : MonoBehaviour {
 		{
 			// Get collected funds for selected province and AI actions
 			provinceCollect();
-			string url = "http://ecivix.org.za/api/collectFunds";
+			string url = "http://localhost:3000/api/collectFunds";
             
 			var requestString = "{\"access_token\":\"" + NewGame.access_token + "\",\"province\":\"" + ProvincesButtons.provinceName.ToString() + "\"}";
 
@@ -651,7 +651,7 @@ public class GamePlayButtons : MonoBehaviour {
 	void fundsUpdate() {
 		// Update user's total funds.
 		updateFunds();
-		string url2 = "http://ecivix.org.za/api/getFunds";
+		string url2 = "http://localhost:3000/api/getFunds";
 
 		var requestString2 = "{\"access_token\":\"" + NewGame.access_token + "\"}";
 
@@ -701,7 +701,7 @@ public class GamePlayButtons : MonoBehaviour {
         } else {
 			// Get and update user's total manpower / support
 			provincePolled();
-			string url = "http://ecivix.org.za/api/pollProvince";
+			string url = "http://localhost:3000/api/pollProvince";
 
 			var requestString = "{\"access_token\":\"" + NewGame.access_token + "\",\"province\": \"" + ProvincesButtons.provinceName.ToString() + "\"}";
 
@@ -778,7 +778,7 @@ public class GamePlayButtons : MonoBehaviour {
    
 	void getSupport() {
 		getSupportHelp();
-		string url = "http://ecivix.org.za/api/getSupport";
+		string url = "http://localhost:3000/api/getSupport";
 
 		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\"}";
 
@@ -832,7 +832,7 @@ public class GamePlayButtons : MonoBehaviour {
 
 
 		getWeeks();
-		string url = "http://ecivix.org.za/api/endTurn";
+		string url = "http://localhost:3000/api/endTurn";
 
 		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\"}";
 
@@ -947,7 +947,7 @@ public class GamePlayButtons : MonoBehaviour {
         campaignTypes.SetActive(false);
 
         provinceCampaign ();
-		string url2 = "http://ecivix.org.za/api/campaignProvince";
+		string url2 = "http://localhost:3000/api/campaignProvince";
 
 		var requestString2 = "{\"access_token\":\"" + NewGame.access_token + "\",\"province\":\"" + ProvincesButtons.provinceName.ToString().ToLower() + "\", \"topic\":\"" + campaignIssue.ToLower() + "\",\"campaigntype\":\"" + campaignType.ToLower() + "\"}";
 
@@ -1072,7 +1072,7 @@ public class GamePlayButtons : MonoBehaviour {
 
 
 		getManpower();
-		string url = "http://ecivix.org.za/api/getManpower";
+		string url = "http://localhost:3000/api/getManpower";
 
 		var requestString = "{\"access_token\":\"" + NewGame.access_token + "\"}";
 
@@ -1142,7 +1142,7 @@ public class GamePlayButtons : MonoBehaviour {
 				print ("Done!!");
 				getScore ();
 				finalResult ();
-				string url2 = "http://ecivix.org.za/api/endResult";
+				string url2 = "http://localhost:3000/api/endResult";
 
 				var requestString2 = "{\"access_token\":\"" + NewGame.access_token + "\"}";
 
