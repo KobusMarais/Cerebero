@@ -819,12 +819,12 @@ module.exports = {
             query.on('row', (row) => {
                 obj.success = calculateresult(row['ai1'], row['ai2'], row['ai3'], row['ai4'], row['user1']);
             });
-            query.on('end', () => {
+                query.on('end', () => {
                     var sendback = JSON.stringify(obj);
                     client.end();
                     callback(err = null, result = sendback);
                     return sendback;
-            });
+                });
         });
     },
     getScore: function (accesstoken, callback) {
@@ -1103,18 +1103,50 @@ module.exports = {
                         overall.push(obj);
                     });
                     query.on('end', () => {
+                        querytext ="DELETE FROM tblgauteng where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM tblfreestate where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM tbllimpopo where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM tblnorthwest where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM tblnorthcape where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM tblwestcape where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM tbleastcape where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM tblmpumalanga where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM tblkwazulunatal where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM ai1 where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM ai2 where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM ai3 where userid = '"+accesskey+"';\n" +
+                            "DELETE FROM ai4 where userid = '"+accesskey+"';";
+                        query = client.query(querytext);
+                        query.on('end', () => {
+                            var sendback = JSON.stringify(overall);
+                            client.end();
+                            callback(err=null,result=sendback);
+                            return sendback;
+                        });
+                    });
+                }
+                else
+                {
+                    querytext ="DELETE FROM tblgauteng where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM tblfreestate where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM tbllimpopo where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM tblnorthwest where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM tblnorthcape where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM tblwestcape where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM tbleastcape where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM tblmpumalanga where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM tblkwazulunatal where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM ai1 where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM ai2 where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM ai3 where userid = '"+accesskey+"';\n" +
+                        "DELETE FROM ai4 where userid = '"+accesskey+"';";
+                    query = client.query(querytext);
+                    query.on('end', () => {
                         var sendback = JSON.stringify(overall);
                         client.end();
                         callback(err=null,result=sendback);
                         return sendback;
                     });
-                }
-                else
-                {
-                    var sendback = JSON.stringify(overall);
-                    client.end();
-                    callback(err = null, result = sendback);
-                    return sendback;
                 }
             });
         });

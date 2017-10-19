@@ -346,8 +346,18 @@ router.get('/', function(req, res, next) {
         ');');
 
 
-    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Victor', 'password111', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
-    
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Victor', 'password321', 'Victor', 'Twigge', 'vtwigge@yahoo.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Kobus', 'password119', 'Victor', 'Twigge', 'teseter@test.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Rikard', 'password181', 'Victor', 'Twigge', 'qwezxc@mahoo.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Fred', 'password171', 'Victor', 'Twigge', 'qqwe@cahoo.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['John', 'password161', 'Victor', 'Twigge', 'zxcgge@asdhoo.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Sparky23', 'password115', 'Victor', 'Twigge', 'vasd@asdzhoo.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['FairPro123', 'password141', 'Victor', 'Twigge', 'vasd@sdfoo.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Hackerman321', 'password311', 'Victor', 'Twigge', 'asd@fghoo.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['MarioSuper999', 'password1', 'Victor', 'Twigge', 'vtwiasdgge@iopoo.com']);
+    query = client.query('INSERT INTO useraccounts(username, password, firstName, lastName, email) values($1, $2, $3, $4, $5)', ['Dropkick77', 'password121', 'Victor', 'Twigge', 'vtwiasd@qeroo.com']);
+
+
     query = client.query('INSERT INTO userprofile(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10,score, funds, time) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13, $14)', [1, 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 1000 ,1000, 10]);
 
     query = client.query('INSERT INTO ai1(userid, topic1, topic2, topic3, topic4, topic5, topic6, topic7, topic8, topic9, topic10, funds) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11, $12)', [1, 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 'Crime_Right', 1000]);
@@ -499,7 +509,18 @@ router.get('/', function(req, res, next) {
     query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['left', 34, 47, 47, 60, 30, 33, 20, 53, 60, 45]);
     query = client.query('INSERT INTO stances(stance,gauteng, freestate, kwazulunatal, limpopo, northwest, northcape, westcape, eastcape, mpumalanga, national) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', ['far left', 16, 22, 13, 22, 24, 15, 10, 14, 14, 16]);
 
-    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [1, 9000001]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [1, 9099]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [2, 3201]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [3, 7048]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [4, 4031]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [5, 9003]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [6, 3021]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [7, 8104]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [8, 2001]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [9, 8371]);
+    query = client.query('INSERT INTO leaderboard(userid, score) values($1,$2)', [10, 7208]);
+
+
 
 
 
